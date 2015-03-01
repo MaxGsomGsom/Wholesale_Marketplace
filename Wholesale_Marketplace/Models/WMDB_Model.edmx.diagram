@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="ffb5af75a5cb433d9d4af98d7850c051" Name="Diagram1">
+        <EntityTypeShape EntityType="WMDBModel.Buyer" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="WMDBModel.Dialog_dispute" Width="1.5" PointX="7.5" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="WMDBModel.Dispute_status" Width="1.5" PointX="5.25" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="WMDBModel.Item" Width="1.5" PointX="3" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="WMDBModel.Item_category" Width="1.5" PointX="0.75" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="WMDBModel.Message" Width="1.5" PointX="9.75" PointY="9.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="WMDBModel.Order" Width="1.5" PointX="5.25" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="WMDBModel.Order_status" Width="1.5" PointX="3" PointY="15.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="WMDBModel.Picture" Width="1.5" PointX="12" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="WMDBModel.Seller" Width="1.5" PointX="3" PointY="11.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="WMDBModel.Shipping_type" Width="1.5" PointX="3" PointY="19" IsExpanded="true" />
+        <EntityTypeShape EntityType="WMDBModel.Store" Width="1.5" PointX="0.75" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="WMDBModel.Support_agent" Width="1.5" PointX="5.25" PointY="13.375" IsExpanded="true" />
+        <AssociationConnector Association="WMDBModel.FK_DIALOGUE_SIDE_1_BUYER" ManuallyRouted="false" />
+        <AssociationConnector Association="WMDBModel.FK_ORDER_CUSTOMER_BUYER" ManuallyRouted="false" />
+        <AssociationConnector Association="WMDBModel.FK_DIALOGUE_CAUSE2_ORDER" ManuallyRouted="false" />
+        <AssociationConnector Association="WMDBModel.FK_DIALOGUE_DISPUTE_S_DISPUTE_" ManuallyRouted="false" />
+        <AssociationConnector Association="WMDBModel.FK_DIALOGUE_SIDE_2_SUPPORT_" ManuallyRouted="false" />
+        <AssociationConnector Association="WMDBModel.FK_DIALOGUE_SIDE_3_SELLER" ManuallyRouted="false" />
+        <AssociationConnector Association="WMDBModel.FK_MESSAGE_AGGREGATE_DIALOGUE" ManuallyRouted="false" />
+        <AssociationConnector Association="WMDBModel.FK_ORDER_CAUSE_DIALOGUE" ManuallyRouted="false" />
+        <AssociationConnector Association="WMDBModel.FK_ITEM_CATHEGORY_ITEM_CAT" ManuallyRouted="false" />
+        <AssociationConnector Association="WMDBModel.FK_ITEM_PLACE_OF__STORE" ManuallyRouted="false" />
+        <AssociationConnector Association="WMDBModel.FK_ORDER_PART_ITEM" ManuallyRouted="false" />
+        <AssociationConnector Association="WMDBModel.FK_PICTURE_PHOTO_OBJ_ITEM" ManuallyRouted="false" />
+        <AssociationConnector Association="WMDBModel.FK_PICTURE_ATTACHMEN_MESSAGE" ManuallyRouted="false" />
+        <AssociationConnector Association="WMDBModel.FK_ORDER_LEADER_SUPPORT_" ManuallyRouted="false" />
+        <AssociationConnector Association="WMDBModel.FK_ORDER_PLACE_OF__SELLER" ManuallyRouted="false" />
+        <AssociationConnector Association="WMDBModel.FK_ORDER_SHIPPING_SHIPPING" ManuallyRouted="false" />
+        <AssociationConnector Association="WMDBModel.FK_ORDER_STATUS_ORDER_ST" ManuallyRouted="false" />
+        <AssociationConnector Association="WMDBModel.FK_SELLER_PLACE_OF__STORE" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

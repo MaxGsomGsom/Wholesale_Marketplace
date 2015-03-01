@@ -1,0 +1,1159 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище WMDBModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Buyer">
+          <Key>
+            <PropertyRef Name="Buyer_number" />
+          </Key>
+          <Property Name="Buyer_number" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="text" />
+          <Property Name="Login" Type="text" />
+          <Property Name="Pass" Type="text" />
+          <Property Name="Address" Type="text" />
+          <Property Name="Orders_count" Type="int" />
+          <Property Name="Email" Type="text" />
+          <Property Name="Registration_date" Type="datetime" />
+          <Property Name="Avatar" Type="image" />
+        </EntityType>
+        <EntityType Name="Dialog_dispute">
+          <Key>
+            <PropertyRef Name="Dispute_number" />
+          </Key>
+          <Property Name="Dispute_number" Type="int" Nullable="false" />
+          <Property Name="Buyer_number" Type="int" Nullable="false" />
+          <Property Name="Seller_number" Type="int" Nullable="false" />
+          <Property Name="Agent_number" Type="int" Nullable="false" />
+          <Property Name="Order_number" Type="int" Nullable="false" />
+          <Property Name="Dispute_status_number" Type="int" />
+          <Property Name="Open_date" Type="datetime" />
+          <Property Name="IsDispute" Type="bit" />
+          <Property Name="Close_date" Type="datetime" />
+          <Property Name="Resolution_text" Type="text" />
+        </EntityType>
+        <EntityType Name="Dispute_status">
+          <Key>
+            <PropertyRef Name="Dispute_status_number" />
+          </Key>
+          <Property Name="Dispute_status_number" Type="int" Nullable="false" />
+          <Property Name="Name" Type="text" />
+        </EntityType>
+        <EntityType Name="Item">
+          <Key>
+            <PropertyRef Name="Item_number" />
+          </Key>
+          <Property Name="Item_number" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Store_number" Type="int" Nullable="false" />
+          <Property Name="Category_number" Type="int" />
+          <Property Name="Name" Type="text" />
+          <Property Name="Price" Type="int" />
+          <Property Name="Description" Type="text" />
+          <Property Name="Orders_count" Type="int" />
+          <Property Name="Reviews_count" Type="int" />
+          <Property Name="Positive_marks" Type="int" />
+          <Property Name="Negative_marks" Type="int" />
+          <Property Name="Minimum_order" Type="int" />
+          <Property Name="Open_date" Type="datetime" />
+          <Property Name="Close_date" Type="datetime" />
+          <Property Name="Left_goods_count" Type="int" />
+        </EntityType>
+        <EntityType Name="Item_category">
+          <Key>
+            <PropertyRef Name="Category_number" />
+          </Key>
+          <Property Name="Category_number" Type="int" Nullable="false" />
+          <Property Name="Name" Type="text" />
+        </EntityType>
+        <EntityType Name="Message">
+          <Key>
+            <PropertyRef Name="Message_number" />
+          </Key>
+          <Property Name="Message_number" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Dispute_number" Type="int" Nullable="false" />
+          <Property Name="Text" Type="text" />
+          <Property Name="Post_date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="Order_number" />
+          </Key>
+          <Property Name="Order_number" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Agent_number" Type="int" Nullable="false" />
+          <Property Name="Buyer_number" Type="int" Nullable="false" />
+          <Property Name="Item_number" Type="int" Nullable="false" />
+          <Property Name="Dispute_number" Type="int" />
+          <Property Name="Seller_number" Type="int" />
+          <Property Name="Shipping_number" Type="int" />
+          <Property Name="Order_status_number" Type="int" />
+          <Property Name="Total_price" Type="int" />
+          <Property Name="Open_date" Type="datetime" />
+          <Property Name="Close_date" Type="datetime" />
+          <Property Name="Amount" Type="int" />
+          <Property Name="Mark" Type="int" />
+          <Property Name="Review_text" Type="text" />
+        </EntityType>
+        <EntityType Name="Order_status">
+          <Key>
+            <PropertyRef Name="Order_status_number" />
+          </Key>
+          <Property Name="Order_status_number" Type="int" Nullable="false" />
+          <Property Name="Name" Type="text" />
+        </EntityType>
+        <EntityType Name="Picture">
+          <Key>
+            <PropertyRef Name="Picture_number" />
+          </Key>
+          <Property Name="Picture_number" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Item_number" Type="int" Nullable="false" />
+          <Property Name="Message_number" Type="int" />
+          <Property Name="Description" Type="text" />
+          <Property Name="Picture" Type="image" />
+        </EntityType>
+        <EntityType Name="Seller">
+          <Key>
+            <PropertyRef Name="Seller_number" />
+          </Key>
+          <Property Name="Seller_number" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Store_number" Type="int" Nullable="false" />
+          <Property Name="Name" Type="text" />
+          <Property Name="Login" Type="text" />
+          <Property Name="Pass" Type="text" />
+          <Property Name="Email" Type="text" />
+          <Property Name="Registration_date" Type="datetime" />
+          <Property Name="Avatar" Type="image" />
+        </EntityType>
+        <EntityType Name="Shipping_type">
+          <Key>
+            <PropertyRef Name="Shipping_number" />
+          </Key>
+          <Property Name="Shipping_number" Type="int" Nullable="false" />
+          <Property Name="Name" Type="text" />
+          <Property Name="Price" Type="int" />
+        </EntityType>
+        <EntityType Name="Store">
+          <Key>
+            <PropertyRef Name="Store_number" />
+          </Key>
+          <Property Name="Store_number" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="text" />
+          <Property Name="Rating" Type="int" />
+          <Property Name="Orders_count" Type="int" />
+          <Property Name="Positive_marks" Type="int" />
+          <Property Name="Negative_marks" Type="int" />
+          <Property Name="Created" Type="datetime" />
+          <Property Name="Description" Type="text" />
+          <Property Name="Owner_seller_number" Type="int" />
+        </EntityType>
+        <EntityType Name="Support_agent">
+          <Key>
+            <PropertyRef Name="Agent_number" />
+          </Key>
+          <Property Name="Agent_number" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="text" />
+          <Property Name="Login" Type="text" />
+          <Property Name="Pass" Type="text" />
+          <Property Name="Email" Type="text" />
+          <Property Name="Disputes_count" Type="int" />
+          <Property Name="Registration_date" Type="datetime" />
+        </EntityType>
+        <Association Name="FK_DIALOGUE_CAUSE2_ORDER">
+          <End Role="Order" Type="Self.Order" Multiplicity="1" />
+          <End Role="Dialog_dispute" Type="Self.Dialog_dispute" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="Order_number" />
+            </Principal>
+            <Dependent Role="Dialog_dispute">
+              <PropertyRef Name="Order_number" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DIALOGUE_DISPUTE_S_DISPUTE_">
+          <End Role="Dispute_status" Type="Self.Dispute_status" Multiplicity="0..1" />
+          <End Role="Dialog_dispute" Type="Self.Dialog_dispute" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dispute_status">
+              <PropertyRef Name="Dispute_status_number" />
+            </Principal>
+            <Dependent Role="Dialog_dispute">
+              <PropertyRef Name="Dispute_status_number" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DIALOGUE_SIDE 1_BUYER">
+          <End Role="Buyer" Type="Self.Buyer" Multiplicity="1" />
+          <End Role="Dialog_dispute" Type="Self.Dialog_dispute" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Buyer">
+              <PropertyRef Name="Buyer_number" />
+            </Principal>
+            <Dependent Role="Dialog_dispute">
+              <PropertyRef Name="Buyer_number" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DIALOGUE_SIDE 2_SUPPORT_">
+          <End Role="Support_agent" Type="Self.Support_agent" Multiplicity="1" />
+          <End Role="Dialog_dispute" Type="Self.Dialog_dispute" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Support_agent">
+              <PropertyRef Name="Agent_number" />
+            </Principal>
+            <Dependent Role="Dialog_dispute">
+              <PropertyRef Name="Agent_number" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DIALOGUE_SIDE 3_SELLER">
+          <End Role="Seller" Type="Self.Seller" Multiplicity="1" />
+          <End Role="Dialog_dispute" Type="Self.Dialog_dispute" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Seller">
+              <PropertyRef Name="Seller_number" />
+            </Principal>
+            <Dependent Role="Dialog_dispute">
+              <PropertyRef Name="Seller_number" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ITEM_CATHEGORY_ITEM_CAT">
+          <End Role="Item_category" Type="Self.Item_category" Multiplicity="0..1" />
+          <End Role="Item" Type="Self.Item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Item_category">
+              <PropertyRef Name="Category_number" />
+            </Principal>
+            <Dependent Role="Item">
+              <PropertyRef Name="Category_number" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ITEM_PLACE_OF__STORE">
+          <End Role="Store" Type="Self.Store" Multiplicity="1" />
+          <End Role="Item" Type="Self.Item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Store">
+              <PropertyRef Name="Store_number" />
+            </Principal>
+            <Dependent Role="Item">
+              <PropertyRef Name="Store_number" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MESSAGE_AGGREGATE_DIALOGUE">
+          <End Role="Dialog_dispute" Type="Self.Dialog_dispute" Multiplicity="1" />
+          <End Role="Message" Type="Self.Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dialog_dispute">
+              <PropertyRef Name="Dispute_number" />
+            </Principal>
+            <Dependent Role="Message">
+              <PropertyRef Name="Dispute_number" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ORDER_CAUSE_DIALOGUE">
+          <End Role="Dialog_dispute" Type="Self.Dialog_dispute" Multiplicity="0..1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dialog_dispute">
+              <PropertyRef Name="Dispute_number" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="Dispute_number" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ORDER_CUSTOMER_BUYER">
+          <End Role="Buyer" Type="Self.Buyer" Multiplicity="1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Buyer">
+              <PropertyRef Name="Buyer_number" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="Buyer_number" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ORDER_LEADER_SUPPORT_">
+          <End Role="Support_agent" Type="Self.Support_agent" Multiplicity="1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Support_agent">
+              <PropertyRef Name="Agent_number" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="Agent_number" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ORDER_PART_ITEM">
+          <End Role="Item" Type="Self.Item" Multiplicity="1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Item">
+              <PropertyRef Name="Item_number" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="Item_number" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ORDER_PLACE_OF__SELLER">
+          <End Role="Seller" Type="Self.Seller" Multiplicity="0..1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Seller">
+              <PropertyRef Name="Seller_number" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="Seller_number" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ORDER_SHIPPING_SHIPPING">
+          <End Role="Shipping_type" Type="Self.Shipping_type" Multiplicity="0..1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Shipping_type">
+              <PropertyRef Name="Shipping_number" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="Shipping_number" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ORDER_STATUS_ORDER_ST">
+          <End Role="Order_status" Type="Self.Order_status" Multiplicity="0..1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order_status">
+              <PropertyRef Name="Order_status_number" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="Order_status_number" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PICTURE_ATTACHMEN_MESSAGE">
+          <End Role="Message" Type="Self.Message" Multiplicity="0..1" />
+          <End Role="Picture" Type="Self.Picture" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Message">
+              <PropertyRef Name="Message_number" />
+            </Principal>
+            <Dependent Role="Picture">
+              <PropertyRef Name="Message_number" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PICTURE_PHOTO_OBJ_ITEM">
+          <End Role="Item" Type="Self.Item" Multiplicity="1" />
+          <End Role="Picture" Type="Self.Picture" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Item">
+              <PropertyRef Name="Item_number" />
+            </Principal>
+            <Dependent Role="Picture">
+              <PropertyRef Name="Item_number" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SELLER_PLACE_OF__STORE">
+          <End Role="Store" Type="Self.Store" Multiplicity="1" />
+          <End Role="Seller" Type="Self.Seller" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Store">
+              <PropertyRef Name="Store_number" />
+            </Principal>
+            <Dependent Role="Seller">
+              <PropertyRef Name="Store_number" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище WMDBModelContainer">
+          <EntitySet Name="Buyer" EntityType="Self.Buyer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Dialog_dispute" EntityType="Self.Dialog_dispute" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Dispute_status" EntityType="Self.Dispute_status" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Item" EntityType="Self.Item" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Item_category" EntityType="Self.Item_category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Message" EntityType="Self.Message" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Order_status" EntityType="Self.Order_status" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Picture" EntityType="Self.Picture" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Seller" EntityType="Self.Seller" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Shipping_type" EntityType="Self.Shipping_type" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Store" EntityType="Self.Store" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Support_agent" EntityType="Self.Support_agent" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_DIALOGUE_CAUSE2_ORDER" Association="Self.FK_DIALOGUE_CAUSE2_ORDER">
+            <End Role="Order" EntitySet="Order" />
+            <End Role="Dialog_dispute" EntitySet="Dialog_dispute" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DIALOGUE_DISPUTE_S_DISPUTE_" Association="Self.FK_DIALOGUE_DISPUTE_S_DISPUTE_">
+            <End Role="Dispute_status" EntitySet="Dispute_status" />
+            <End Role="Dialog_dispute" EntitySet="Dialog_dispute" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DIALOGUE_SIDE 1_BUYER" Association="Self.FK_DIALOGUE_SIDE 1_BUYER">
+            <End Role="Buyer" EntitySet="Buyer" />
+            <End Role="Dialog_dispute" EntitySet="Dialog_dispute" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DIALOGUE_SIDE 2_SUPPORT_" Association="Self.FK_DIALOGUE_SIDE 2_SUPPORT_">
+            <End Role="Support_agent" EntitySet="Support_agent" />
+            <End Role="Dialog_dispute" EntitySet="Dialog_dispute" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DIALOGUE_SIDE 3_SELLER" Association="Self.FK_DIALOGUE_SIDE 3_SELLER">
+            <End Role="Seller" EntitySet="Seller" />
+            <End Role="Dialog_dispute" EntitySet="Dialog_dispute" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ITEM_CATHEGORY_ITEM_CAT" Association="Self.FK_ITEM_CATHEGORY_ITEM_CAT">
+            <End Role="Item_category" EntitySet="Item_category" />
+            <End Role="Item" EntitySet="Item" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ITEM_PLACE_OF__STORE" Association="Self.FK_ITEM_PLACE_OF__STORE">
+            <End Role="Store" EntitySet="Store" />
+            <End Role="Item" EntitySet="Item" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MESSAGE_AGGREGATE_DIALOGUE" Association="Self.FK_MESSAGE_AGGREGATE_DIALOGUE">
+            <End Role="Dialog_dispute" EntitySet="Dialog_dispute" />
+            <End Role="Message" EntitySet="Message" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORDER_CAUSE_DIALOGUE" Association="Self.FK_ORDER_CAUSE_DIALOGUE">
+            <End Role="Dialog_dispute" EntitySet="Dialog_dispute" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORDER_CUSTOMER_BUYER" Association="Self.FK_ORDER_CUSTOMER_BUYER">
+            <End Role="Buyer" EntitySet="Buyer" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORDER_LEADER_SUPPORT_" Association="Self.FK_ORDER_LEADER_SUPPORT_">
+            <End Role="Support_agent" EntitySet="Support_agent" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORDER_PART_ITEM" Association="Self.FK_ORDER_PART_ITEM">
+            <End Role="Item" EntitySet="Item" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORDER_PLACE_OF__SELLER" Association="Self.FK_ORDER_PLACE_OF__SELLER">
+            <End Role="Seller" EntitySet="Seller" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORDER_SHIPPING_SHIPPING" Association="Self.FK_ORDER_SHIPPING_SHIPPING">
+            <End Role="Shipping_type" EntitySet="Shipping_type" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORDER_STATUS_ORDER_ST" Association="Self.FK_ORDER_STATUS_ORDER_ST">
+            <End Role="Order_status" EntitySet="Order_status" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PICTURE_ATTACHMEN_MESSAGE" Association="Self.FK_PICTURE_ATTACHMEN_MESSAGE">
+            <End Role="Message" EntitySet="Message" />
+            <End Role="Picture" EntitySet="Picture" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PICTURE_PHOTO_OBJ_ITEM" Association="Self.FK_PICTURE_PHOTO_OBJ_ITEM">
+            <End Role="Item" EntitySet="Item" />
+            <End Role="Picture" EntitySet="Picture" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SELLER_PLACE_OF__STORE" Association="Self.FK_SELLER_PLACE_OF__STORE">
+            <End Role="Store" EntitySet="Store" />
+            <End Role="Seller" EntitySet="Seller" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="WMDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Buyer">
+          <Key>
+            <PropertyRef Name="Buyer_number" />
+          </Key>
+          <Property Name="Buyer_number" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Login" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Pass" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Orders_count" Type="Int32" />
+          <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Registration_date" Type="DateTime" Precision="3" />
+          <Property Name="Avatar" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="Dialog_dispute" Relationship="Self.FK_DIALOGUE_SIDE_1_BUYER" FromRole="Buyer" ToRole="Dialog_dispute" />
+          <NavigationProperty Name="Order" Relationship="Self.FK_ORDER_CUSTOMER_BUYER" FromRole="Buyer" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="Dialog_dispute">
+          <Key>
+            <PropertyRef Name="Dispute_number" />
+          </Key>
+          <Property Name="Dispute_number" Type="Int32" Nullable="false" />
+          <Property Name="Buyer_number" Type="Int32" Nullable="false" />
+          <Property Name="Seller_number" Type="Int32" Nullable="false" />
+          <Property Name="Agent_number" Type="Int32" Nullable="false" />
+          <Property Name="Order_number" Type="Int32" Nullable="false" />
+          <Property Name="Dispute_status_number" Type="Int32" />
+          <Property Name="Open_date" Type="DateTime" Precision="3" />
+          <Property Name="IsDispute" Type="Boolean" />
+          <Property Name="Close_date" Type="DateTime" Precision="3" />
+          <Property Name="Resolution_text" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Buyer" Relationship="Self.FK_DIALOGUE_SIDE_1_BUYER" FromRole="Dialog_dispute" ToRole="Buyer" />
+          <NavigationProperty Name="Order" Relationship="Self.FK_DIALOGUE_CAUSE2_ORDER" FromRole="Dialog_dispute" ToRole="Order" />
+          <NavigationProperty Name="Dispute_status" Relationship="Self.FK_DIALOGUE_DISPUTE_S_DISPUTE_" FromRole="Dialog_dispute" ToRole="Dispute_status" />
+          <NavigationProperty Name="Support_agent" Relationship="Self.FK_DIALOGUE_SIDE_2_SUPPORT_" FromRole="Dialog_dispute" ToRole="Support_agent" />
+          <NavigationProperty Name="Seller" Relationship="Self.FK_DIALOGUE_SIDE_3_SELLER" FromRole="Dialog_dispute" ToRole="Seller" />
+          <NavigationProperty Name="Message" Relationship="Self.FK_MESSAGE_AGGREGATE_DIALOGUE" FromRole="Dialog_dispute" ToRole="Message" />
+          <NavigationProperty Name="Order1" Relationship="Self.FK_ORDER_CAUSE_DIALOGUE" FromRole="Dialog_dispute" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="Dispute_status">
+          <Key>
+            <PropertyRef Name="Dispute_status_number" />
+          </Key>
+          <Property Name="Dispute_status_number" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Dialog_dispute" Relationship="Self.FK_DIALOGUE_DISPUTE_S_DISPUTE_" FromRole="Dispute_status" ToRole="Dialog_dispute" />
+        </EntityType>
+        <EntityType Name="Item">
+          <Key>
+            <PropertyRef Name="Item_number" />
+          </Key>
+          <Property Name="Item_number" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Store_number" Type="Int32" Nullable="false" />
+          <Property Name="Category_number" Type="Int32" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Price" Type="Int32" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Orders_count" Type="Int32" />
+          <Property Name="Reviews_count" Type="Int32" />
+          <Property Name="Positive_marks" Type="Int32" />
+          <Property Name="Negative_marks" Type="Int32" />
+          <Property Name="Minimum_order" Type="Int32" />
+          <Property Name="Open_date" Type="DateTime" Precision="3" />
+          <Property Name="Close_date" Type="DateTime" Precision="3" />
+          <Property Name="Left_goods_count" Type="Int32" />
+          <NavigationProperty Name="Item_category" Relationship="Self.FK_ITEM_CATHEGORY_ITEM_CAT" FromRole="Item" ToRole="Item_category" />
+          <NavigationProperty Name="Store" Relationship="Self.FK_ITEM_PLACE_OF__STORE" FromRole="Item" ToRole="Store" />
+          <NavigationProperty Name="Order" Relationship="Self.FK_ORDER_PART_ITEM" FromRole="Item" ToRole="Order" />
+          <NavigationProperty Name="Picture" Relationship="Self.FK_PICTURE_PHOTO_OBJ_ITEM" FromRole="Item" ToRole="Picture" />
+        </EntityType>
+        <EntityType Name="Item_category">
+          <Key>
+            <PropertyRef Name="Category_number" />
+          </Key>
+          <Property Name="Category_number" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Item" Relationship="Self.FK_ITEM_CATHEGORY_ITEM_CAT" FromRole="Item_category" ToRole="Item" />
+        </EntityType>
+        <EntityType Name="Message">
+          <Key>
+            <PropertyRef Name="Message_number" />
+          </Key>
+          <Property Name="Message_number" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Dispute_number" Type="Int32" Nullable="false" />
+          <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Post_date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Dialog_dispute" Relationship="Self.FK_MESSAGE_AGGREGATE_DIALOGUE" FromRole="Message" ToRole="Dialog_dispute" />
+          <NavigationProperty Name="Picture" Relationship="Self.FK_PICTURE_ATTACHMEN_MESSAGE" FromRole="Message" ToRole="Picture" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="Order_number" />
+          </Key>
+          <Property Name="Order_number" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Agent_number" Type="Int32" Nullable="false" />
+          <Property Name="Buyer_number" Type="Int32" Nullable="false" />
+          <Property Name="Item_number" Type="Int32" Nullable="false" />
+          <Property Name="Dispute_number" Type="Int32" />
+          <Property Name="Seller_number" Type="Int32" />
+          <Property Name="Shipping_number" Type="Int32" />
+          <Property Name="Order_status_number" Type="Int32" />
+          <Property Name="Total_price" Type="Int32" />
+          <Property Name="Open_date" Type="DateTime" Precision="3" />
+          <Property Name="Close_date" Type="DateTime" Precision="3" />
+          <Property Name="Amount" Type="Int32" />
+          <Property Name="Mark" Type="Int32" />
+          <Property Name="Review_text" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Buyer" Relationship="Self.FK_ORDER_CUSTOMER_BUYER" FromRole="Order" ToRole="Buyer" />
+          <NavigationProperty Name="Dialog_dispute" Relationship="Self.FK_DIALOGUE_CAUSE2_ORDER" FromRole="Order" ToRole="Dialog_dispute" />
+          <NavigationProperty Name="Dialog_dispute1" Relationship="Self.FK_ORDER_CAUSE_DIALOGUE" FromRole="Order" ToRole="Dialog_dispute" />
+          <NavigationProperty Name="Item" Relationship="Self.FK_ORDER_PART_ITEM" FromRole="Order" ToRole="Item" />
+          <NavigationProperty Name="Support_agent" Relationship="Self.FK_ORDER_LEADER_SUPPORT_" FromRole="Order" ToRole="Support_agent" />
+          <NavigationProperty Name="Seller" Relationship="Self.FK_ORDER_PLACE_OF__SELLER" FromRole="Order" ToRole="Seller" />
+          <NavigationProperty Name="Shipping_type" Relationship="Self.FK_ORDER_SHIPPING_SHIPPING" FromRole="Order" ToRole="Shipping_type" />
+          <NavigationProperty Name="Order_status" Relationship="Self.FK_ORDER_STATUS_ORDER_ST" FromRole="Order" ToRole="Order_status" />
+        </EntityType>
+        <EntityType Name="Order_status">
+          <Key>
+            <PropertyRef Name="Order_status_number" />
+          </Key>
+          <Property Name="Order_status_number" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Order" Relationship="Self.FK_ORDER_STATUS_ORDER_ST" FromRole="Order_status" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="Picture">
+          <Key>
+            <PropertyRef Name="Picture_number" />
+          </Key>
+          <Property Name="Picture_number" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Item_number" Type="Int32" Nullable="false" />
+          <Property Name="Message_number" Type="Int32" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Picture1" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="Item" Relationship="Self.FK_PICTURE_PHOTO_OBJ_ITEM" FromRole="Picture" ToRole="Item" />
+          <NavigationProperty Name="Message" Relationship="Self.FK_PICTURE_ATTACHMEN_MESSAGE" FromRole="Picture" ToRole="Message" />
+        </EntityType>
+        <EntityType Name="Seller">
+          <Key>
+            <PropertyRef Name="Seller_number" />
+          </Key>
+          <Property Name="Seller_number" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Store_number" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Login" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Pass" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Registration_date" Type="DateTime" Precision="3" />
+          <Property Name="Avatar" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="Dialog_dispute" Relationship="Self.FK_DIALOGUE_SIDE_3_SELLER" FromRole="Seller" ToRole="Dialog_dispute" />
+          <NavigationProperty Name="Order" Relationship="Self.FK_ORDER_PLACE_OF__SELLER" FromRole="Seller" ToRole="Order" />
+          <NavigationProperty Name="Store" Relationship="Self.FK_SELLER_PLACE_OF__STORE" FromRole="Seller" ToRole="Store" />
+        </EntityType>
+        <EntityType Name="Shipping_type">
+          <Key>
+            <PropertyRef Name="Shipping_number" />
+          </Key>
+          <Property Name="Shipping_number" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Price" Type="Int32" />
+          <NavigationProperty Name="Order" Relationship="Self.FK_ORDER_SHIPPING_SHIPPING" FromRole="Shipping_type" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="Store">
+          <Key>
+            <PropertyRef Name="Store_number" />
+          </Key>
+          <Property Name="Store_number" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Rating" Type="Int32" />
+          <Property Name="Orders_count" Type="Int32" />
+          <Property Name="Positive_marks" Type="Int32" />
+          <Property Name="Negative_marks" Type="Int32" />
+          <Property Name="Created" Type="DateTime" Precision="3" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Owner_seller_number" Type="Int32" />
+          <NavigationProperty Name="Item" Relationship="Self.FK_ITEM_PLACE_OF__STORE" FromRole="Store" ToRole="Item" />
+          <NavigationProperty Name="Seller" Relationship="Self.FK_SELLER_PLACE_OF__STORE" FromRole="Store" ToRole="Seller" />
+        </EntityType>
+        <EntityType Name="Support_agent">
+          <Key>
+            <PropertyRef Name="Agent_number" />
+          </Key>
+          <Property Name="Agent_number" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Login" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Pass" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Disputes_count" Type="Int32" />
+          <Property Name="Registration_date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Dialog_dispute" Relationship="Self.FK_DIALOGUE_SIDE_2_SUPPORT_" FromRole="Support_agent" ToRole="Dialog_dispute" />
+          <NavigationProperty Name="Order" Relationship="Self.FK_ORDER_LEADER_SUPPORT_" FromRole="Support_agent" ToRole="Order" />
+        </EntityType>
+        <Association Name="FK_DIALOGUE_SIDE_1_BUYER">
+          <End Role="Buyer" Type="Self.Buyer" Multiplicity="1" />
+          <End Role="Dialog_dispute" Type="Self.Dialog_dispute" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Buyer">
+              <PropertyRef Name="Buyer_number" />
+            </Principal>
+            <Dependent Role="Dialog_dispute">
+              <PropertyRef Name="Buyer_number" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ORDER_CUSTOMER_BUYER">
+          <End Role="Buyer" Type="Self.Buyer" Multiplicity="1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Buyer">
+              <PropertyRef Name="Buyer_number" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="Buyer_number" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DIALOGUE_CAUSE2_ORDER">
+          <End Role="Order" Type="Self.Order" Multiplicity="1" />
+          <End Role="Dialog_dispute" Type="Self.Dialog_dispute" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="Order_number" />
+            </Principal>
+            <Dependent Role="Dialog_dispute">
+              <PropertyRef Name="Order_number" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DIALOGUE_DISPUTE_S_DISPUTE_">
+          <End Role="Dispute_status" Type="Self.Dispute_status" Multiplicity="0..1" />
+          <End Role="Dialog_dispute" Type="Self.Dialog_dispute" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dispute_status">
+              <PropertyRef Name="Dispute_status_number" />
+            </Principal>
+            <Dependent Role="Dialog_dispute">
+              <PropertyRef Name="Dispute_status_number" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DIALOGUE_SIDE_2_SUPPORT_">
+          <End Role="Support_agent" Type="Self.Support_agent" Multiplicity="1" />
+          <End Role="Dialog_dispute" Type="Self.Dialog_dispute" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Support_agent">
+              <PropertyRef Name="Agent_number" />
+            </Principal>
+            <Dependent Role="Dialog_dispute">
+              <PropertyRef Name="Agent_number" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DIALOGUE_SIDE_3_SELLER">
+          <End Role="Seller" Type="Self.Seller" Multiplicity="1" />
+          <End Role="Dialog_dispute" Type="Self.Dialog_dispute" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Seller">
+              <PropertyRef Name="Seller_number" />
+            </Principal>
+            <Dependent Role="Dialog_dispute">
+              <PropertyRef Name="Seller_number" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MESSAGE_AGGREGATE_DIALOGUE">
+          <End Role="Dialog_dispute" Type="Self.Dialog_dispute" Multiplicity="1" />
+          <End Role="Message" Type="Self.Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dialog_dispute">
+              <PropertyRef Name="Dispute_number" />
+            </Principal>
+            <Dependent Role="Message">
+              <PropertyRef Name="Dispute_number" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ORDER_CAUSE_DIALOGUE">
+          <End Role="Dialog_dispute" Type="Self.Dialog_dispute" Multiplicity="0..1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dialog_dispute">
+              <PropertyRef Name="Dispute_number" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="Dispute_number" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ITEM_CATHEGORY_ITEM_CAT">
+          <End Role="Item_category" Type="Self.Item_category" Multiplicity="0..1" />
+          <End Role="Item" Type="Self.Item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Item_category">
+              <PropertyRef Name="Category_number" />
+            </Principal>
+            <Dependent Role="Item">
+              <PropertyRef Name="Category_number" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ITEM_PLACE_OF__STORE">
+          <End Role="Store" Type="Self.Store" Multiplicity="1" />
+          <End Role="Item" Type="Self.Item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Store">
+              <PropertyRef Name="Store_number" />
+            </Principal>
+            <Dependent Role="Item">
+              <PropertyRef Name="Store_number" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ORDER_PART_ITEM">
+          <End Role="Item" Type="Self.Item" Multiplicity="1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Item">
+              <PropertyRef Name="Item_number" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="Item_number" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PICTURE_PHOTO_OBJ_ITEM">
+          <End Role="Item" Type="Self.Item" Multiplicity="1" />
+          <End Role="Picture" Type="Self.Picture" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Item">
+              <PropertyRef Name="Item_number" />
+            </Principal>
+            <Dependent Role="Picture">
+              <PropertyRef Name="Item_number" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PICTURE_ATTACHMEN_MESSAGE">
+          <End Role="Message" Type="Self.Message" Multiplicity="0..1" />
+          <End Role="Picture" Type="Self.Picture" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Message">
+              <PropertyRef Name="Message_number" />
+            </Principal>
+            <Dependent Role="Picture">
+              <PropertyRef Name="Message_number" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ORDER_LEADER_SUPPORT_">
+          <End Role="Support_agent" Type="Self.Support_agent" Multiplicity="1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Support_agent">
+              <PropertyRef Name="Agent_number" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="Agent_number" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ORDER_PLACE_OF__SELLER">
+          <End Role="Seller" Type="Self.Seller" Multiplicity="0..1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Seller">
+              <PropertyRef Name="Seller_number" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="Seller_number" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ORDER_SHIPPING_SHIPPING">
+          <End Role="Shipping_type" Type="Self.Shipping_type" Multiplicity="0..1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Shipping_type">
+              <PropertyRef Name="Shipping_number" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="Shipping_number" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ORDER_STATUS_ORDER_ST">
+          <End Role="Order_status" Type="Self.Order_status" Multiplicity="0..1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order_status">
+              <PropertyRef Name="Order_status_number" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="Order_status_number" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SELLER_PLACE_OF__STORE">
+          <End Role="Store" Type="Self.Store" Multiplicity="1" />
+          <End Role="Seller" Type="Self.Seller" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Store">
+              <PropertyRef Name="Store_number" />
+            </Principal>
+            <Dependent Role="Seller">
+              <PropertyRef Name="Store_number" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Buyer" EntityType="Self.Buyer" />
+          <EntitySet Name="Dialog_dispute" EntityType="Self.Dialog_dispute" />
+          <EntitySet Name="Dispute_status" EntityType="Self.Dispute_status" />
+          <EntitySet Name="Item" EntityType="Self.Item" />
+          <EntitySet Name="Item_category" EntityType="Self.Item_category" />
+          <EntitySet Name="Message" EntityType="Self.Message" />
+          <EntitySet Name="Order" EntityType="Self.Order" />
+          <EntitySet Name="Order_status" EntityType="Self.Order_status" />
+          <EntitySet Name="Picture" EntityType="Self.Picture" />
+          <EntitySet Name="Seller" EntityType="Self.Seller" />
+          <EntitySet Name="Shipping_type" EntityType="Self.Shipping_type" />
+          <EntitySet Name="Store" EntityType="Self.Store" />
+          <EntitySet Name="Support_agent" EntityType="Self.Support_agent" />
+          <AssociationSet Name="FK_DIALOGUE_SIDE_1_BUYER" Association="Self.FK_DIALOGUE_SIDE_1_BUYER">
+            <End Role="Buyer" EntitySet="Buyer" />
+            <End Role="Dialog_dispute" EntitySet="Dialog_dispute" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORDER_CUSTOMER_BUYER" Association="Self.FK_ORDER_CUSTOMER_BUYER">
+            <End Role="Buyer" EntitySet="Buyer" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DIALOGUE_CAUSE2_ORDER" Association="Self.FK_DIALOGUE_CAUSE2_ORDER">
+            <End Role="Order" EntitySet="Order" />
+            <End Role="Dialog_dispute" EntitySet="Dialog_dispute" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DIALOGUE_DISPUTE_S_DISPUTE_" Association="Self.FK_DIALOGUE_DISPUTE_S_DISPUTE_">
+            <End Role="Dispute_status" EntitySet="Dispute_status" />
+            <End Role="Dialog_dispute" EntitySet="Dialog_dispute" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DIALOGUE_SIDE_2_SUPPORT_" Association="Self.FK_DIALOGUE_SIDE_2_SUPPORT_">
+            <End Role="Support_agent" EntitySet="Support_agent" />
+            <End Role="Dialog_dispute" EntitySet="Dialog_dispute" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DIALOGUE_SIDE_3_SELLER" Association="Self.FK_DIALOGUE_SIDE_3_SELLER">
+            <End Role="Seller" EntitySet="Seller" />
+            <End Role="Dialog_dispute" EntitySet="Dialog_dispute" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MESSAGE_AGGREGATE_DIALOGUE" Association="Self.FK_MESSAGE_AGGREGATE_DIALOGUE">
+            <End Role="Dialog_dispute" EntitySet="Dialog_dispute" />
+            <End Role="Message" EntitySet="Message" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORDER_CAUSE_DIALOGUE" Association="Self.FK_ORDER_CAUSE_DIALOGUE">
+            <End Role="Dialog_dispute" EntitySet="Dialog_dispute" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ITEM_CATHEGORY_ITEM_CAT" Association="Self.FK_ITEM_CATHEGORY_ITEM_CAT">
+            <End Role="Item_category" EntitySet="Item_category" />
+            <End Role="Item" EntitySet="Item" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ITEM_PLACE_OF__STORE" Association="Self.FK_ITEM_PLACE_OF__STORE">
+            <End Role="Store" EntitySet="Store" />
+            <End Role="Item" EntitySet="Item" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORDER_PART_ITEM" Association="Self.FK_ORDER_PART_ITEM">
+            <End Role="Item" EntitySet="Item" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PICTURE_PHOTO_OBJ_ITEM" Association="Self.FK_PICTURE_PHOTO_OBJ_ITEM">
+            <End Role="Item" EntitySet="Item" />
+            <End Role="Picture" EntitySet="Picture" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PICTURE_ATTACHMEN_MESSAGE" Association="Self.FK_PICTURE_ATTACHMEN_MESSAGE">
+            <End Role="Message" EntitySet="Message" />
+            <End Role="Picture" EntitySet="Picture" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORDER_LEADER_SUPPORT_" Association="Self.FK_ORDER_LEADER_SUPPORT_">
+            <End Role="Support_agent" EntitySet="Support_agent" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORDER_PLACE_OF__SELLER" Association="Self.FK_ORDER_PLACE_OF__SELLER">
+            <End Role="Seller" EntitySet="Seller" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORDER_SHIPPING_SHIPPING" Association="Self.FK_ORDER_SHIPPING_SHIPPING">
+            <End Role="Shipping_type" EntitySet="Shipping_type" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORDER_STATUS_ORDER_ST" Association="Self.FK_ORDER_STATUS_ORDER_ST">
+            <End Role="Order_status" EntitySet="Order_status" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SELLER_PLACE_OF__STORE" Association="Self.FK_SELLER_PLACE_OF__STORE">
+            <End Role="Store" EntitySet="Store" />
+            <End Role="Seller" EntitySet="Seller" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище WMDBModelContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="Buyer">
+            <EntityTypeMapping TypeName="WMDBModel.Buyer">
+              <MappingFragment StoreEntitySet="Buyer">
+                <ScalarProperty Name="Buyer_number" ColumnName="Buyer_number" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Pass" ColumnName="Pass" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Orders_count" ColumnName="Orders_count" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Registration_date" ColumnName="Registration_date" />
+                <ScalarProperty Name="Avatar" ColumnName="Avatar" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Dialog_dispute">
+            <EntityTypeMapping TypeName="WMDBModel.Dialog_dispute">
+              <MappingFragment StoreEntitySet="Dialog_dispute">
+                <ScalarProperty Name="Dispute_number" ColumnName="Dispute_number" />
+                <ScalarProperty Name="Buyer_number" ColumnName="Buyer_number" />
+                <ScalarProperty Name="Seller_number" ColumnName="Seller_number" />
+                <ScalarProperty Name="Agent_number" ColumnName="Agent_number" />
+                <ScalarProperty Name="Order_number" ColumnName="Order_number" />
+                <ScalarProperty Name="Dispute_status_number" ColumnName="Dispute_status_number" />
+                <ScalarProperty Name="Open_date" ColumnName="Open_date" />
+                <ScalarProperty Name="IsDispute" ColumnName="IsDispute" />
+                <ScalarProperty Name="Close_date" ColumnName="Close_date" />
+                <ScalarProperty Name="Resolution_text" ColumnName="Resolution_text" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Dispute_status">
+            <EntityTypeMapping TypeName="WMDBModel.Dispute_status">
+              <MappingFragment StoreEntitySet="Dispute_status">
+                <ScalarProperty Name="Dispute_status_number" ColumnName="Dispute_status_number" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Item">
+            <EntityTypeMapping TypeName="WMDBModel.Item">
+              <MappingFragment StoreEntitySet="Item">
+                <ScalarProperty Name="Item_number" ColumnName="Item_number" />
+                <ScalarProperty Name="Store_number" ColumnName="Store_number" />
+                <ScalarProperty Name="Category_number" ColumnName="Category_number" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Orders_count" ColumnName="Orders_count" />
+                <ScalarProperty Name="Reviews_count" ColumnName="Reviews_count" />
+                <ScalarProperty Name="Positive_marks" ColumnName="Positive_marks" />
+                <ScalarProperty Name="Negative_marks" ColumnName="Negative_marks" />
+                <ScalarProperty Name="Minimum_order" ColumnName="Minimum_order" />
+                <ScalarProperty Name="Open_date" ColumnName="Open_date" />
+                <ScalarProperty Name="Close_date" ColumnName="Close_date" />
+                <ScalarProperty Name="Left_goods_count" ColumnName="Left_goods_count" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Item_category">
+            <EntityTypeMapping TypeName="WMDBModel.Item_category">
+              <MappingFragment StoreEntitySet="Item_category">
+                <ScalarProperty Name="Category_number" ColumnName="Category_number" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Message">
+            <EntityTypeMapping TypeName="WMDBModel.Message">
+              <MappingFragment StoreEntitySet="Message">
+                <ScalarProperty Name="Message_number" ColumnName="Message_number" />
+                <ScalarProperty Name="Dispute_number" ColumnName="Dispute_number" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="Post_date" ColumnName="Post_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Order">
+            <EntityTypeMapping TypeName="WMDBModel.Order">
+              <MappingFragment StoreEntitySet="Order">
+                <ScalarProperty Name="Order_number" ColumnName="Order_number" />
+                <ScalarProperty Name="Agent_number" ColumnName="Agent_number" />
+                <ScalarProperty Name="Buyer_number" ColumnName="Buyer_number" />
+                <ScalarProperty Name="Item_number" ColumnName="Item_number" />
+                <ScalarProperty Name="Dispute_number" ColumnName="Dispute_number" />
+                <ScalarProperty Name="Seller_number" ColumnName="Seller_number" />
+                <ScalarProperty Name="Shipping_number" ColumnName="Shipping_number" />
+                <ScalarProperty Name="Order_status_number" ColumnName="Order_status_number" />
+                <ScalarProperty Name="Total_price" ColumnName="Total_price" />
+                <ScalarProperty Name="Open_date" ColumnName="Open_date" />
+                <ScalarProperty Name="Close_date" ColumnName="Close_date" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Mark" ColumnName="Mark" />
+                <ScalarProperty Name="Review_text" ColumnName="Review_text" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Order_status">
+            <EntityTypeMapping TypeName="WMDBModel.Order_status">
+              <MappingFragment StoreEntitySet="Order_status">
+                <ScalarProperty Name="Order_status_number" ColumnName="Order_status_number" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Picture">
+            <EntityTypeMapping TypeName="WMDBModel.Picture">
+              <MappingFragment StoreEntitySet="Picture">
+                <ScalarProperty Name="Picture_number" ColumnName="Picture_number" />
+                <ScalarProperty Name="Item_number" ColumnName="Item_number" />
+                <ScalarProperty Name="Message_number" ColumnName="Message_number" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Picture1" ColumnName="Picture" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Seller">
+            <EntityTypeMapping TypeName="WMDBModel.Seller">
+              <MappingFragment StoreEntitySet="Seller">
+                <ScalarProperty Name="Seller_number" ColumnName="Seller_number" />
+                <ScalarProperty Name="Store_number" ColumnName="Store_number" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Pass" ColumnName="Pass" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Registration_date" ColumnName="Registration_date" />
+                <ScalarProperty Name="Avatar" ColumnName="Avatar" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Shipping_type">
+            <EntityTypeMapping TypeName="WMDBModel.Shipping_type">
+              <MappingFragment StoreEntitySet="Shipping_type">
+                <ScalarProperty Name="Shipping_number" ColumnName="Shipping_number" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Store">
+            <EntityTypeMapping TypeName="WMDBModel.Store">
+              <MappingFragment StoreEntitySet="Store">
+                <ScalarProperty Name="Store_number" ColumnName="Store_number" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Rating" ColumnName="Rating" />
+                <ScalarProperty Name="Orders_count" ColumnName="Orders_count" />
+                <ScalarProperty Name="Positive_marks" ColumnName="Positive_marks" />
+                <ScalarProperty Name="Negative_marks" ColumnName="Negative_marks" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Owner_seller_number" ColumnName="Owner_seller_number" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Support_agent">
+            <EntityTypeMapping TypeName="WMDBModel.Support_agent">
+              <MappingFragment StoreEntitySet="Support_agent">
+                <ScalarProperty Name="Agent_number" ColumnName="Agent_number" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Pass" ColumnName="Pass" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Disputes_count" ColumnName="Disputes_count" />
+                <ScalarProperty Name="Registration_date" ColumnName="Registration_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
