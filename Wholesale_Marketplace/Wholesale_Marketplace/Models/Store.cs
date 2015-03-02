@@ -16,21 +16,21 @@ namespace Wholesale_Marketplace.Models
     {
         public Store()
         {
-            this.Item = new HashSet<Item>();
-            this.Seller = new HashSet<Seller>();
+            this.Items = new HashSet<Item>();
+            this.Sellers = new HashSet<Seller>();
         }
     
-        public int Store_number { get; set; }
+        public int StoreID { get; set; }
         public string Name { get; set; }
-        public Nullable<int> Rating { get; set; }
-        public Nullable<int> Orders_count { get; set; }
-        public Nullable<int> Positive_marks { get; set; }
-        public Nullable<int> Negative_marks { get; set; }
-        public Nullable<System.DateTime> Created { get; set; }
+        public int Rating { get; set; }
+        public int Orders_count { get; set; }
+        public int Positive_marks { get; set; }
+        public int Negative_marks { get; set; }
+        public System.DateTime Created_date { get; set; }
         public string Description { get; set; }
-        public Nullable<int> Owner_seller_number { get; set; }
+        public int Owner_sellerID { get; set; }
     
-        public virtual ICollection<Item> Item { get; set; }
-        public virtual ICollection<Seller> Seller { get; set; }
+        public virtual ICollection<Item> Items { get; set; }
+        public virtual ICollection<Seller> Sellers { get; set; }
     }
 }

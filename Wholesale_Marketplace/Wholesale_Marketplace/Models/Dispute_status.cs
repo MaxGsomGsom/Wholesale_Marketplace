@@ -19,7 +19,7 @@ namespace Wholesale_Marketplace.Models
             this.Dialog_dispute = new HashSet<Dialog_dispute>();
         }
     
-        public int Dispute_status_number { get; set; }
+        public int Dispute_statusID { get; set; }
         public string Name { get; set; }
     
         public virtual ICollection<Dialog_dispute> Dialog_dispute { get; set; }

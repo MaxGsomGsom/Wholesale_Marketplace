@@ -1,0 +1,33 @@
+﻿@model Wholesale_Marketplace.Models.User
+@using Wholesale_Marketplace.Models;
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Регистрация</title>
+</head>
+<body>
+    <div>
+        @using (Html.BeginForm())
+        {
+        <p>Тип учетной записи</p>
+        <select name="RoleID">
+            <option value="0">Покупатель</option>
+            <option value="1">Продавец</option>
+        </select>
+        <p>Логин</p>
+        @Html.EditorFor(m => m.Login)
+        <p>Пароль</p>
+        @Html.EditorFor(m => m.Password)
+        <p>Имейл</p>
+        @Html.EditorFor(m => m.Email)
+        <p><input type="submit" value="Зарегистрироваться" /></p>
+        }
+    </div>
+</body>
+</html>

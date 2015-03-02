@@ -16,15 +16,15 @@ namespace Wholesale_Marketplace.Models
     {
         public Message()
         {
-            this.Picture = new HashSet<Picture>();
+            this.Pictures = new HashSet<Picture>();
         }
     
-        public int Message_number { get; set; }
-        public int Dispute_number { get; set; }
+        public int MessageID { get; set; }
+        public int DisputeID { get; set; }
         public string Text { get; set; }
-        public Nullable<System.DateTime> Post_date { get; set; }
+        public System.DateTime Post_date { get; set; }
     
         public virtual Dialog_dispute Dialog_dispute { get; set; }
-        public virtual ICollection<Picture> Picture { get; set; }
+        public virtual ICollection<Picture> Pictures { get; set; }
     }
 }

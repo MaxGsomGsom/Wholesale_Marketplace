@@ -17,20 +17,19 @@ namespace Wholesale_Marketplace.Models
         public Buyer()
         {
             this.Dialog_dispute = new HashSet<Dialog_dispute>();
-            this.Order = new HashSet<Order>();
+            this.Orders = new HashSet<Order>();
         }
     
-        public int Buyer_number { get; set; }
+        public int BuyerID { get; set; }
+        public int UserID { get; set; }
         public string Name { get; set; }
-        public string Login { get; set; }
-        public string Pass { get; set; }
         public string Address { get; set; }
-        public Nullable<int> Orders_count { get; set; }
-        public string Email { get; set; }
-        public Nullable<System.DateTime> Registration_date { get; set; }
+        public int Orders_count { get; set; }
+        public System.DateTime Registration_date { get; set; }
         public byte[] Avatar { get; set; }
     
+        public virtual User User { get; set; }
         public virtual ICollection<Dialog_dispute> Dialog_dispute { get; set; }
-        public virtual ICollection<Order> Order { get; set; }
+        public virtual ICollection<Order> Orders { get; set; }
     }
 }
