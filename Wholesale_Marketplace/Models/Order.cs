@@ -14,29 +14,23 @@ namespace Wholesale_Marketplace.Models
     
     public partial class Order
     {
-        public Order()
-        {
-            this.Dialog_dispute = new HashSet<Dialog_dispute>();
-        }
-    
-        public int Order_number { get; set; }
-        public int Agent_number { get; set; }
-        public int Buyer_number { get; set; }
-        public int Item_number { get; set; }
-        public Nullable<int> Dispute_number { get; set; }
-        public Nullable<int> Seller_number { get; set; }
-        public Nullable<int> Shipping_number { get; set; }
-        public Nullable<int> Order_status_number { get; set; }
-        public Nullable<int> Total_price { get; set; }
-        public Nullable<System.DateTime> Open_date { get; set; }
+        public int OrderID { get; set; }
+        public int AgentID { get; set; }
+        public int BuyerID { get; set; }
+        public int ItemID { get; set; }
+        public int DisputeID { get; set; }
+        public int SellerID { get; set; }
+        public int ShippingID { get; set; }
+        public int Order_statusID { get; set; }
+        public int Total_price { get; set; }
+        public System.DateTime Open_date { get; set; }
         public Nullable<System.DateTime> Close_date { get; set; }
-        public Nullable<int> Amount { get; set; }
+        public int Amount { get; set; }
         public Nullable<int> Mark { get; set; }
         public string Review_text { get; set; }
     
         public virtual Buyer Buyer { get; set; }
-        public virtual ICollection<Dialog_dispute> Dialog_dispute { get; set; }
-        public virtual Dialog_dispute Dialog_dispute1 { get; set; }
+        public virtual Dialog_dispute Dialog_dispute { get; set; }
         public virtual Item Item { get; set; }
         public virtual Support_agent Support_agent { get; set; }
         public virtual Seller Seller { get; set; }

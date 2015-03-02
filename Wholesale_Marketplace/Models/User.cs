@@ -12,16 +12,24 @@ namespace Wholesale_Marketplace.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Order_status
+    public partial class User
     {
-        public Order_status()
+        public User()
         {
-            this.Orders = new HashSet<Order>();
+            this.Buyers = new HashSet<Buyer>();
+            this.Sellers = new HashSet<Seller>();
+            this.Support_agent = new HashSet<Support_agent>();
         }
     
-        public int Order_statusID { get; set; }
-        public string Name { get; set; }
+        public int UserID { get; set; }
+        public int RoleID { get; set; }
+        public string Login { get; set; }
+        public string Password { get; set; }
+        public string Email { get; set; }
     
-        public virtual ICollection<Order> Orders { get; set; }
+        public virtual ICollection<Buyer> Buyers { get; set; }
+        public virtual Role Role { get; set; }
+        public virtual ICollection<Seller> Sellers { get; set; }
+        public virtual ICollection<Support_agent> Support_agent { get; set; }
     }
 }

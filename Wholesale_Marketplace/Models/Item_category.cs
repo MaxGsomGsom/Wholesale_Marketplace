@@ -16,12 +16,12 @@ namespace Wholesale_Marketplace.Models
     {
         public Item_category()
         {
-            this.Item = new HashSet<Item>();
+            this.Items = new HashSet<Item>();
         }
     
-        public int Category_number { get; set; }
+        public int CategoryID { get; set; }
         public string Name { get; set; }
     
-        public virtual ICollection<Item> Item { get; set; }
+        public virtual ICollection<Item> Items { get; set; }
     }
 }

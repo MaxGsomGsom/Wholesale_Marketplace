@@ -16,27 +16,25 @@ namespace Wholesale_Marketplace.Models
     {
         public Dialog_dispute()
         {
-            this.Message = new HashSet<Message>();
-            this.Order1 = new HashSet<Order>();
+            this.Messages = new HashSet<Message>();
+            this.Orders = new HashSet<Order>();
         }
     
-        public int Dispute_number { get; set; }
-        public int Buyer_number { get; set; }
-        public int Seller_number { get; set; }
-        public int Agent_number { get; set; }
-        public int Order_number { get; set; }
-        public Nullable<int> Dispute_status_number { get; set; }
-        public Nullable<System.DateTime> Open_date { get; set; }
-        public Nullable<bool> IsDispute { get; set; }
+        public int DisputeID { get; set; }
+        public int BuyerID { get; set; }
+        public int SellerID { get; set; }
+        public int AgentID { get; set; }
+        public int Dispute_statusID { get; set; }
+        public System.DateTime Open_date { get; set; }
+        public bool IsDispute { get; set; }
         public Nullable<System.DateTime> Close_date { get; set; }
         public string Resolution_text { get; set; }
     
         public virtual Buyer Buyer { get; set; }
-        public virtual Order Order { get; set; }
         public virtual Dispute_status Dispute_status { get; set; }
         public virtual Support_agent Support_agent { get; set; }
         public virtual Seller Seller { get; set; }
-        public virtual ICollection<Message> Message { get; set; }
-        public virtual ICollection<Order> Order1 { get; set; }
+        public virtual ICollection<Message> Messages { get; set; }
+        public virtual ICollection<Order> Orders { get; set; }
     }
 }

@@ -16,13 +16,13 @@ namespace Wholesale_Marketplace.Models
     {
         public Shipping_type()
         {
-            this.Order = new HashSet<Order>();
+            this.Orders = new HashSet<Order>();
         }
     
-        public int Shipping_number { get; set; }
+        public int ShippingID { get; set; }
         public string Name { get; set; }
-        public Nullable<int> Price { get; set; }
+        public int Price { get; set; }
     
-        public virtual ICollection<Order> Order { get; set; }
+        public virtual ICollection<Order> Orders { get; set; }
     }
 }

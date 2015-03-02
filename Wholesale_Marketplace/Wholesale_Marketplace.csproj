@@ -119,63 +119,70 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Buyer.cs">
-      <DependentUpon>WMDB_Model.tt</DependentUpon>
+      <DependentUpon>WM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Dialog_dispute.cs">
-      <DependentUpon>WMDB_Model.tt</DependentUpon>
+      <DependentUpon>WM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Dispute_status.cs">
-      <DependentUpon>WMDB_Model.tt</DependentUpon>
+      <DependentUpon>WM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Item.cs">
-      <DependentUpon>WMDB_Model.tt</DependentUpon>
+      <DependentUpon>WM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Item_category.cs">
-      <DependentUpon>WMDB_Model.tt</DependentUpon>
+      <DependentUpon>WM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Message.cs">
-      <DependentUpon>WMDB_Model.tt</DependentUpon>
+      <DependentUpon>WM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Order.cs">
-      <DependentUpon>WMDB_Model.tt</DependentUpon>
+      <DependentUpon>WM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Order_status.cs">
-      <DependentUpon>WMDB_Model.tt</DependentUpon>
+      <DependentUpon>WM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Picture.cs">
-      <DependentUpon>WMDB_Model.tt</DependentUpon>
+      <DependentUpon>WM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Role.cs">
+      <DependentUpon>WM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Seller.cs">
-      <DependentUpon>WMDB_Model.tt</DependentUpon>
+      <DependentUpon>WM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Shipping_type.cs">
-      <DependentUpon>WMDB_Model.tt</DependentUpon>
+      <DependentUpon>WM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Store.cs">
-      <DependentUpon>WMDB_Model.tt</DependentUpon>
+      <DependentUpon>WM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Support_agent.cs">
-      <DependentUpon>WMDB_Model.tt</DependentUpon>
+      <DependentUpon>WM_Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\WMDB_Model.Context.cs">
+    <Compile Include="Models\User.cs">
+      <DependentUpon>WM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\WM_Model.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>WMDB_Model.Context.tt</DependentUpon>
+      <DependentUpon>WM_Model.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\WMDB_Model.cs">
+    <Compile Include="Models\WM_Model.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>WMDB_Model.tt</DependentUpon>
+      <DependentUpon>WM_Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\WMDB_Model.Designer.cs">
+    <Compile Include="Models\WM_Model.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>WMDB_Model.edmx</DependentUpon>
+      <DependentUpon>WM_Model.edmx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -186,24 +193,24 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Models\WMDB_Model.Context.tt">
+    <Content Include="Models\WM_Model.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>WMDB_Model.edmx</DependentUpon>
-      <LastGenOutput>WMDB_Model.Context.cs</LastGenOutput>
+      <DependentUpon>WM_Model.edmx</DependentUpon>
+      <LastGenOutput>WM_Model.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\WMDB_Model.tt">
+    <Content Include="Models\WM_Model.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>WMDB_Model.edmx</DependentUpon>
-      <LastGenOutput>WMDB_Model.cs</LastGenOutput>
+      <DependentUpon>WM_Model.edmx</DependentUpon>
+      <LastGenOutput>WM_Model.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <EntityDeploy Include="Models\WMDB_Model.edmx">
+    <EntityDeploy Include="Models\WM_Model.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>WMDB_Model.Designer.cs</LastGenOutput>
+      <LastGenOutput>WM_Model.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\WMDB_Model.edmx.diagram">
-      <DependentUpon>WMDB_Model.edmx</DependentUpon>
+    <Content Include="Models\WM_Model.edmx.diagram">
+      <DependentUpon>WM_Model.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -217,9 +224,12 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -232,6 +242,8 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+    <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Account\AddInfoBuyer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

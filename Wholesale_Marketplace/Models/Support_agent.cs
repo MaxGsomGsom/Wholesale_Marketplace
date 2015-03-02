@@ -17,18 +17,17 @@ namespace Wholesale_Marketplace.Models
         public Support_agent()
         {
             this.Dialog_dispute = new HashSet<Dialog_dispute>();
-            this.Order = new HashSet<Order>();
+            this.Orders = new HashSet<Order>();
         }
     
-        public int Agent_number { get; set; }
+        public int AgentID { get; set; }
+        public int UserID { get; set; }
         public string Name { get; set; }
-        public string Login { get; set; }
-        public string Pass { get; set; }
-        public string Email { get; set; }
-        public Nullable<int> Disputes_count { get; set; }
-        public Nullable<System.DateTime> Registration_date { get; set; }
+        public int Solved_count { get; set; }
+        public System.DateTime Registration_date { get; set; }
     
         public virtual ICollection<Dialog_dispute> Dialog_dispute { get; set; }
-        public virtual ICollection<Order> Order { get; set; }
+        public virtual ICollection<Order> Orders { get; set; }
+        public virtual User User { get; set; }
     }
 }
