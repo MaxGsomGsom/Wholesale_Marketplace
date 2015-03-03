@@ -1,4 +1,5 @@
-﻿
+﻿@using Wholesale_Marketplace.Models
+@model Wholesale_Marketplace.Models.Buyer
 @{
     Layout = null;
 }
@@ -12,6 +13,16 @@
 </head>
 <body>
     <div> 
+        @using (Html.BeginForm())
+        {
+            <p>Имя</p>
+            @Html.EditorFor(m => m.Name)
+            <p>Адрес</p>
+            @Html.EditorFor(m => m.Address)
+            <p>Аватар</p>
+            @Html.EditorFor(m => m.Avatar)
+            <p><input type="submit" value="Сохранить" formaction="AddInfoBuyer"/></p>
+        }
     </div>
 </body>
 </html>
