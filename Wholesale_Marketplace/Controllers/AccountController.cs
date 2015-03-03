@@ -59,5 +59,24 @@ namespace Wholesale_Marketplace.Controllers
             return View("AddInfoBuyer");
         }
 
+        [HttpGet]
+        public ActionResult Login()
+        {
+            return View("Login");
+        }
+
+        [HttpPost]
+        public ActionResult Login(User u)
+        {
+            User curUser = db.Users.Where(e => e.Login == u.Login).First();
+            if (curUser!=null && curUser.Password == u.Password)
+            {
+                FormsAuthentication.SetAuthCookie(curUser.Login, true);
+                return Content("Успешно");
+            }
+
+            return Content("Ошибка");
+        }
+
     }
 }

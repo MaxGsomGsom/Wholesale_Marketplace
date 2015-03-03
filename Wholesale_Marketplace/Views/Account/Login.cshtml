@@ -1,0 +1,27 @@
+﻿@model Wholesale_Marketplace.Models.User
+@using Wholesale_Marketplace.Models
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+</head>
+<body>
+    <div> 
+        @using (Html.BeginForm())
+        {
+            <p>Логин</p>
+            @Html.EditorFor(m => m.Login)
+            <p>Пароль</p>
+            @Html.EditorFor(m => m.Password)
+
+            <p><input type="submit" value="Войти"/></p>
+}
+    </div>
+</body>
+</html>
