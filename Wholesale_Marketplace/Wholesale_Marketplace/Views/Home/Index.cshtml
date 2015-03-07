@@ -1,5 +1,6 @@
 ﻿@{
     ViewBag.Title = "Home Page";
+    if (ViewBag.RoleID == 0) { Layout = "~/Views/Shared/BuyerLayout.cshtml"; }
 }
 
 <div class="jumbotron">
