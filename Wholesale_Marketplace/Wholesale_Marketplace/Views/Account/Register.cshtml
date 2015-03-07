@@ -1,33 +1,42 @@
 ﻿@model Wholesale_Marketplace.Models.User
 @using Wholesale_Marketplace.Models;
 @{
-    Layout = null;
+    Layout = "~/Views/Shared/AnonimLayout.cshtml";
+    ViewBag.Title = "Регистрация";
 }
 
-<!DOCTYPE html>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Регистрация</title>
-</head>
-<body>
-    <div>
+<div class="row">
+    <div class="col-md-4 col-md-offset-4">
         @using (Html.BeginForm())
         {
-        <p>Тип учетной записи</p>
-        <select name="RoleID">
-            <option value="0">Покупатель</option>
-            <option value="1">Продавец</option>
-        </select>
-        <p>Логин</p>
-        @Html.EditorFor(m => m.Login)
-        <p>Пароль</p>
-        @Html.EditorFor(m => m.Password)
-        <p>Имейл</p>
-        @Html.EditorFor(m => m.Email)
-        <p><input type="submit" value="Зарегистрироваться" /></p>
+            <div class="form-group">
+                @Html.LabelFor(m => m.RoleID, "Тип учетной записи")
+                <select name="RoleID">
+                    <option value="0">Покупатель</option>
+                    <option value="1">Продавец</option>
+                </select>
+            </div>
+    <br />
+    <div class="form-group">
+        @Html.LabelFor(m => m.Login, "Логин")
+        <br />
+        @Html.EditorFor(m => m.Login, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Password, "Пароль")
+        <br />
+        @Html.EditorFor(m => m.Password, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Email, "E-mail")
+        <br />
+        @Html.EditorFor(m => m.Email, new { @class = "form-control" })
+    </div>
+    <br />
+        <input type="submit" value="Зарегистрироваться" />
+
         }
     </div>
-</body>
-</html>
+</div>
+
