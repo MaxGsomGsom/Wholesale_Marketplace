@@ -8,7 +8,7 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
-<body style="background-color:#e2f9dc" >
+<body style="background-color:#e2f9dc">
     <div class="container">
         <div class="field" style="margin-bottom:0.5em">
             <div class="row">
@@ -25,11 +25,14 @@
                 </div>
                 <div class="col-md-6">
                     <div class="row">
-                        <div class="col-md-offset-6 col-md-3">
+                        @*<div class="col-md-offset-6 col-md-3">
                             <a href="/Account/Register" class="btn btn-default btn-block" role="button">Регистрация</a>
                         </div>
                         <div class="col-md-3">
                             <a href="/Account/Login" class="btn btn-primary btn-block" role="button">Войти</a>
+                        </div>*@
+                        <div class="col-md-offset-6 col-md-6">
+                            <p>Здравствуйте, @ViewBag.Login</p>
                         </div>
                     </div>
                 </div>

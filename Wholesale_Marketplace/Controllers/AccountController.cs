@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -23,7 +24,7 @@ namespace Wholesale_Marketplace.Controllers
         [HttpPost]
         public ActionResult Register(User newUser)
         {
-            if (!db.Users.Where(e => e.Login == newUser.Login).Any())
+            if (ModelState.IsValid && !db.Users.Where(e => e.Login == newUser.Login).Any())
             {
                 if (newUser.RoleID == 0)
                 {
@@ -32,30 +33,42 @@ namespace Wholesale_Marketplace.Controllers
                     FormsAuthentication.SetAuthCookie(newUser.Login, true);
                     return View("AddInfoBuyer");
                 }
-            }
+            } 
             
             return View("Register");
 
         }
 
-        [HttpPost]
+        //[HttpPost]
         public ActionResult AddInfoBuyer(Buyer newBuyer)
         {
-            
-            if (HttpContext.User.Identity.IsAuthenticated)
+            if (ModelState.IsValid && Helpers.UserCheck(db, ViewBag))
             {
-                User connectedUser = db.Users.First(e => e.Login == User.Identity.Name);
-                if (connectedUser != null)
+                if (ViewBag.RoleID == 0)
                 {
-                    newBuyer.User = connectedUser;
-                    newBuyer.Orders_count = 0;
-                    newBuyer.Registration_date = DateTime.Now;
-                    db.Buyers.Add(newBuyer);
-                    db.SaveChanges();
-                    return Content("Успешная регистрация");
+                    int curUserID = ViewBag.UserID;
+                    
+                    if (db.Buyers.Any(e => e.UserID == curUserID))
+                    {
+                        Buyer curBuyer = db.Buyers.First(e => e.UserID == curUserID);
+                        curBuyer.Name = newBuyer.Name;
+                        curBuyer.Address = newBuyer.Address;
+                        db.Entry(curBuyer).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }
+                    else
+                    {
+                        newBuyer.UserID = curUserID;
+                        newBuyer.Orders_count = 0;
+                        newBuyer.Registration_date = DateTime.Now;
+                        db.Buyers.Add(newBuyer);
+                        db.SaveChanges();
+                    }
+                    return Redirect("/Home/Index");
                 }
             }
 
+            //return View("AddInfoBuyer");
             return View("AddInfoBuyer");
         }
 
