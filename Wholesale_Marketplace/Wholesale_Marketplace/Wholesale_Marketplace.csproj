@@ -122,6 +122,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Helpers.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ItemController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -191,6 +192,7 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\default-avatar.png" />
     <Content Include="Content\logo.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -248,8 +250,8 @@
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\AddInfoBuyer.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Shared\AnonimLayout.cshtml" />
     <Content Include="Views\Shared\BuyerLayout.cshtml" />
+    <Content Include="Views\Item\Info.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

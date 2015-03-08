@@ -1,39 +1,78 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title – приложение ASP.NET</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
-<body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Имя приложения", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+<body style="background-color:#e2f9dc">
+    <div class="container">
+        <div class="field" style="margin-bottom:0.5em">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <a href="/Home/">
+                                <img src="~/Content/logo.jpg" class="img-responsive img-rounded" />
+                            </a>
+                        </div>
+                        <div class="col-md-9" style="white-space: nowrap;">
+                            <p class="h2"><b>Wholesale Marketplace</b></p>
+                            <p class="h5">Buy and sell everythink fast and free</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-offset-5 col-md-4">
+                            <a href="/Account/Register" class="btn btn-default btn-block" role="button">Регистрация</a>
+                        </div>
+                        <div class="col-md-3">
+                            <a href="/Account/Login" class="btn btn-primary btn-block" role="button">Войти</a>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Домашняя страница", "Index", "Home")</li>
-                    <li>@Html.ActionLink("О программе", "About", "Home")</li>
-                    <li>@Html.ActionLink("Контакт", "Contact", "Home")</li>
-                </ul>
+        </div>
+        <div class="field">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" style="width:130%">
+                            Категория товара <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#">123</a></li>
+                            <li><a href="#">456</a></li>
+                            <li><a href="#">646363</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <form action="/Search/Search" method="post" class="form-inline">
+                    <div class="col-md-8">
+                        <input type="text" class="form-control" name="searchKeywords" placeholder="Поиск по товарам" />
+                    </div>
+                    <div class="col-md-1">
+                        <input type="submit" class="btn btn-default btn-block" value="Поиск" />
+                    </div>
+                </form>
+
             </div>
         </div>
     </div>
-    <div class="container body-content">
+    <div class="container body-content" style="padding-top:1em">
         @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year – приложение ASP.NET</p>
-        </footer>
+    </div>
+    <div align="center" style="padding-top:3em">
+        <small>
+            <p>&copy; @DateTime.Now.Year – Wholesale Marketplace </p>
+            <p> <a href="mailto:max@pochtamt.ru">Contact us</a></p>
+        </small>
+
     </div>
 
     @Scripts.Render("~/bundles/jquery")

@@ -18,6 +18,14 @@ namespace Wholesale_Marketplace.Controllers
                     ViewBag.RoleID = curUser.RoleID;
                     ViewBag.UserID = curUser.UserID;
                     ViewBag.Login = curUser.Login;
+                    //switch (curUser.RoleID)
+                    //{
+                    //    case 0:
+                    //        {
+                    //            ViewBag.Avatar = db.Buyers.First(e => e.User == curUser);
+                    //            break;
+                    //        }
+                    //}
                     return true;
                 }
                 else
@@ -25,6 +33,7 @@ namespace Wholesale_Marketplace.Controllers
                     ViewBag.RoleID = -1;
                     ViewBag.UserID = -1;
                     ViewBag.Login = "";
+                    //ViewBag.Avatar = null;
                     return false;
                 }
             }
@@ -33,6 +42,7 @@ namespace Wholesale_Marketplace.Controllers
                 ViewBag.RoleID = -1;
                 ViewBag.UserID = -1;
                 ViewBag.Login = "";
+                //ViewBag.Avatar = null;
                 return false;
             }
         }
