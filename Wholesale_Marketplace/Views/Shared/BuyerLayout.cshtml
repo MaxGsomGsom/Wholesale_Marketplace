@@ -1,4 +1,13 @@
-﻿<!DOCTYPE html>
+﻿@{ 
+    WebImage avatar = new WebImage("~/Content/default-avatar.png");
+    //if (ViewBag.Avatar != null)
+    //{
+    //    avatar = new WebImage(ViewBag.Avatar);
+    //}
+}
+
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -15,7 +24,9 @@
                 <div class="col-md-6">
                     <div class="row">
                         <div class="col-md-3">
-                            <img src="~/Content/logo.jpg" class="img-responsive img-rounded" />
+                            <a href="/Home/">
+                                <img src="~/Content/logo.jpg" class="img-responsive img-rounded" />
+                            </a>
                         </div>
                         <div class="col-md-9" style="white-space: nowrap;">
                             <p class="h2"><b>Wholesale Marketplace</b></p>
@@ -23,18 +34,28 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-5">
+                    <div class="row" style="padding-bottom:1em"><div class="col-md-offset-6 col-md-6">Здравствуйте, @ViewBag.Login</div></div>
                     <div class="row">
-                        @*<div class="col-md-offset-6 col-md-3">
-                            <a href="/Account/Register" class="btn btn-default btn-block" role="button">Регистрация</a>
+                       <div class="col-md-3">
+                            <a href="/Account/Register" class="btn btn-default btn-block" role="button">Заказы</a>
                         </div>
                         <div class="col-md-3">
-                            <a href="/Account/Login" class="btn btn-primary btn-block" role="button">Войти</a>
-                        </div>*@
-                        <div class="col-md-offset-6 col-md-6">
-                            <p>Здравствуйте, @ViewBag.Login</p>
+                            <a href="/Account/Login" class="btn btn-default btn-block" role="button">Диалоги</a>
+                        </div>
+                        <div class="col-md-3">
+                            <a href="/Account/AddInfoBuyer" class="btn btn-default btn-block" role="button">Настройки</a>
+                        </div>
+                        <div class="col-md-1">
+                            <a href="/Account/Login" class="btn btn-default " role="button"><span class="glyphicon glyphicon-question-sign"></span></a>
+                        </div>
+                        <div class="col-md-1">
+                            <a href="/Account/Logout" class="btn btn-default " role="button"><span class="glyphicon glyphicon-log-out"></span></a>
                         </div>
                     </div>
+                </div>
+                <div class="col-md-1">
+                    <img class="img-responsive" src="~/Content/default-avatar.png"/>
                 </div>
             </div>
         </div>
@@ -65,7 +86,7 @@
             </div>
         </div>
     </div>
-    <div class="container body-content" style="padding-top:2em">
+    <div class="container body-content" style="padding-top:1em">
         @RenderBody()
     </div>
     <div align="center" style="padding-top:3em">

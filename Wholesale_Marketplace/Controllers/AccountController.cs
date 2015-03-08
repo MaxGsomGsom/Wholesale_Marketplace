@@ -42,7 +42,7 @@ namespace Wholesale_Marketplace.Controllers
         //[HttpPost]
         public ActionResult AddInfoBuyer(Buyer newBuyer)
         {
-            if (ModelState.IsValid && Helpers.UserCheck(db, ViewBag))
+            if (Helpers.UserCheck(db, ViewBag) && ModelState.IsValid)
             {
                 if (ViewBag.RoleID == 0)
                 {
@@ -68,7 +68,6 @@ namespace Wholesale_Marketplace.Controllers
                 }
             }
 
-            //return View("AddInfoBuyer");
             return View("AddInfoBuyer");
         }
 
@@ -81,14 +80,23 @@ namespace Wholesale_Marketplace.Controllers
         [HttpPost]
         public ActionResult Login(User u)
         {
-            User curUser = db.Users.Where(e => e.Login == u.Login).First();
-            if (curUser!=null && curUser.Password == u.Password)
+            if (db.Users.Any(e => e.Login == u.Login))
             {
-                FormsAuthentication.SetAuthCookie(curUser.Login, true);
-                return Content("Успешно");
+                User curUser = db.Users.First(e => e.Login == u.Login);
+                if (curUser.Password == u.Password)
+                {
+                    FormsAuthentication.SetAuthCookie(curUser.Login, true);
+                    return Content("Успешно");
+                }
             }
 
             return Content("Ошибка");
+        }
+
+        public ActionResult Logout()
+        {
+            FormsAuthentication.SignOut();
+            return Redirect("/Home/Index");
         }
 
     }
