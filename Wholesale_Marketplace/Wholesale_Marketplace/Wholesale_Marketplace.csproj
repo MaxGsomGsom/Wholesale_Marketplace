@@ -208,6 +208,7 @@
       <DependentUpon>WM_Model.edmx</DependentUpon>
       <LastGenOutput>WM_Model.cs</LastGenOutput>
     </Content>
+    <Content Include="script.sql" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <EntityDeploy Include="Models\WM_Model.edmx">
