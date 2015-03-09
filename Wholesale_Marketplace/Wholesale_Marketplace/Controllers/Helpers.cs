@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 using Wholesale_Marketplace.Models;
 
 namespace Wholesale_Marketplace.Controllers
@@ -45,6 +46,40 @@ namespace Wholesale_Marketplace.Controllers
                 //ViewBag.Avatar = null;
                 return false;
             }
+        }
+
+
+        public static byte[] GetBytes(string str)
+        {
+            byte[] bytes = new byte[str.Length * sizeof(char)];
+            System.Buffer.BlockCopy(str.ToCharArray(), 0, bytes, 0, bytes.Length);
+            return bytes;
+        }
+
+        public static string GetString(byte[] bytes)
+        {
+            char[] chars = new char[bytes.Length / sizeof(char)];
+            System.Buffer.BlockCopy(bytes, 0, chars, 0, bytes.Length);
+            return new string(chars);
+        }
+
+
+        public static MvcHtmlString Stars(int pos, int neg)
+        {
+            if ((pos + neg) < 5) return new MvcHtmlString("-");
+            int num = pos/((pos+neg) / 5);
+            string outStr = "";
+            for (int i = 0; i < 5; i++)
+            {
+                if (num>i) outStr += "<span class=\"glyphicon glyphicon-star\" style=\"color: blueviolet; display:inline\"></span>";
+                else outStr += "<span class=\"glyphicon glyphicon-star\" style=\"color: lightgray; display:inline\"></span>";
+            }
+            return new MvcHtmlString(outStr);
+        }
+
+        public static MvcHtmlString Stars(int mark)
+        {
+            return Stars(mark, 5 - mark);
         }
     }
 }

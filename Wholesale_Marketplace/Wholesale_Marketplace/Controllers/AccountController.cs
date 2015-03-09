@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using Wholesale_Marketplace.Models;
+using System.Security.Cryptography;
 
 namespace Wholesale_Marketplace.Controllers
 {
@@ -13,6 +14,7 @@ namespace Wholesale_Marketplace.Controllers
     {
 
         WMDB db = new WMDB();
+        MD5 passHash = MD5.Create();
 
         [HttpGet]
         public ActionResult Register()
@@ -28,9 +30,13 @@ namespace Wholesale_Marketplace.Controllers
             {
                 if (newUser.RoleID == 0)
                 {
+                    //newUser.Password = passHash.ComputeHash(Helpers.GetBytes(newUser.Password));
                     db.Users.Add(newUser);
                     db.SaveChanges();
                     FormsAuthentication.SetAuthCookie(newUser.Login, true);
+                    ViewBag.RoleID = newUser.RoleID;
+                    ViewBag.UserID = newUser.UserID;
+                    ViewBag.Login = newUser.Login;
                     return View("AddInfoBuyer");
                 }
             } 
@@ -83,14 +89,15 @@ namespace Wholesale_Marketplace.Controllers
             if (db.Users.Any(e => e.Login == u.Login))
             {
                 User curUser = db.Users.First(e => e.Login == u.Login);
+                //u.Password = passHash.ComputeHash(Helpers.GetBytes(u.Password));
                 if (curUser.Password == u.Password)
                 {
                     FormsAuthentication.SetAuthCookie(curUser.Login, true);
-                    return Content("Успешно");
+                    return Redirect("/Home/Index");
                 }
             }
 
-            return Content("Ошибка");
+            return View("Login");
         }
 
         public ActionResult Logout()

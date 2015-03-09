@@ -1,4 +1,5 @@
 ﻿@model Wholesale_Marketplace.Models.Item
+@using Wholesale_Marketplace.Controllers;
 
 @{
     ViewBag.Title = Model.Name;
@@ -11,10 +12,11 @@
         <div class="col-md-8">
 
             <div class="row">
-                <h3><b>Название магазина бла бла</b></h3>
+                <h3><b>@Model.Store.Name</b></h3>
             </div>
             <div class="row">
-                Рейтинг
+                <div class="col-md-2" style="padding-left:0px">@Helpers.Stars(Model.Store.Positive_marks, Model.Store.Negative_marks)</div>
+                <div class="col-md-2">@Model.Store.Orders_count заказов</div>
             </div>
         </div>
         <div class="col-md-offset-1 col-md-3">
@@ -30,22 +32,26 @@
         </div>
         <div class="col-md-offset-0 col-md-6">
             <div class="field-in" style="line-height:2em">
-                <div class="row" style="padding-top:0.5em; padding-bottom:0.5em; padding-left:2.6em;"><h3><b>Название товара</b></h3></div>
+                <div class="row" style="padding-top:0.5em; padding-bottom:0.5em; border-bottom:1px solid lightgray"><div class="col-md-offset-1 col-md-8"><h3><b>@Model.Name</b></h3></div></div>
                 <div class="row">
-                    <div class="col-md-offset-1 col-md-2">
-                        <div class="row"><h4><b>Рейтинг:</b></h4></div>
-                        <div class="row">Продано:</div>
-                        <div class="row">Осталось:</div>
-                        <div class="row" style="padding-top:1em"><h2><b>Цена:</b></h2></div>
-                        <div class="row">Мин. заказ:</div>
-                    </div>
-                    <div class="col-md-offset-3 col-md-5" style="text-align:left">
-                        <div class="row"><h4><b>100500</b></h4></div>
-                        <div class="row">3</div>
-                        <div class="row">777</div>
-                        <div class="row" style="padding-top:1em"><h2><b>11 руб</b></h2></div>
-                        <div class="row">1</div>
-                    </div>
+                    <div class="col-md-offset-1 col-md-4"><h4><b>Рейтинг:</b></h4></div>
+                    <div class="col-md-offset-1 col-md-6"><h5 style="padding-top:0.1em"><b>@Helpers.Stars(Model.Positive_marks, Model.Negative_marks)</b></h5></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-offset-1 col-md-4">Продано:</div>
+                    <div class="col-md-offset-1 col-md-6">@Model.Orders_count <i style="padding-left:0.5em">заказов</i></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-offset-1 col-md-4">Осталось:</div>
+                    <div class="col-md-offset-1 col-md-6">@Model.Left_goods_count <i style="padding-left:0.5em">штук</i></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-offset-1 col-md-4"><h2><b>Цена:</b></h2></div>
+                    <div class="col-md-offset-1 col-md-6"><h2><b>@(Model.Price/100.0) руб</b></h2></div>
+                </div>
+                <div class="row" style="padding-bottom:1em; border-bottom: 1px solid lightgray">
+                    <div class="col-md-offset-1 col-md-4">Мин. заказ:</div>
+                    <div class="col-md-offset-1 col-md-6">@Model.Minimum_order <i style="padding-left:0.5em">штук</i></div>
                 </div>
                 <div class="row">
                     <div class="col-md-offset-2 col-md-8">
@@ -57,5 +63,44 @@
             </div>
         </div>
     </div>
-</div>
+
+    <div class="row" style="margin-top:2em">
+        <div class="col-md-1"><a href="/Home/" class="btn btn-default btn-block" role="button"><span class="glyphicon glyphicon-arrow-left" style="font-size:2em"></span></a></div>
+        <div class="col-md-1"><img src="http://goodnewsanimal.ru/_nw/37/00118217.jpg"  style="width:70px; height:50px;"/></div>
+        <div class="col-md-1"><img src="http://goodnewsanimal.ru/_nw/37/00118217.jpg"  style="width:70px; height:50px" /></div>
+        <div class="col-md-1"><img src="http://goodnewsanimal.ru/_nw/37/00118217.jpg"  style="width:70px; height:50px" /></div>
+        <div class="col-md-offset-7 col-md-1"><a href="/Home/" class="btn btn-default btn-block" role="button"><span class="glyphicon glyphicon-arrow-right" style="font-size:2em"></span></a></div>
+    </div>
+    <div class="row" style="margin-top:2em">
+        <div class="col-md-6">
+            <div class="field-in">
+                <div class="row" style="padding-top:0.5em; padding-bottom:0.5em; border-bottom:1px solid lightgray" ><h4><b>Описание товара</b></h4></div>
+                <div class="row" style="padding-top:2em; margin-bottom:1em">
+                    @Model.Description 
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="field-in">
+                <div class="row" style="padding-top:0.5em; padding-bottom:0.5em; margin-bottom:1em; border-bottom:1px solid lightgray"><h4><b>Отзывы</b></h4></div>
+                @foreach (Wholesale_Marketplace.Models.Order review in Model.Orders)
+                {
+                    if (review.Mark.HasValue)
+                    {
+                    <div class="row field-in" style="padding-top:1em; margin-bottom:1em">
+                        <div class="row" style="border-bottom: 1px solid lightgray; padding-bottom:0.5em">
+                            <div class="col-md-6" style="padding-left:0px"><b>@review.Buyer.Name</b></div>
+                            <div class="col-md-6">@Helpers.Stars(review.Mark.Value)</div>
+                        </div>
+                        <div class="row" style="padding-top:0.5em">
+                            <i>@review.Review_text</i>
+                        </div>
+                    </div>
+                        }
+                    }
+
+            </div>
+        </div>
+    </div>
+    </div>
 
