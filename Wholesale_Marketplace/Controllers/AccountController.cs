@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using System.Web.Security;
 using Wholesale_Marketplace.Models;
 using System.Security.Cryptography;
+using System.IO;
 
 namespace Wholesale_Marketplace.Controllers
 {
@@ -46,7 +47,7 @@ namespace Wholesale_Marketplace.Controllers
         }
 
         //[HttpPost]
-        public ActionResult AddInfoBuyer(Buyer newBuyer)
+        public ActionResult AddInfoBuyer([Bind(Exclude = "Avatar")] Buyer newBuyer, HttpPostedFileBase Avatar)
         {
             if (Helpers.UserCheck(db, ViewBag) && ModelState.IsValid)
             {
@@ -59,6 +60,7 @@ namespace Wholesale_Marketplace.Controllers
                         Buyer curBuyer = db.Buyers.First(e => e.UserID == curUserID);
                         curBuyer.Name = newBuyer.Name;
                         curBuyer.Address = newBuyer.Address;
+                        if (Avatar != null) curBuyer.Avatar = (new BinaryReader(Avatar.InputStream)).ReadBytes((int)Avatar.InputStream.Length);
                         db.Entry(curBuyer).State = EntityState.Modified;
                         db.SaveChanges();
                     }
@@ -104,6 +106,20 @@ namespace Wholesale_Marketplace.Controllers
         {
             FormsAuthentication.SignOut();
             return Redirect("/Home/Index");
+        }
+
+
+        public ActionResult Avatar(string login)
+        {
+            User curUser = db.Users.First(m => m.Login == login);
+
+            if (curUser.RoleID == 0)
+            {
+                byte[] img = db.Buyers.First(m => m.UserID == curUser.UserID).Avatar;
+                if (img != null) return File(img, "image/jpeg");
+            }
+
+            return File("~/Content/default-avatar.png", "image/png");
         }
 
     }

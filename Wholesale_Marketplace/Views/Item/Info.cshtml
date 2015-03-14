@@ -1,11 +1,39 @@
 ﻿@model Wholesale_Marketplace.Models.Item
 @using Wholesale_Marketplace.Controllers;
+@using Wholesale_Marketplace.Models;
 
 @{
     ViewBag.Title = Model.Name;
     if (ViewBag.RoleID == 0) { Layout = "~/Views/Shared/BuyerLayout.cshtml"; }
 }
 
+
+<script>
+    var curFirstDispPic = 1;
+    function MovFront() {
+        var children = $("#Pics").children();
+        if (children.length > 10 && (curFirstDispPic+10)<(children.length-1)) {
+            $(children[curFirstDispPic]).addClass("hidden");
+            $(children[curFirstDispPic + 10]).removeClass("hidden");
+
+            curFirstDispPic++;
+        }
+    }
+
+    function MovBack() {
+        var children = $("#Pics").children();
+        if (children.length > 10 && (curFirstDispPic) > 1) {
+            $(children[curFirstDispPic-1]).removeClass("hidden");
+            $(children[curFirstDispPic + 9]).addClass("hidden");
+
+            curFirstDispPic--;
+        }
+    }
+
+    function ChangeMainImg(path) {
+        $("#MainImg").attr({ src: path });
+    }
+</script>
 
 <div class="field-main">
     <div class="row" style="padding-left:1em">
@@ -28,7 +56,7 @@
 
     <div class="row" style="padding-top:2em">
         <div class="col-md-6">
-            <div ><img class="img-responsive img-rounded" src="http://goodnewsanimal.ru/_nw/37/00118217.jpg"></div>
+            <div ><img class="img-responsive img-rounded" id="MainImg" src="~/Item/Photo?id=@Model.Pictures.First().PictureID" style="width:100%; max-height:378px"></div>
         </div>
         <div class="col-md-offset-0 col-md-6">
             <div class="field-in" style="line-height:2em">
@@ -64,12 +92,27 @@
         </div>
     </div>
 
-    <div class="row" style="margin-top:2em">
-        <div class="col-md-1"><a href="/Home/" class="btn btn-default btn-block" role="button"><span class="glyphicon glyphicon-arrow-left" style="font-size:2em"></span></a></div>
-        <div class="col-md-1"><img src="http://goodnewsanimal.ru/_nw/37/00118217.jpg"  style="width:70px; height:50px;"/></div>
-        <div class="col-md-1"><img src="http://goodnewsanimal.ru/_nw/37/00118217.jpg"  style="width:70px; height:50px" /></div>
-        <div class="col-md-1"><img src="http://goodnewsanimal.ru/_nw/37/00118217.jpg"  style="width:70px; height:50px" /></div>
-        <div class="col-md-offset-7 col-md-1"><a href="/Home/" class="btn btn-default btn-block" role="button"><span class="glyphicon glyphicon-arrow-right" style="font-size:2em"></span></a></div>
+    <div class="row" style="margin-top:2em" id="Pics">
+        <div class="col-md-1"><a class="btn btn-default btn-block" role="button" onclick="MovBack();"><span class="glyphicon glyphicon-arrow-left" style="font-size:2em"></span></a></div>
+        @{int picNum = 0;
+            foreach (Picture item in Model.Pictures)
+            {
+                if (picNum < 10)
+                {
+                    <div class="col-md-1"><img src="~/Item/Photo?id=@item.PictureID" onclick="ChangeMainImg('Photo?id=@item.PictureID')" style="width:70px; height:50px;" /></div>
+                }
+                else
+                {
+                    <div class="col-md-1 hidden"><img src="~/Item/Photo?id=@item.PictureID" style="width:70px; height:50px;" onclick="ChangeMainImg('Photo?id=@item.PictureID')" /></div>
+                }
+                picNum++;
+            }
+            if (picNum < 10)
+            {
+                <div class="col-md-@(10-picNum)"></div>
+            }
+        }
+        <div class="col-md-1"><a class="btn btn-default btn-block" role="button" onclick="MovFront();"><span class="glyphicon glyphicon-arrow-right" style="font-size:2em"></span></a></div>
     </div>
     <div class="row" style="margin-top:2em">
         <div class="col-md-6">
