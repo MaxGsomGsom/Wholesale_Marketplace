@@ -1,12 +1,4 @@
-﻿@{ 
-    WebImage avatar = new WebImage("~/Content/default-avatar.png");
-    //if (ViewBag.Avatar != null)
-    //{
-    //    avatar = new WebImage(ViewBag.Avatar);
-    //}
-}
-
-
+﻿
 <!DOCTYPE html>
 <html>
 <head>
@@ -55,7 +47,7 @@
                     </div>
                 </div>
                 <div class="col-md-1">
-                    <img class="img-responsive" src="~/Content/default-avatar.png"/>
+                    <img class="img-responsive img-rounded" src="~/Account/Avatar?login=@ViewBag.Login" />
                 </div>
             </div>
         </div>

@@ -11,7 +11,7 @@
         <div class="field-big">
             <h3><b>Введите личные данные</b></h3>
             <br />
-            @using (Html.BeginForm())
+            @using (Html.BeginForm("AddInfoBuyer", "Account", null, FormMethod.Post, new { enctype = "multipart/form-data" })) 
             {
                 <div class="form-group">
                     @Html.LabelFor(m => m.Name, "ФИО")
@@ -23,11 +23,11 @@
                     <br />
                     @Html.EditorFor(m => m.Address, new { htmlAttributes = new { @class = "form-control"} })
                 </div>
-                @*<div class="form-group">
+                <div class="form-group">
                     @Html.LabelFor(m => m.Avatar, "Аватар")
                     <br />
-                    @Html.EditorFor(m => m.Avatar, new { htmlAttributes = new { @class = "form-control" } })
-                </div>*@
+                    <input type="file" id="Avatar" name="Avatar" />
+                </div>
                 <br />
                 <input type="submit" class="btn btn-primary" value="Сохранить" formaction="AddInfoBuyer"/>
             }
