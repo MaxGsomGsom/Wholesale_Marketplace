@@ -1,0 +1,46 @@
+﻿@model IEnumerable<Wholesale_Marketplace.Models.Item>
+@using Wholesale_Marketplace.Controllers;
+@using Wholesale_Marketplace.Models
+
+@{
+    ViewBag.Title = "Search";
+    if (ViewBag.RoleID == 0) { Layout = "~/Views/Shared/BuyerLayout.cshtml"; }
+}
+
+<div class="field-main">
+    <div class="row">
+        <div class="col-md-4">
+
+        </div>
+        <div class="col-md-8">
+            <div class="row" style="padding-top:1em">По запросу А найдено В товаров</div>
+            <div class="row">Сортировка по</div>
+            @foreach (Item item in Model)
+            {
+                <div class="row field-in" style="padding-top:1em; margin-bottom:1em; padding-left:0px">
+                    <div class="col-md-3">
+                        <img src="~/Item/Photo?id=@item.Pictures.First().PictureID" class="img-responsive img-rounded" style="width:100%; max-height:100px" />
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row">
+                            <h4 style="margin-top:0px"><b>@item.Name</b></h4>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4" style="padding-left:0px">@Helpers.Stars(item.Positive_marks, item.Negative_marks)</div>
+                            <div class="col-md-8">@item.Orders_count заказов</div>
+                        </div>
+                        <div class="row" style="padding-top:3em">
+                            <div class="col-md-8">Магазин: @item.Store.Name</div>
+                            <div class="col-md-4" style="padding-left:0px">@Helpers.Stars(item.Store.Positive_marks, item.Store.Negative_marks)</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="row"><b>Цена:</b></div>
+                        <div class="row">@(item.Price/100) руб</div>
+                        <div class="row"><a href="/Item/Info?ItemID=@item.ItemID" role="button" class="btn btn-default">Подробности</a></div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

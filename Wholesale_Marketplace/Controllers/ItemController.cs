@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -32,6 +33,12 @@ namespace Wholesale_Marketplace.Controllers
         }
 
 
+        public ActionResult Search(string SearchKeywords)
+        {
+            Helpers.UserCheck(db, ViewBag);
+            IEnumerable<Item> collect = db.Items.Where(m => m.Name.Contains(SearchKeywords));
+            return View("Search", collect);
+        }
 
     }
 }
