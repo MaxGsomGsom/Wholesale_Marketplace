@@ -243,6 +243,7 @@
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Shared\BuyerLayout.cshtml" />
     <Content Include="Views\Item\Info.cshtml" />
+    <Content Include="Views\Item\Search.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
