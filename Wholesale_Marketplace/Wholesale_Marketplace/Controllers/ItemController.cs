@@ -33,12 +33,23 @@ namespace Wholesale_Marketplace.Controllers
         }
 
 
-        public ActionResult Search(string SearchKeywords)
+        public ActionResult Search(string SearchKeywords, int page=0)
         {
             Helpers.UserCheck(db, ViewBag);
-            IEnumerable<Item> collect = db.Items.Where(m => m.Name.Contains(SearchKeywords));
+            ViewBag.SearchKeywords = SearchKeywords;
+            IEnumerable<Item> collect;
+            if (page > 0)
+            {
+                collect = db.Items.Where(m => m.Name.Contains(SearchKeywords)).OrderBy(m=> m.Name).Skip(page * 10).Take(10);
+                return PartialView("SearchPart", collect);
+            }
+            else
+            {
+                collect = db.Items.Where(m => m.Name.Contains(SearchKeywords)).OrderBy(m => m.Name).Skip(page * 10).Take(10);
+            }
             return View("Search", collect);
         }
+
 
     }
 }
