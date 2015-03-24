@@ -40,14 +40,14 @@ namespace Wholesale_Marketplace.Controllers
             IEnumerable<Item> collect;
             if (page > 0)
             {
-                collect = db.Items.Where(m => m.Name.Contains(SearchKeywords)).OrderBy(m=> m.Name).Skip(page * 10).Take(10);
-                return PartialView("SearchPart", collect);
+                collect = db.Items.Where(m => m.Name.Contains(SearchKeywords)).OrderBy(m => m.Orders_count).Skip(page * 10).Take(10);
+                return PartialView("SearchPart", collect.ToList());
             }
             else
             {
-                collect = db.Items.Where(m => m.Name.Contains(SearchKeywords)).OrderBy(m => m.Name).Skip(page * 10).Take(10);
+                collect = db.Items.Where(m => m.Name.Contains(SearchKeywords)).OrderBy(m => m.Orders_count).Skip(page * 10).Take(10);  
             }
-            return View("Search", collect);
+            return View("Search", collect.ToList());
         }
 
 

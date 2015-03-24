@@ -8,10 +8,12 @@
 }
 
 <script>
-    var page = 0;
+    var pageNext = 0;
     var NextPage = function() {
-        page++;
-        $("#SearchResults").append($.get("Item/Search?SearchKeywords=@(ViewBag.SearchKeywords)&page=" + page));
+        pageNext++;
+        $.get("Search", { SearchKeywords: "@(ViewBag.SearchKeywords)", page: "" + pageNext }, function (data, textStatus, jqXHR) {
+            $("#SearchResults").append(data);
+        });
         }
 </script>
 <div class="field-main">
@@ -22,7 +24,7 @@
         <div class="col-md-8">
             <div id="SearchResults">
                 <div class="row field-in" style="padding-top:0.5em; padding-bottom:0.5em; margin-top:0.5em">По запросу найдено @Model.Count() товаров</div>
-                <div class="row field-in" style="padding-top:0.5em; padding-bottom:0.5em; margin-top:0.5em; margin-bottom:0.5em">Сортировка по</div>
+                <div class="row field-in" style="padding-top:0.5em; padding-bottom:0.5em; margin-top:0.5em; margin-bottom:0.5em">Сортировка по кол-ву заказов</div>
                 @{Html.RenderPartial("SearchPart", Model);}
             </div>
             <div class="row"><a class="btn btn-default" onclick="NextPage();">Показать ещё</a></div>

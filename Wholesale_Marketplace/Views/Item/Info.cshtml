@@ -56,7 +56,7 @@
 
     <div class="row" style="padding-top:2em">
         <div class="col-md-6">
-            <div ><img class="img-responsive img-rounded" id="MainImg" src="~/Item/Photo?id=@Model.Pictures.First().PictureID" style="width:100%; max-height:378px"></div>
+            <div ><img class="img-responsive img-rounded" id="MainImg" src="~/Item/Photo?id=@((Model.Pictures.Count>0) ? (Model.Pictures.First().PictureID) : -1)" style="width:100%; max-height:378px"></div>
         </div>
         <div class="col-md-offset-0 col-md-6">
             <div class="field-in" style="line-height:2em">
