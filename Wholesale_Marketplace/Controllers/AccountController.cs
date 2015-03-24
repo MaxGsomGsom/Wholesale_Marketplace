@@ -38,7 +38,11 @@ namespace Wholesale_Marketplace.Controllers
                     ViewBag.RoleID = newUser.RoleID;
                     ViewBag.UserID = newUser.UserID;
                     ViewBag.Login = newUser.Login;
-                    return View("AddInfoBuyer");
+
+                    Buyer modelOut = new Buyer();
+                    modelOut.Name = "";
+                    modelOut.Address = "";
+                    return View("AddInfoBuyer", modelOut);
                 }
             } 
             
@@ -76,7 +80,19 @@ namespace Wholesale_Marketplace.Controllers
                 }
             }
 
-            return View("AddInfoBuyer");
+            Buyer modelOut = new Buyer() ;
+            modelOut.Name = "";
+            modelOut.Address = "";
+            if (ViewBag.UserID >= 0)
+            {
+                int curUser = ViewBag.UserID;
+                try
+                {
+                    modelOut = db.Buyers.First(m => m.UserID == curUser);
+                }
+                catch { }
+            }
+            return View("AddInfoBuyer", modelOut);
         }
 
         [HttpGet]
@@ -115,8 +131,12 @@ namespace Wholesale_Marketplace.Controllers
 
             if (curUser.RoleID == 0)
             {
-                byte[] img = db.Buyers.First(m => m.UserID == curUser.UserID).Avatar;
-                if (img != null) return File(img, "image/jpeg");
+                try
+                {
+                    byte[] img = db.Buyers.First(m => m.UserID == curUser.UserID).Avatar;
+                    if (img != null) return File(img, "image/jpeg");
+                }
+                catch { }
             }
 
             return File("~/Content/default-avatar.png", "image/png");
