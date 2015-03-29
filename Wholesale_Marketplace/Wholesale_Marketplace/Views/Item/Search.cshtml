@@ -9,25 +9,67 @@
 
 <script>
     var pageNext = 0;
+
+    var search_keywordsCur = "@ViewBag.search_keywords";
+    var sortCur = @ViewBag.sort;
+    var price_minCur = @ViewBag.price_min;
+    var price_maxCur = @ViewBag.price_max;
+    var good_sellers = @ViewBag.good_sellers;
+    var categoryCur = @ViewBag.category;
+
+    var SearchAgain = function() {
+        $.get("Search", { search_keywords: "" + search_keywordsCur, page: 0, sort: sortCur,
+            price_min: price_minCur, price_max: price_maxCur, good_sellers: good_sellers,
+            category: categoryCur, part_page: 1},
+                    function (data, textStatus, jqXHR) {
+                        $("#SearchResults").html(data);
+                    });
+        pageNext = 0;
+    }
+
     var NextPage = function() {
         pageNext++;
-        $.get("Search", { SearchKeywords: "@(ViewBag.SearchKeywords)", page: "" + pageNext }, function (data, textStatus, jqXHR) {
-            $("#SearchResults").append(data);
-        });
-        }
+        $.get("Search", { search_keywords: "@ViewBag.search_keywords", page: pageNext, sort: sortCur,
+            price_min: price_minCur, price_max: price_maxCur, good_sellers: good_sellers,
+            category: categoryCur, part_page: 1},
+            function (data, textStatus, jqXHR) {
+                $("#SearchResults").append(data);
+            });
+    }
+
+
+    $("#SrchKwrds").val(search_keywordsCur);
+
+    $("#BtnSrch").click(function(e) {
+        search_keywordsCur = $("#SrchKwrds").val();
+        price_minCur = $("#InpPriceMin").val();
+        price_maxCur = ($("#InpPriceMax").val()=="")?Number.MAX_VALUE:$("#InpPriceMax").val();
+        good_sellers = ($("#InpGoodSellers").val()=="on")?1:0;
+        SearchAgain();
+    });
+
+
 </script>
 <div class="field-main">
     <div class="row">
         <div class="col-md-4">
-
+            <div class="row">Категория:</div>
+            <div class="row">trut</div>
+            <div class="row">tyuiti</div>
+            <div class="row">trut</div>
+            <div class="row">tiyuit</div>
+            <div class="row">Цена:</div>
+            <div class="row"><input type="text" value="@ViewBag.price_min" id="InpPriceMin" /></div>
+            <div class="row"><input type="text" value="" id="InpPriceMax" /></div>
+            <div class="row"><label><input type="checkbox" checked="@((ViewBag.good_sellers == 0) ? "off" : "on")" id="InpGoodSellers"/>Провереные продавцы</label></div>
         </div>
         <div class="col-md-8">
+            <div class="row field-in" style="padding-top:0.5em; padding-bottom:0.5em; margin-top:0.5em">По запросу <b>@ViewBag.search_keywords</b> найдено @ViewBag.FoundCount товаров</div>
+            <div class="row field-in" style="padding-top:0.5em; padding-bottom:0.5em; margin-top:0.5em; margin-bottom:0.5em">Сортировка по <a onclick="sortCur=0; SearchAgain();">цена /\ </a><a onclick="sortCur=1; SearchAgain();">цена \/ </a><a onclick="sortCur=2; SearchAgain();">рейтинг </a><a onclick="sortCur=3; SearchAgain();">заказы </a><a onclick="sortCur=4; SearchAgain();">дата \/ </a> <a onclick="sortCur=5; SearchAgain();">дата /\ </a></div>
             <div id="SearchResults">
-                <div class="row field-in" style="padding-top:0.5em; padding-bottom:0.5em; margin-top:0.5em">По запросу найдено @Model.Count() товаров</div>
-                <div class="row field-in" style="padding-top:0.5em; padding-bottom:0.5em; margin-top:0.5em; margin-bottom:0.5em">Сортировка по кол-ву заказов</div>
                 @{Html.RenderPartial("SearchPart", Model);}
             </div>
-            <div class="row"><a class="btn btn-default" onclick="NextPage();">Показать ещё</a></div>
+            <div class="row"><a class="btn btn-default btn-block" onclick="NextPage();">Показать ещё</a></div>
         </div>
     </div>
 </div>
