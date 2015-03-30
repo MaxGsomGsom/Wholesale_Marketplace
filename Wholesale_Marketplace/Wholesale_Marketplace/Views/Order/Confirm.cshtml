@@ -1,0 +1,52 @@
+﻿@model Wholesale_Marketplace.Models.Item
+@using Wholesale_Marketplace.Controllers
+@using Wholesale_Marketplace.Models
+
+
+@{
+    ViewBag.Title = Model.Name;
+    if (ViewBag.RoleID == 0) { Layout = "~/Views/Shared/BuyerLayout.cshtml"; }
+}
+
+<div class="field-main">
+    <div class="row" style="padding-left:1em">
+        <div class="col-md-8">
+
+            <div class="row">
+                <h3><b>@Model.Store.Name</b></h3>
+            </div>
+            <div class="row">
+                <div class="col-md-2" style="padding-left:0px">@Helpers.Stars(Model.Store.Positive_marks, Model.Store.Negative_marks)</div>
+                <div class="col-md-2">@Model.Store.Orders_count заказов</div>
+            </div>
+        </div>
+        <div class="col-md-offset-1 col-md-3">
+            <div style="margin-top:1.5em">
+                <a href="/Home/Index" class="btn btn-default btn-block btn-lg" role="button">Написать продавцу</a>
+            </div>
+        </div>
+    </div>
+
+    <form action="/Order/Confirm" method="post">
+        <div class="row"><img class=" img-rounded" id="MainImg" src="~/Item/Photo?id=@((Model.Pictures.Count>0) ? (Model.Pictures.First().PictureID) : -1)" style=" max-height:100px"></div>
+        <div class="row">Товар: @Model.Name</div><input type="number" name="ItemID" value="@Model.ItemID" hidden/>
+        <div class="row">Цена: @(Model.Price/100.0) руб</div>
+        <div class="row">Количество: <input type="number" name="Amount" value="1" min="1" max="@Model.Left_goods_count" id="amount" onclick="$('#total').html($('#amount').val()*(@Model.Price/100.0));"/></div>
+        <div class="row">Стоимость: <span id="total">@(Model.Price / 100.0)</span> руб</div>
+
+        <div class="row">Доставка:
+            <select size="4" name="ShippingID" class="form-control" style="height:10em; overflow:hidden;" required>
+                @foreach (Shipping_type ship in ViewBag.ShippingTypes)
+                {
+                    <option value="@ship.ShippingID" style="padding:0.5em"> @ship.Name </option>
+                }
+                <option value="7" style="padding:0.5em"> Строка списка 2 </option>
+            </select>
+        </div>
+
+        <div class="row">Адрес: <textarea  name="Address"  rows="10" >@ViewBag.Address</textarea></div>
+        <div class="row">Информация для продавца: <textarea  name="ForSellerInfo"  rows="10"></textarea></div>
+
+        <div class="row"><input type="submit" class="btn btn-primary" value="Подтвердить заказ" /></div>
+</form>
+</div>
