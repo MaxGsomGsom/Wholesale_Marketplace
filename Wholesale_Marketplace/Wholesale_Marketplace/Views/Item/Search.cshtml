@@ -14,12 +14,13 @@
     var sortCur = @ViewBag.sort;
     var price_minCur = @ViewBag.price_min;
     var price_maxCur = @ViewBag.price_max;
-    var good_sellers = @ViewBag.good_sellers;
+    var good_sellersCur = @ViewBag.good_sellers;
     var categoryCur = @ViewBag.category;
+
 
     var SearchAgain = function() {
         $.get("Search", { search_keywords: "" + search_keywordsCur, page: 0, sort: sortCur,
-            price_min: price_minCur, price_max: price_maxCur, good_sellers: good_sellers,
+            price_min: price_minCur, price_max: price_maxCur, good_sellers: good_sellersCur,
             category: categoryCur, part_page: 1},
                     function (data, textStatus, jqXHR) {
                         $("#SearchResults").html(data);
@@ -29,8 +30,8 @@
 
     var NextPage = function() {
         pageNext++;
-        $.get("Search", { search_keywords: "@ViewBag.search_keywords", page: pageNext, sort: sortCur,
-            price_min: price_minCur, price_max: price_maxCur, good_sellers: good_sellers,
+        $.get("Search", { search_keywords: "" + search_keywordsCur, page: pageNext, sort: sortCur,
+            price_min: price_minCur, price_max: price_maxCur, good_sellers: good_sellersCur,
             category: categoryCur, part_page: 1},
             function (data, textStatus, jqXHR) {
                 $("#SearchResults").append(data);
@@ -44,27 +45,36 @@
         search_keywordsCur = $("#SrchKwrds").val();
         price_minCur = $("#InpPriceMin").val();
         price_maxCur = ($("#InpPriceMax").val()=="")?Number.MAX_VALUE:$("#InpPriceMax").val();
-        good_sellers = ($("#InpGoodSellers").val()=="on")?1:0;
+        good_sellersCur = ($("#InpGoodSellers")[0].checked)?1:0;
+        categoryCur = $("#CategorySelect").val();
         SearchAgain();
     });
+
+    $("#BtnSrch").attr({type: "button"});
+
 
 
 </script>
 <div class="field-main">
     <div class="row">
         <div class="col-md-4">
-            <div class="row">Категория:</div>
-            <div class="row">trut</div>
-            <div class="row">tyuiti</div>
-            <div class="row">trut</div>
-            <div class="row">tiyuit</div>
-            <div class="row">Цена:</div>
-            <div class="row"><input type="text" value="@ViewBag.price_min" id="InpPriceMin" /></div>
-            <div class="row"><input type="text" value="" id="InpPriceMax" /></div>
-            <div class="row"><label><input type="checkbox" checked="@((ViewBag.good_sellers == 0) ? "off" : "on")" id="InpGoodSellers"/>Провереные продавцы</label></div>
+            <div class="field-in" style="margin-top:0.5em; margin-left:0em; margin-right:1em; padding-top:1em">
+                <div class="row h4" style="padding-bottom:0.5em; margin-bottom:0.5em; border-bottom: 1px solid lightgray"><b>Категория:</b></div>
+                <select id="CategorySelect" name="category"  class="form-control" style="height:20em">
+                    <option class="row" value="-1" hidden selected></option>
+                    <option class="row" value ="0" style="padding:0.5em"> Строка списка 0 </option>
+                    <option class="row" value="1" style="padding:0.5em"> Строка списка 1 </option>
+                    <option class="row" value="2"style="padding:0.5em"> Строка списка 2 </option>
+                </select>
+                
+                <div class="row h4" style="padding-bottom:0.5em; margin-bottom:0.5em; padding-top:0.5em; margin-top:2em; border-bottom: 1px solid lightgray; border-top:1px solid lightgray;"><b>Цена:</b></div>
+                <div class="row">Мин:<input type="text" value="@ViewBag.price_min" id="InpPriceMin" class="form-control"/></div>
+                <div class="row" style="margin-top:0.5em">Макс:<input type="text" value="" id="InpPriceMax" class="form-control" ></div>
+                <div class="row" style="padding-bottom:0.5em; margin-bottom:0.5em; padding-top:0.5em; margin-top:3em; border-bottom: 1px solid lightgray; border-top:1px solid lightgray;"><label><input type="checkbox" id="InpGoodSellers" />Провереные продавцы</label></div>
+            </div>
         </div>
         <div class="col-md-8">
-            <div class="row field-in" style="padding-top:0.5em; padding-bottom:0.5em; margin-top:0.5em">По запросу <b>@ViewBag.search_keywords</b> найдено @ViewBag.FoundCount товаров</div>
+            <div class="row field-in" style="padding-top:0.5em; padding-bottom:0.5em; margin-top:0.5em">По запросу <b id="SrchKwrdsInfo">@ViewBag.search_keywords</b> найдено <b id="SrchCnt">@ViewBag.FoundCount</b> товаров</div>
             <div class="row field-in" style="padding-top:0.5em; padding-bottom:0.5em; margin-top:0.5em; margin-bottom:0.5em">Сортировка по <a onclick="sortCur=0; SearchAgain();">цена /\ </a><a onclick="sortCur=1; SearchAgain();">цена \/ </a><a onclick="sortCur=2; SearchAgain();">рейтинг </a><a onclick="sortCur=3; SearchAgain();">заказы </a><a onclick="sortCur=4; SearchAgain();">дата \/ </a> <a onclick="sortCur=5; SearchAgain();">дата /\ </a></div>
             <div id="SearchResults">
                 @{Html.RenderPartial("SearchPart", Model);}

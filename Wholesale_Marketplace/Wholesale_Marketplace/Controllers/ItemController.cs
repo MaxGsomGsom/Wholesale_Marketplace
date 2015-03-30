@@ -45,9 +45,11 @@ namespace Wholesale_Marketplace.Controllers
             ViewBag.good_sellers = good_sellers;
             ViewBag.category = category;
 
+            int price_maxForCheck = (price_max >= int.MaxValue) ? int.MaxValue : price_max * 100;
+
             IEnumerable<Item> collect;
             collect = db.Items.Where(m => m.Name.Contains(search_keywords) || m.Description.Contains(search_keywords)).Where(m=> m.Close_date >= DateTime.Now);
-            collect = collect.Where(m => m.Price >= price_min && m.Price <= price_max);
+            collect = collect.Where(m => m.Price >= price_min*100 && m.Price <= price_maxForCheck);
             if (good_sellers==1) collect = collect.Where(m => (m.Store.Positive_marks + m.Store.Negative_marks) >= 5 && (m.Store.Positive_marks / ((m.Store.Positive_marks + m.Store.Negative_marks) / 5)) >= 4);
             if (category >= 0 && category <= 10) collect = collect.Where(m => m.CategoryID == category);
 
