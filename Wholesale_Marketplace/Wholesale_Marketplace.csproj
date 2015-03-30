@@ -120,6 +120,7 @@
     <Compile Include="Controllers\Helpers.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ItemController.cs" />
+    <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -255,6 +256,8 @@
     <Content Include="Views\Item\Info.cshtml" />
     <Content Include="Views\Item\Search.cshtml" />
     <Content Include="Views\Item\SearchPart.cshtml" />
+    <Content Include="Views\Order\Confirm.cshtml" />
+    <Content Include="Views\Order\Pay.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

@@ -19,14 +19,16 @@ namespace Wholesale_Marketplace.Controllers
                     ViewBag.RoleID = curUser.RoleID;
                     ViewBag.UserID = curUser.UserID;
                     ViewBag.Login = curUser.Login;
-                    //switch (curUser.RoleID)
-                    //{
-                    //    case 0:
-                    //        {
-                    //            ViewBag.Avatar = db.Buyers.First(e => e.User == curUser);
-                    //            break;
-                    //        }
-                    //}
+                    switch (curUser.RoleID)
+                    {
+                        case 0:
+                            {
+                                //ViewBag.Avatar = db.Buyers.First(e => e.User == curUser);
+                                ViewBag.Address = db.Buyers.First(e => e.UserID == curUser.UserID).Address;
+                                ViewBag.BuyerID = db.Buyers.First(e => e.UserID == curUser.UserID).BuyerID;
+                                break;
+                            }
+                    }
                     return true;
                 }
                 else

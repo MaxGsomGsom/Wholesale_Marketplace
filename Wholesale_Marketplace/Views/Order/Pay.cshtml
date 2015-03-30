@@ -1,0 +1,133 @@
+﻿@model Wholesale_Marketplace.Models.Order
+@using Wholesale_Marketplace.Controllers
+@using Wholesale_Marketplace.Models
+
+
+@{
+    ViewBag.Title = "Оплата " + Model.OrderID;
+    if (ViewBag.RoleID == 0) { Layout = "~/Views/Shared/BuyerLayout.cshtml"; }
+}
+
+
+    <div>
+        <h4>Order</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Total_price)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Total_price)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Open_date)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Open_date)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Close_date)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Close_date)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Amount)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Amount)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Mark)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Mark)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Review_text)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Review_text)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Address)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Address)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.ForSellerInfo)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.ForSellerInfo)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.ForBuyerInfo)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.ForBuyerInfo)
+            </dd>
+    
+            
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Item.Name)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Item.Name)
+            </dd>
+    
+            
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Seller.Store.Name)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Seller.Store.Name)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Shipping_type.Name)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Shipping_type.Name)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Order_status.Name)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Order_status.Name)
+            </dd>
+    
+        </dl>
+    </div>
+
+<form action="/Order/Pay" method="post">
+
+    <input type="number" name="MakePayment" value="1" hidden/>
+    <input type="number" name="Order" value="@Model.OrderID" hidden />
+    <input type="submit" class="btn btn-primary"  value="Оплатить"/>
+
+</form>

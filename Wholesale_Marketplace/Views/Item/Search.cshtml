@@ -60,11 +60,13 @@
         <div class="col-md-4">
             <div class="field-in" style="margin-top:0.5em; margin-left:0em; margin-right:1em; padding-top:1em">
                 <div class="row h4" style="padding-bottom:0.5em; margin-bottom:0.5em; border-bottom: 1px solid lightgray"><b>Категория:</b></div>
-                <select id="CategorySelect" name="category"  class="form-control" style="height:20em">
-                    <option class="row" value="-1" hidden selected></option>
-                    <option class="row" value ="0" style="padding:0.5em"> Строка списка 0 </option>
-                    <option class="row" value="1" style="padding:0.5em"> Строка списка 1 </option>
-                    <option class="row" value="2"style="padding:0.5em"> Строка списка 2 </option>
+                <select id="CategorySelect" size="4" name="category"  class="form-control" style="height:20em; overflow:hidden;">
+                    <option  value="-1" hidden selected></option>
+                    @foreach (Item_category cat in ViewBag.Categories)
+                    {
+                        <option value="@cat.CategoryID" style="padding:0.5em">@cat.Name</option>
+                    }
+                    <option value="7" style="padding:0.5em">777</option>
                 </select>
                 
                 <div class="row h4" style="padding-bottom:0.5em; margin-bottom:0.5em; padding-top:0.5em; margin-top:2em; border-bottom: 1px solid lightgray; border-top:1px solid lightgray;"><b>Цена:</b></div>

@@ -38,6 +38,8 @@ namespace Wholesale_Marketplace.Controllers
         public ActionResult Search(string search_keywords = "", int page = 0, int sort = 0, int price_min = 0, int price_max = int.MaxValue, int good_sellers = 0, int category = -1, int part_page = 0)
         {
             Helpers.UserCheck(db, ViewBag);
+            ViewBag.Categories = db.Item_category;
+
             ViewBag.search_keywords = search_keywords;
             ViewBag.sort = sort;
             ViewBag.price_min = price_min;
