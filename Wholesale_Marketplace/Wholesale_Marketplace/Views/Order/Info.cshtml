@@ -1,0 +1,165 @@
+﻿@model Wholesale_Marketplace.Models.Order
+@using Wholesale_Marketplace.Models
+
+
+@{
+    ViewBag.Title = "Заказ " + Model.OrderID;
+    if (ViewBag.RoleID == 0) { Layout = "~/Views/Shared/BuyerLayout.cshtml"; }
+}
+
+<div class="field-main">
+    <div class="row" style="padding-left:1em">
+        <div class="col-md-8">
+
+            <div class="row">
+                <h3><b>@Model.Item.Store.Name</b></h3>
+            </div>
+            <div class="row">
+                <div class="col-md-2" style="padding-left:0px">@Helpers.Stars(Convert.ToInt32(Model.Item.Store.Average_mark))</div>
+                <div class="col-md-2">@Model.Item.Store.Orders_count заказов</div>
+            </div>
+        </div>
+        <div class="col-md-offset-1 col-md-3">
+            <div style="margin-top:1.5em">
+                <a href="/Home/Index" class="btn btn-default btn-block btn-lg" role="button">Написать продавцу</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row"><img class=" img-rounded" id="MainImg" src="~/Item/Photo?id=@((Model.Item.Pictures.Count > 0) ? (Model.Item.Pictures.First().PictureID) : -1)" style=" max-height:100px"></div>
+
+    <div>
+        <h4>Order</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Total_price)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Total_price)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Open_date)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Open_date)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Close_date)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Close_date)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Amount)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Amount)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Mark)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Mark)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Review_text)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Review_text)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Address)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Address)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.ForSellerInfo)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.ForSellerInfo)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.ForBuyerInfo)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.ForBuyerInfo)
+            </dd>
+
+
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Item.Name)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Item.Name)
+            </dd>
+
+
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Item.Store.Name)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Item.Store.Name)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Shipping_type.Name)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Shipping_type.Name)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Order_status.Name)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Order_status.Name)
+            </dd>
+
+        </dl>
+    </div>
+
+    @if (@Model.Order_statusID == 0)
+    {
+        <a href="/Order/Pay?id=@Model.OrderID" class="btn btn-primary">Оплатить заказ</a>
+        <a href="/Order/Cancel?id=@Model.OrderID" class="btn btn-primary">Отменить заказ</a>
+    }
+    else if (@Model.Order_statusID == 2)
+    {
+        <a href="/Order/Review?id=@Model.OrderID" class="btn btn-primary">Завершить заказ</a>
+        <a href="@Model.OrderID" class="btn btn-primary">Открыть спор</a>
+    }
+    else if (@Model.Order_statusID == 4)
+    {
+        <a href="@Model.OrderID" class="btn btn-primary">Перейти к спору</a>
+        <a href="@Model.OrderID" class="btn btn-primary">Закрыть спор??</a>
+    }
+    else if (@Model.Order_statusID == 5)
+    {
+        <a href="/Order/Review?id=@Model.OrderID" class="btn btn-primary">Завершить спор??</a>
+    }
+</div>

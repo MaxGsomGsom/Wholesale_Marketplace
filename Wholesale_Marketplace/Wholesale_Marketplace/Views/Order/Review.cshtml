@@ -1,0 +1,50 @@
+﻿@model Wholesale_Marketplace.Models.Order
+@using Wholesale_Marketplace.Models
+
+
+@{
+    ViewBag.Title = "Отзыв " + Model.OrderID;
+    if (ViewBag.RoleID == 0) { Layout = "~/Views/Shared/BuyerLayout.cshtml"; }
+}
+
+
+<div class="field-main">
+    <div class="row" style="padding-left:1em">
+        <div class="col-md-8">
+
+            <div class="row">
+                <h3><b>@Model.Item.Store.Name</b></h3>
+            </div>
+            <div class="row">
+                <div class="col-md-2" style="padding-left:0px">@Helpers.Stars(Convert.ToInt32(Model.Item.Store.Average_mark))</div>
+                <div class="col-md-2">@Model.Item.Store.Orders_count заказов</div>
+            </div>
+        </div>
+        <div class="col-md-offset-1 col-md-3">
+            <div style="margin-top:1.5em">
+                <a href="/Home/Index" class="btn btn-default btn-block btn-lg" role="button">Написать продавцу</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row"><img class=" img-rounded" id="MainImg" src="~/Item/Photo?id=@((Model.Item.Pictures.Count > 0) ? (Model.Item.Pictures.First().PictureID) : -1)" style=" max-height:100px"></div>
+    <div class="row">Товар: @Model.Item.Name</div>
+    <div class="row">Номер заказа: @Model.OrderID</div>
+    <div class="row">Дата заказа: @Model.Open_date</div>
+    <div class="row">Статус заказа: @Model.Order_status.Name</div>
+    <div class="row">Информация от продавца: @Model.ForBuyerInfo</div>
+
+    <form action="/Order/Review" method="post">
+        <input type="number" name="id" value="@Model.OrderID" hidden />
+
+        <div class="row"><b>Оцените качество товара и обслуживания:</b></div>
+        <div class="row">@Helpers.Stars(0)<input type="radio" name="Mark" value="0" required /></div>
+        <div class="row">@Helpers.Stars(1)<input type="radio" name="Mark" value="1" required /></div>
+        <div class="row">@Helpers.Stars(2)<input type="radio" name="Mark" value="2" required /></div>
+        <div class="row">@Helpers.Stars(3)<input type="radio" name="Mark" value="3" required /></div>
+        <div class="row">@Helpers.Stars(4)<input type="radio" name="Mark" value="4" required /></div>
+        <div class="row">@Helpers.Stars(5)<input type="radio" name="Mark" value="5" required /></div>
+
+        <div class="row"><input type="submit" class="btn btn-primary" value="Оценить" /></div>
+    </form>
+</div>

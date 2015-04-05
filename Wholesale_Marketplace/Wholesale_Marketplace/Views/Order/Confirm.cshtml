@@ -1,5 +1,4 @@
 ﻿@model Wholesale_Marketplace.Models.Item
-@using Wholesale_Marketplace.Controllers
 @using Wholesale_Marketplace.Models
 
 
@@ -16,7 +15,7 @@
                 <h3><b>@Model.Store.Name</b></h3>
             </div>
             <div class="row">
-                <div class="col-md-2" style="padding-left:0px">@Helpers.Stars(Model.Store.Positive_marks, Model.Store.Negative_marks)</div>
+                <div class="col-md-2" style="padding-left:0px">@Helpers.Stars(Convert.ToInt32(Model.Store.Average_mark))</div>
                 <div class="col-md-2">@Model.Store.Orders_count заказов</div>
             </div>
         </div>
@@ -29,10 +28,11 @@
 
     <form action="/Order/Confirm" method="post">
         <div class="row"><img class=" img-rounded" id="MainImg" src="~/Item/Photo?id=@((Model.Pictures.Count>0) ? (Model.Pictures.First().PictureID) : -1)" style=" max-height:100px"></div>
-        <div class="row">Товар: @Model.Name</div><input type="number" name="ItemID" value="@Model.ItemID" hidden/>
-        <div class="row">Цена: @(Model.Price/100.0) руб</div>
-        <div class="row">Количество: <input type="number" name="Amount" value="1" min="1" max="@Model.Left_goods_count" id="amount" onclick="$('#total').html($('#amount').val()*(@Model.Price/100.0));"/></div>
-        <div class="row">Стоимость: <span id="total">@(Model.Price / 100.0)</span> руб</div>
+        <div class="row">Товар: @Model.Name</div>
+        <input type="number" name="ItemID" value="@Model.ItemID" hidden/>
+        <div class="row">Цена: @Model.Price руб</div>
+        <div class="row">Количество: <input type="number" name="Amount" value="1" min="1" max="@Model.Left_goods_count" id="amount" onclick="$('#total').html($('#amount').val()*@Model.Price);"/></div>
+        <div class="row">Стоимость: <span id="total">@Model.Price</span> руб</div>
 
         <div class="row">Доставка:
             <select size="4" name="ShippingID" class="form-control" style="height:10em; overflow:hidden;" required>

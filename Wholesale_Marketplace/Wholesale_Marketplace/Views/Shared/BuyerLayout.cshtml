@@ -1,4 +1,5 @@
-﻿
+﻿@using Wholesale_Marketplace.Models
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -33,7 +34,7 @@
                     <div class="row" style="padding-bottom:1em"><div class="col-md-offset-6 col-md-6">Покупатель:<b style="margin-left:2.7em">@ViewBag.Login</b></div></div>
                     <div class="row">
                        <div class="col-md-3">
-                            <a href="/Account/Register" class="btn btn-default btn-block" role="button">Заказы</a>
+                            <a href="/Buyer/Orders" class="btn btn-default btn-block" role="button">Заказы</a>
                         </div>
                         <div class="col-md-3">
                             <a href="/Account/Login" class="btn btn-default btn-block" role="button">Диалоги</a>
@@ -62,9 +63,10 @@
                             Категория товара <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="#">123</a></li>
-                            <li><a href="#">456</a></li>
-                            <li><a href="#">646363</a></li>
+                            @foreach (Item_category cat in ViewBag.Categories)
+                            {
+                                <li><a href="/Item/Search?category=@cat.CategoryID">@cat.Name</a></li>
+                            }
                         </ul>
                     </div>
                 </div>

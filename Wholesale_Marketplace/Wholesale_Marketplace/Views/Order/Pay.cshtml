@@ -1,5 +1,4 @@
 ﻿@model Wholesale_Marketplace.Models.Order
-@using Wholesale_Marketplace.Controllers
 @using Wholesale_Marketplace.Models
 
 
@@ -7,6 +6,25 @@
     ViewBag.Title = "Оплата " + Model.OrderID;
     if (ViewBag.RoleID == 0) { Layout = "~/Views/Shared/BuyerLayout.cshtml"; }
 }
+
+<div class="field-main">
+    <div class="row" style="padding-left:1em">
+        <div class="col-md-8">
+
+            <div class="row">
+                <h3><b>@Model.Item.Store.Name</b></h3>
+            </div>
+            <div class="row">
+                <div class="col-md-2" style="padding-left:0px">@Helpers.Stars(Convert.ToInt32(Model.Item.Store.Average_mark))</div>
+                <div class="col-md-2">@Model.Item.Store.Orders_count заказов</div>
+            </div>
+        </div>
+        <div class="col-md-offset-1 col-md-3">
+            <div style="margin-top:1.5em">
+                <a href="/Home/Index" class="btn btn-default btn-block btn-lg" role="button">Написать продавцу</a>
+            </div>
+        </div>
+    </div>
 
 
     <div>
@@ -16,118 +34,119 @@
             <dt>
                 @Html.DisplayNameFor(model => model.Total_price)
             </dt>
-    
+
             <dd>
                 @Html.DisplayFor(model => model.Total_price)
             </dd>
-    
+
             <dt>
                 @Html.DisplayNameFor(model => model.Open_date)
             </dt>
-    
+
             <dd>
                 @Html.DisplayFor(model => model.Open_date)
             </dd>
-    
+
             <dt>
                 @Html.DisplayNameFor(model => model.Close_date)
             </dt>
-    
+
             <dd>
                 @Html.DisplayFor(model => model.Close_date)
             </dd>
-    
+
             <dt>
                 @Html.DisplayNameFor(model => model.Amount)
             </dt>
-    
+
             <dd>
                 @Html.DisplayFor(model => model.Amount)
             </dd>
-    
+
             <dt>
                 @Html.DisplayNameFor(model => model.Mark)
             </dt>
-    
+
             <dd>
                 @Html.DisplayFor(model => model.Mark)
             </dd>
-    
+
             <dt>
                 @Html.DisplayNameFor(model => model.Review_text)
             </dt>
-    
+
             <dd>
                 @Html.DisplayFor(model => model.Review_text)
             </dd>
-    
+
             <dt>
                 @Html.DisplayNameFor(model => model.Address)
             </dt>
-    
+
             <dd>
                 @Html.DisplayFor(model => model.Address)
             </dd>
-    
+
             <dt>
                 @Html.DisplayNameFor(model => model.ForSellerInfo)
             </dt>
-    
+
             <dd>
                 @Html.DisplayFor(model => model.ForSellerInfo)
             </dd>
-    
+
             <dt>
                 @Html.DisplayNameFor(model => model.ForBuyerInfo)
             </dt>
-    
+
             <dd>
                 @Html.DisplayFor(model => model.ForBuyerInfo)
             </dd>
-    
-            
-    
+
+
+
             <dt>
                 @Html.DisplayNameFor(model => model.Item.Name)
             </dt>
-    
+
             <dd>
                 @Html.DisplayFor(model => model.Item.Name)
             </dd>
-    
-            
-    
+
+
+
             <dt>
-                @Html.DisplayNameFor(model => model.Seller.Store.Name)
+                @Html.DisplayNameFor(model => model.Item.Store.Name)
             </dt>
-    
+
             <dd>
-                @Html.DisplayFor(model => model.Seller.Store.Name)
+                @Html.DisplayFor(model => model.Item.Store.Name)
             </dd>
-    
+
             <dt>
                 @Html.DisplayNameFor(model => model.Shipping_type.Name)
             </dt>
-    
+
             <dd>
                 @Html.DisplayFor(model => model.Shipping_type.Name)
             </dd>
-    
+
             <dt>
                 @Html.DisplayNameFor(model => model.Order_status.Name)
             </dt>
-    
+
             <dd>
                 @Html.DisplayFor(model => model.Order_status.Name)
             </dd>
-    
+
         </dl>
     </div>
 
-<form action="/Order/Pay" method="post">
+    <form action="/Order/Pay" method="post">
 
-    <input type="number" name="MakePayment" value="1" hidden/>
-    <input type="number" name="Order" value="@Model.OrderID" hidden />
-    <input type="submit" class="btn btn-primary"  value="Оплатить"/>
+        <input type="number" name="MakePayment" value="1" hidden />
+        <input type="number" name="id" value="@Model.OrderID" hidden />
+        <input type="submit" class="btn btn-primary" value="Оплатить" />
 
-</form>
+    </form>
+</div>

@@ -60,32 +60,114 @@ namespace Wholesale_Marketplace.Controllers
         }
 
         [HttpGet]
-        public ActionResult Pay(int Order)
+        public ActionResult Pay(int id)
         {
             if (Helpers.UserCheck(db, ViewBag) && ViewBag.RoleID == 0)
             {
-                Order curOrder = db.Orders.Find(Order);
-
-                return View("Pay", curOrder);
+                Order curOrder = db.Orders.Find(id);
+                if (curOrder.BuyerID == ViewBag.BuyerID)
+                {
+                    return View("Pay", curOrder);
+                }
             }
 
             return Redirect("/Home/Index");
         }
 
         [HttpPost]
-        public ActionResult Pay(int Order, int MakePayment = 0)
+        public ActionResult Pay(int id, int MakePayment = 0)
         {
             if (Helpers.UserCheck(db, ViewBag) && ViewBag.RoleID == 0)
             {
-                if (MakePayment == 1)
+                Order curOrder = db.Orders.Find(id);
+                if (curOrder.BuyerID == ViewBag.BuyerID)
                 {
-                    Order curOrder = db.Orders.Find(Order);
-                    curOrder.Order_statusID = 1;
-                    db.Entry(curOrder).State = EntityState.Modified;
-                    db.SaveChanges();
-                    return Content("Оплачено");
+                    if (MakePayment == 1)
+                    {
+                        curOrder.Order_statusID = 1;
+                        db.Entry(curOrder).State = EntityState.Modified;
+                        db.SaveChanges();
+                        return Content("Оплачено");
+                    }
+                    else return Content("Не оплачено");
                 }
-                else return Content("Не оплачено");
+            }
+            return Redirect("/Home/Index");
+        }
+
+        [HttpGet]
+        public ActionResult Cancel(int id)
+        {
+            if (Helpers.UserCheck(db, ViewBag) && ViewBag.RoleID == 0)
+            {
+                    Order curOrder = db.Orders.Find(id);
+                    if (curOrder.BuyerID == ViewBag.BuyerID)
+                    {
+                        curOrder.Order_statusID = 6;
+                        db.Entry(curOrder).State = EntityState.Modified;
+                        db.SaveChanges();
+                        return Content("Заказ отменен");
+                    }
+            }
+
+            return Redirect("/Home/Index");
+        }
+
+
+        [HttpGet]
+        public ActionResult Review(int id = -1)
+        {
+            if (id == -1) return Redirect("/Home/Index");
+
+            if (Helpers.UserCheck(db, ViewBag) && ViewBag.RoleID == 0)
+            {
+                Order curOrder = db.Orders.Find(id);
+                if (curOrder.BuyerID == ViewBag.BuyerID)
+                {
+                    if (curOrder.Order_statusID == 2 || curOrder.Order_statusID == 5)
+                    {
+                        return View("Review", curOrder);
+                    }
+                }
+            }
+
+            return Redirect("/Home/Index");
+        }
+
+
+        [HttpPost]
+        public ActionResult Review(int id, int Mark)
+        {
+            if (Helpers.UserCheck(db, ViewBag) && ViewBag.RoleID == 0 && Mark>=0 && Mark<=5)
+            {
+                    Order curOrder = db.Orders.Find(id);
+                    if (curOrder.BuyerID == ViewBag.BuyerID)
+                    {
+                        if (curOrder.Order_statusID == 2 || curOrder.Order_statusID == 5)
+                        {
+                            curOrder.Order_statusID = 3;
+                            curOrder.Mark = Mark;
+                            db.Entry(curOrder).State = EntityState.Modified;
+                            db.SaveChanges();
+                            return Content("Отзыв оставлен");
+                        }
+                    }
+            }
+
+            return Redirect("/Home/Index");
+        }
+
+
+        [HttpGet]
+        public ActionResult Info(int id)
+        {
+            if (Helpers.UserCheck(db, ViewBag) && ViewBag.RoleID == 0)
+            {
+                Order curOrder = db.Orders.Find(id);
+                if (curOrder.BuyerID == ViewBag.BuyerID)
+                {
+                    return View("Info", curOrder);
+                }
             }
 
             return Redirect("/Home/Index");

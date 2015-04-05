@@ -1,0 +1,35 @@
+﻿@model IEnumerable<Wholesale_Marketplace.Models.Order>
+@using Wholesale_Marketplace.Models
+
+
+@{
+    ViewBag.Title = "Заказы";
+    if (ViewBag.RoleID == 0) { Layout = "~/Views/Shared/BuyerLayout.cshtml"; }
+}
+
+
+<div class="field-main">
+
+    @foreach (Order order in Model)
+    {
+        int mainPic = (order.Item.Pictures.Count > 0) ? (order.Item.Pictures.First().PictureID) : -1;
+        <div class="row field-in" style="padding-top:1em; margin-bottom:1em; padding-left:0px">
+            <div class="col-md-3">
+                <img src="~/Item/Photo?id=@mainPic" class="img-responsive img-rounded" style="width:100%; max-height:100px" />
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <h4 style="margin-top:0px"><a href="/Item/Info?id=@order.ItemID" style="text-decoration:none; color:black"><b>@order.Item.Name</b></a></h4>
+                </div>
+                <div class="row">Магазин: @order.Item.Store.Name</div>
+                <div class="row">Сумма: @order.Total_price руб</div>
+                <div class="row">Дата заказа: @order.Open_date</div>
+                <div class="row">Статус: <b>@order.Order_status.Name</b></div>
+            </div>
+            <div class="col-md-3">
+                <div class="row" style="padding-bottom:0em"><a class="btn btn-default" href="/Order/Info?id=@order.OrderID">Подробно</a></div>
+            </div>
+        </div>
+    }
+
+</div>

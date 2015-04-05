@@ -24,16 +24,15 @@ namespace Wholesale_Marketplace.Models
         public int StoreID { get; set; }
         public int CategoryID { get; set; }
         public string Name { get; set; }
-        public int Price { get; set; }
+        public double Price { get; set; }
         public string Description { get; set; }
         public int Orders_count { get; set; }
-        public int Reviews_count { get; set; }
-        public int Positive_marks { get; set; }
-        public int Negative_marks { get; set; }
         public int Minimum_order { get; set; }
         public System.DateTime Open_date { get; set; }
         public Nullable<System.DateTime> Close_date { get; set; }
         public int Left_goods_count { get; set; }
+        public int Marks_count { get; set; }
+        public double Average_mark { get; set; }
     
         public virtual Item_category Item_category { get; set; }
         public virtual Store Store { get; set; }

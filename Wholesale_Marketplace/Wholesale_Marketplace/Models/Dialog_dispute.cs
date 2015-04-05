@@ -24,14 +24,12 @@ namespace Wholesale_Marketplace.Models
         public int BuyerID { get; set; }
         public int SellerID { get; set; }
         public int AgentID { get; set; }
-        public int Dispute_statusID { get; set; }
         public System.DateTime Open_date { get; set; }
         public bool IsDispute { get; set; }
         public Nullable<System.DateTime> Close_date { get; set; }
         public string Resolution_text { get; set; }
     
         public virtual Buyer Buyer { get; set; }
-        public virtual Dispute_status Dispute_status { get; set; }
         public virtual Support_agent Support_agent { get; set; }
         public virtual Seller Seller { get; set; }
         public virtual ICollection<Message> Messages { get; set; }
