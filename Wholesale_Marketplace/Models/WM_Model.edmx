@@ -25,18 +25,10 @@
           <Property Name="BuyerID" Type="int" Nullable="false" />
           <Property Name="SellerID" Type="int" Nullable="false" />
           <Property Name="AgentID" Type="int" Nullable="false" />
-          <Property Name="Dispute_statusID" Type="int" Nullable="false" />
           <Property Name="Open_date" Type="datetime" Nullable="false" />
           <Property Name="IsDispute" Type="bit" Nullable="false" />
           <Property Name="Close_date" Type="datetime" />
           <Property Name="Resolution_text" Type="varchar" MaxLength="50" />
-        </EntityType>
-        <EntityType Name="Dispute_status">
-          <Key>
-            <PropertyRef Name="Dispute_statusID" />
-          </Key>
-          <Property Name="Dispute_statusID" Type="int" Nullable="false" />
-          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Item">
           <Key>
@@ -46,12 +38,11 @@
           <Property Name="StoreID" Type="int" Nullable="false" />
           <Property Name="CategoryID" Type="int" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Price" Type="int" Nullable="false" />
+          <Property Name="Price" Type="float" Nullable="false" />
           <Property Name="Description" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Orders_count" Type="int" Nullable="false" />
-          <Property Name="Reviews_count" Type="int" Nullable="false" />
-          <Property Name="Positive_marks" Type="int" Nullable="false" />
-          <Property Name="Negative_marks" Type="int" Nullable="false" />
+          <Property Name="Marks_count" Type="int" Nullable="false" />
+          <Property Name="Average_mark" Type="float" Nullable="false" />
           <Property Name="Minimum_order" Type="int" Nullable="false" />
           <Property Name="Open_date" Type="datetime" Nullable="false" />
           <Property Name="Close_date" Type="datetime" />
@@ -85,7 +76,7 @@
           <Property Name="SellerID" Type="int" Nullable="false" />
           <Property Name="ShippingID" Type="int" Nullable="false" />
           <Property Name="Order_statusID" Type="int" Nullable="false" />
-          <Property Name="Total_price" Type="int" Nullable="false" />
+          <Property Name="Total_price" Type="float" Nullable="false" />
           <Property Name="Open_date" Type="datetime" Nullable="false" />
           <Property Name="Close_date" Type="datetime" />
           <Property Name="Amount" Type="int" Nullable="false" />
@@ -144,10 +135,9 @@
           </Key>
           <Property Name="StoreID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Rating" Type="int" Nullable="false" />
+          <Property Name="Marks_count" Type="int" Nullable="false" />
           <Property Name="Orders_count" Type="int" Nullable="false" />
-          <Property Name="Positive_marks" Type="int" Nullable="false" />
-          <Property Name="Negative_marks" Type="int" Nullable="false" />
+          <Property Name="Average_mark" Type="float" Nullable="false" />
           <Property Name="Created_date" Type="datetime" Nullable="false" />
           <Property Name="Description" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Owner_sellerID" Type="int" Nullable="false" />
@@ -181,18 +171,6 @@
             </Principal>
             <Dependent Role="Buyer">
               <PropertyRef Name="UserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_DIALOGUE_DISPUTE_S_DISPUTE_">
-          <End Role="Dispute_status" Type="Self.Dispute_status" Multiplicity="1" />
-          <End Role="Dialog_dispute" Type="Self.Dialog_dispute" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Dispute_status">
-              <PropertyRef Name="Dispute_statusID" />
-            </Principal>
-            <Dependent Role="Dialog_dispute">
-              <PropertyRef Name="Dispute_statusID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -427,7 +405,6 @@
         <EntityContainer Name="Хранилище WM_ModelContainer">
           <EntitySet Name="Buyer" EntityType="Self.Buyer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Dialog_dispute" EntityType="Self.Dialog_dispute" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Dispute_status" EntityType="Self.Dispute_status" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Item" EntityType="Self.Item" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Item_category" EntityType="Self.Item_category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Message" EntityType="Self.Message" Schema="dbo" store:Type="Tables" />
@@ -443,10 +420,6 @@
           <AssociationSet Name="FK_Buyer_User" Association="Self.FK_Buyer_User">
             <End Role="User" EntitySet="User" />
             <End Role="Buyer" EntitySet="Buyer" />
-          </AssociationSet>
-          <AssociationSet Name="FK_DIALOGUE_DISPUTE_S_DISPUTE_" Association="Self.FK_DIALOGUE_DISPUTE_S_DISPUTE_">
-            <End Role="Dispute_status" EntitySet="Dispute_status" />
-            <End Role="Dialog_dispute" EntitySet="Dialog_dispute" />
           </AssociationSet>
           <AssociationSet Name="FK_DIALOGUE_SIDE 1_BUYER" Association="Self.FK_DIALOGUE_SIDE 1_BUYER">
             <End Role="Buyer" EntitySet="Buyer" />
@@ -552,25 +525,15 @@
           <Property Name="BuyerID" Type="Int32" Nullable="false" />
           <Property Name="SellerID" Type="Int32" Nullable="false" />
           <Property Name="AgentID" Type="Int32" Nullable="false" />
-          <Property Name="Dispute_statusID" Type="Int32" Nullable="false" />
           <Property Name="Open_date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="IsDispute" Type="Boolean" Nullable="false" />
           <Property Name="Close_date" Type="DateTime" Precision="3" />
           <Property Name="Resolution_text" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Buyer" Relationship="Self.FK_DIALOGUE_SIDE_1_BUYER" FromRole="Dialog_dispute" ToRole="Buyer" />
-          <NavigationProperty Name="Dispute_status" Relationship="Self.FK_DIALOGUE_DISPUTE_S_DISPUTE_" FromRole="Dialog_dispute" ToRole="Dispute_status" />
           <NavigationProperty Name="Support_agent" Relationship="Self.FK_DIALOGUE_SIDE_2_SUPPORT_" FromRole="Dialog_dispute" ToRole="Support_agent" />
           <NavigationProperty Name="Seller" Relationship="Self.FK_DIALOGUE_SIDE_3_SELLER" FromRole="Dialog_dispute" ToRole="Seller" />
           <NavigationProperty Name="Messages" Relationship="Self.FK_MESSAGE_AGGREGATE_DIALOGUE" FromRole="Dialog_dispute" ToRole="Message" />
           <NavigationProperty Name="Orders" Relationship="Self.FK_ORDER_CAUSE_DIALOGUE" FromRole="Dialog_dispute" ToRole="Order" />
-        </EntityType>
-        <EntityType Name="Dispute_status">
-          <Key>
-            <PropertyRef Name="Dispute_statusID" />
-          </Key>
-          <Property Name="Dispute_statusID" Type="Int32" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Dialog_dispute" Relationship="Self.FK_DIALOGUE_DISPUTE_S_DISPUTE_" FromRole="Dispute_status" ToRole="Dialog_dispute" />
         </EntityType>
         <EntityType Name="Item">
           <Key>
@@ -580,12 +543,9 @@
           <Property Name="StoreID" Type="Int32" Nullable="false" />
           <Property Name="CategoryID" Type="Int32" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Price" Type="Int32" Nullable="false" />
+          <Property Name="Price" Type="Double" Nullable="false" />
           <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Orders_count" Type="Int32" Nullable="false" />
-          <Property Name="Reviews_count" Type="Int32" Nullable="false" />
-          <Property Name="Positive_marks" Type="Int32" Nullable="false" />
-          <Property Name="Negative_marks" Type="Int32" Nullable="false" />
           <Property Name="Minimum_order" Type="Int32" Nullable="false" />
           <Property Name="Open_date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Close_date" Type="DateTime" Precision="3" />
@@ -594,6 +554,8 @@
           <NavigationProperty Name="Store" Relationship="Self.FK_ITEM_PLACE_OF__STORE" FromRole="Item" ToRole="Store" />
           <NavigationProperty Name="Orders" Relationship="Self.FK_ORDER_PART_ITEM" FromRole="Item" ToRole="Order" />
           <NavigationProperty Name="Pictures" Relationship="Self.FK_PICTURE_PHOTO_OBJ_ITEM" FromRole="Item" ToRole="Picture" />
+          <Property Name="Marks_count" Type="Int32" Nullable="false" />
+          <Property Name="Average_mark" Type="Double" Nullable="false" />
         </EntityType>
         <EntityType Name="Item_category">
           <Key>
@@ -623,10 +585,9 @@
           <Property Name="BuyerID" Type="Int32" Nullable="false" />
           <Property Name="ItemID" Type="Int32" Nullable="false" />
           <Property Name="DisputeID" Type="Int32" Nullable="false" />
-          <Property Name="SellerID" Type="Int32" Nullable="false" />
           <Property Name="ShippingID" Type="Int32" Nullable="false" />
           <Property Name="Order_statusID" Type="Int32" Nullable="false" />
-          <Property Name="Total_price" Type="Int32" Nullable="false" />
+          <Property Name="Total_price" Type="Double" Nullable="false" />
           <Property Name="Open_date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Close_date" Type="DateTime" Precision="3" />
           <Property Name="Amount" Type="Int32" Nullable="false" />
@@ -636,12 +597,13 @@
           <NavigationProperty Name="Dialog_dispute" Relationship="Self.FK_ORDER_CAUSE_DIALOGUE" FromRole="Order" ToRole="Dialog_dispute" />
           <NavigationProperty Name="Item" Relationship="Self.FK_ORDER_PART_ITEM" FromRole="Order" ToRole="Item" />
           <NavigationProperty Name="Support_agent" Relationship="Self.FK_ORDER_LEADER_SUPPORT_" FromRole="Order" ToRole="Support_agent" />
-          <NavigationProperty Name="Seller" Relationship="Self.FK_ORDER_PLACE_OF__SELLER" FromRole="Order" ToRole="Seller" />
           <NavigationProperty Name="Shipping_type" Relationship="Self.FK_ORDER_SHIPPING_SHIPPING" FromRole="Order" ToRole="Shipping_type" />
           <NavigationProperty Name="Order_status" Relationship="Self.FK_ORDER_STATUS_ORDER_ST" FromRole="Order" ToRole="Order_status" />
           <Property Name="Address" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
           <Property Name="ForSellerInfo" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
           <Property Name="ForBuyerInfo" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="SellerID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Seller" Relationship="WM_Model.FK_ORDER_PLACE_OF__SELLER" FromRole="Order" ToRole="Seller" />
         </EntityType>
         <EntityType Name="Order_status">
           <Key>
@@ -682,9 +644,9 @@
           <Property Name="Registration_date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Avatar" Type="Binary" MaxLength="Max" FixedLength="false" />
           <NavigationProperty Name="Dialog_dispute" Relationship="Self.FK_DIALOGUE_SIDE_3_SELLER" FromRole="Seller" ToRole="Dialog_dispute" />
-          <NavigationProperty Name="Orders" Relationship="Self.FK_ORDER_PLACE_OF__SELLER" FromRole="Seller" ToRole="Order" />
           <NavigationProperty Name="Store" Relationship="Self.FK_SELLER_PLACE_OF__STORE" FromRole="Seller" ToRole="Store" />
           <NavigationProperty Name="User" Relationship="Self.FK_Seller_User" FromRole="Seller" ToRole="User" />
+          <NavigationProperty Name="Orders" Relationship="WM_Model.FK_ORDER_PLACE_OF__SELLER" FromRole="Seller" ToRole="Order" />
         </EntityType>
         <EntityType Name="Shipping_type">
           <Key>
@@ -701,15 +663,14 @@
           </Key>
           <Property Name="StoreID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Rating" Type="Int32" Nullable="false" />
           <Property Name="Orders_count" Type="Int32" Nullable="false" />
-          <Property Name="Positive_marks" Type="Int32" Nullable="false" />
-          <Property Name="Negative_marks" Type="Int32" Nullable="false" />
           <Property Name="Created_date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Owner_sellerID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Items" Relationship="Self.FK_ITEM_PLACE_OF__STORE" FromRole="Store" ToRole="Item" />
           <NavigationProperty Name="Sellers" Relationship="Self.FK_SELLER_PLACE_OF__STORE" FromRole="Store" ToRole="Seller" />
+          <Property Name="Marks_count" Type="Int32" Nullable="false" />
+          <Property Name="Average_mark" Type="Double" Nullable="false" />
         </EntityType>
         <EntityType Name="Support_agent">
           <Key>
@@ -771,18 +732,6 @@
             </Principal>
             <Dependent Role="Order">
               <PropertyRef Name="BuyerID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_DIALOGUE_DISPUTE_S_DISPUTE_">
-          <End Role="Dispute_status" Type="Self.Dispute_status" Multiplicity="1" />
-          <End Role="Dialog_dispute" Type="Self.Dialog_dispute" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Dispute_status">
-              <PropertyRef Name="Dispute_statusID" />
-            </Principal>
-            <Dependent Role="Dialog_dispute">
-              <PropertyRef Name="Dispute_statusID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -906,18 +855,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ORDER_PLACE_OF__SELLER">
-          <End Role="Seller" Type="Self.Seller" Multiplicity="1" />
-          <End Role="Order" Type="Self.Order" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Seller">
-              <PropertyRef Name="SellerID" />
-            </Principal>
-            <Dependent Role="Order">
-              <PropertyRef Name="SellerID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_ORDER_SHIPPING_SHIPPING">
           <End Role="Shipping_type" Type="Self.Shipping_type" Multiplicity="1" />
           <End Role="Order" Type="Self.Order" Multiplicity="*" />
@@ -993,7 +930,6 @@
         <EntityContainer Name="WMDB" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Buyers" EntityType="Self.Buyer" />
           <EntitySet Name="Dialog_dispute" EntityType="Self.Dialog_dispute" />
-          <EntitySet Name="Dispute_status" EntityType="Self.Dispute_status" />
           <EntitySet Name="Items" EntityType="Self.Item" />
           <EntitySet Name="Item_category" EntityType="Self.Item_category" />
           <EntitySet Name="Messages" EntityType="Self.Message" />
@@ -1017,10 +953,6 @@
           <AssociationSet Name="FK_ORDER_CUSTOMER_BUYER" Association="Self.FK_ORDER_CUSTOMER_BUYER">
             <End Role="Buyer" EntitySet="Buyers" />
             <End Role="Order" EntitySet="Orders" />
-          </AssociationSet>
-          <AssociationSet Name="FK_DIALOGUE_DISPUTE_S_DISPUTE_" Association="Self.FK_DIALOGUE_DISPUTE_S_DISPUTE_">
-            <End Role="Dispute_status" EntitySet="Dispute_status" />
-            <End Role="Dialog_dispute" EntitySet="Dialog_dispute" />
           </AssociationSet>
           <AssociationSet Name="FK_DIALOGUE_SIDE_2_SUPPORT_" Association="Self.FK_DIALOGUE_SIDE_2_SUPPORT_">
             <End Role="Support_agent" EntitySet="Support_agent" />
@@ -1062,10 +994,6 @@
             <End Role="Support_agent" EntitySet="Support_agent" />
             <End Role="Order" EntitySet="Orders" />
           </AssociationSet>
-          <AssociationSet Name="FK_ORDER_PLACE_OF__SELLER" Association="Self.FK_ORDER_PLACE_OF__SELLER">
-            <End Role="Seller" EntitySet="Sellers" />
-            <End Role="Order" EntitySet="Orders" />
-          </AssociationSet>
           <AssociationSet Name="FK_ORDER_SHIPPING_SHIPPING" Association="Self.FK_ORDER_SHIPPING_SHIPPING">
             <End Role="Shipping_type" EntitySet="Shipping_type" />
             <End Role="Order" EntitySet="Orders" />
@@ -1090,7 +1018,23 @@
             <End Role="User" EntitySet="Users" />
             <End Role="Support_agent" EntitySet="Support_agent" />
           </AssociationSet>
+          <AssociationSet Name="FK_ORDER_PLACE_OF__SELLER" Association="WM_Model.FK_ORDER_PLACE_OF__SELLER">
+            <End Role="Seller" EntitySet="Sellers" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
         </EntityContainer>
+        <Association Name="FK_ORDER_PLACE_OF__SELLER">
+          <End Type="WM_Model.Seller" Role="Seller" Multiplicity="1" />
+          <End Type="WM_Model.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Seller">
+              <PropertyRef Name="SellerID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="SellerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1117,7 +1061,6 @@
                 <ScalarProperty Name="BuyerID" ColumnName="BuyerID" />
                 <ScalarProperty Name="SellerID" ColumnName="SellerID" />
                 <ScalarProperty Name="AgentID" ColumnName="AgentID" />
-                <ScalarProperty Name="Dispute_statusID" ColumnName="Dispute_statusID" />
                 <ScalarProperty Name="Open_date" ColumnName="Open_date" />
                 <ScalarProperty Name="IsDispute" ColumnName="IsDispute" />
                 <ScalarProperty Name="Close_date" ColumnName="Close_date" />
@@ -1125,17 +1068,11 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Dispute_status">
-            <EntityTypeMapping TypeName="WM_Model.Dispute_status">
-              <MappingFragment StoreEntitySet="Dispute_status">
-                <ScalarProperty Name="Dispute_statusID" ColumnName="Dispute_statusID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Items">
             <EntityTypeMapping TypeName="WM_Model.Item">
               <MappingFragment StoreEntitySet="Item">
+                <ScalarProperty Name="Average_mark" ColumnName="Average_mark" />
+                <ScalarProperty Name="Marks_count" ColumnName="Marks_count" />
                 <ScalarProperty Name="ItemID" ColumnName="ItemID" />
                 <ScalarProperty Name="StoreID" ColumnName="StoreID" />
                 <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
@@ -1143,9 +1080,6 @@
                 <ScalarProperty Name="Price" ColumnName="Price" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Orders_count" ColumnName="Orders_count" />
-                <ScalarProperty Name="Reviews_count" ColumnName="Reviews_count" />
-                <ScalarProperty Name="Positive_marks" ColumnName="Positive_marks" />
-                <ScalarProperty Name="Negative_marks" ColumnName="Negative_marks" />
                 <ScalarProperty Name="Minimum_order" ColumnName="Minimum_order" />
                 <ScalarProperty Name="Open_date" ColumnName="Open_date" />
                 <ScalarProperty Name="Close_date" ColumnName="Close_date" />
@@ -1174,6 +1108,7 @@
           <EntitySetMapping Name="Orders">
             <EntityTypeMapping TypeName="WM_Model.Order">
               <MappingFragment StoreEntitySet="Order">
+                <ScalarProperty Name="SellerID" ColumnName="SellerID" />
                 <ScalarProperty Name="ForBuyerInfo" ColumnName="ForBuyerInfo" />
                 <ScalarProperty Name="ForSellerInfo" ColumnName="ForSellerInfo" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
@@ -1182,7 +1117,6 @@
                 <ScalarProperty Name="BuyerID" ColumnName="BuyerID" />
                 <ScalarProperty Name="ItemID" ColumnName="ItemID" />
                 <ScalarProperty Name="DisputeID" ColumnName="DisputeID" />
-                <ScalarProperty Name="SellerID" ColumnName="SellerID" />
                 <ScalarProperty Name="ShippingID" ColumnName="ShippingID" />
                 <ScalarProperty Name="Order_statusID" ColumnName="Order_statusID" />
                 <ScalarProperty Name="Total_price" ColumnName="Total_price" />
@@ -1245,12 +1179,11 @@
           <EntitySetMapping Name="Stores">
             <EntityTypeMapping TypeName="WM_Model.Store">
               <MappingFragment StoreEntitySet="Store">
+                <ScalarProperty Name="Average_mark" ColumnName="Average_mark" />
+                <ScalarProperty Name="Marks_count" ColumnName="Marks_count" />
                 <ScalarProperty Name="StoreID" ColumnName="StoreID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Rating" ColumnName="Rating" />
                 <ScalarProperty Name="Orders_count" ColumnName="Orders_count" />
-                <ScalarProperty Name="Positive_marks" ColumnName="Positive_marks" />
-                <ScalarProperty Name="Negative_marks" ColumnName="Negative_marks" />
                 <ScalarProperty Name="Created_date" ColumnName="Created_date" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Owner_sellerID" ColumnName="Owner_sellerID" />

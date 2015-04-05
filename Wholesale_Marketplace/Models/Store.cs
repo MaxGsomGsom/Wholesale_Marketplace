@@ -22,13 +22,12 @@ namespace Wholesale_Marketplace.Models
     
         public int StoreID { get; set; }
         public string Name { get; set; }
-        public int Rating { get; set; }
         public int Orders_count { get; set; }
-        public int Positive_marks { get; set; }
-        public int Negative_marks { get; set; }
         public System.DateTime Created_date { get; set; }
         public string Description { get; set; }
         public int Owner_sellerID { get; set; }
+        public int Marks_count { get; set; }
+        public double Average_mark { get; set; }
     
         public virtual ICollection<Item> Items { get; set; }
         public virtual ICollection<Seller> Sellers { get; set; }

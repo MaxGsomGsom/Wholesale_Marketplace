@@ -27,7 +27,6 @@ namespace Wholesale_Marketplace.Models
     
         public virtual DbSet<Buyer> Buyers { get; set; }
         public virtual DbSet<Dialog_dispute> Dialog_dispute { get; set; }
-        public virtual DbSet<Dispute_status> Dispute_status { get; set; }
         public virtual DbSet<Item> Items { get; set; }
         public virtual DbSet<Item_category> Item_category { get; set; }
         public virtual DbSet<Message> Messages { get; set; }

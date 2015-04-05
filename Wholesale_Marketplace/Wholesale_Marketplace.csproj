@@ -117,7 +117,8 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\Helpers.cs" />
+    <Compile Include="Controllers\BuyerController.cs" />
+    <Compile Include="Helpers.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ItemController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
@@ -129,9 +130,6 @@
       <DependentUpon>WM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Dialog_dispute.cs">
-      <DependentUpon>WM_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Dispute_status.cs">
       <DependentUpon>WM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Item.cs">
@@ -258,6 +256,9 @@
     <Content Include="Views\Item\SearchPart.cshtml" />
     <Content Include="Views\Order\Confirm.cshtml" />
     <Content Include="Views\Order\Pay.cshtml" />
+    <Content Include="Views\Order\Review.cshtml" />
+    <Content Include="Views\Order\Info.cshtml" />
+    <Content Include="Views\Buyer\Orders.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

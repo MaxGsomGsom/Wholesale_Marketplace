@@ -19,10 +19,9 @@ namespace Wholesale_Marketplace.Models
         public int BuyerID { get; set; }
         public int ItemID { get; set; }
         public int DisputeID { get; set; }
-        public int SellerID { get; set; }
         public int ShippingID { get; set; }
         public int Order_statusID { get; set; }
-        public int Total_price { get; set; }
+        public double Total_price { get; set; }
         public System.DateTime Open_date { get; set; }
         public Nullable<System.DateTime> Close_date { get; set; }
         public int Amount { get; set; }
@@ -31,13 +30,14 @@ namespace Wholesale_Marketplace.Models
         public string Address { get; set; }
         public string ForSellerInfo { get; set; }
         public string ForBuyerInfo { get; set; }
+        public int SellerID { get; set; }
     
         public virtual Buyer Buyer { get; set; }
         public virtual Dialog_dispute Dialog_dispute { get; set; }
         public virtual Item Item { get; set; }
         public virtual Support_agent Support_agent { get; set; }
-        public virtual Seller Seller { get; set; }
         public virtual Shipping_type Shipping_type { get; set; }
         public virtual Order_status Order_status { get; set; }
+        public virtual Seller Seller { get; set; }
     }
 }
