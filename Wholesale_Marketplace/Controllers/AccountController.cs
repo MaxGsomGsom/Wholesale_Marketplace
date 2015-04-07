@@ -125,15 +125,25 @@ namespace Wholesale_Marketplace.Controllers
         }
 
 
-        public ActionResult Avatar(string login)
+        public ActionResult Avatar(int UserID)
         {
-            User curUser = db.Users.First(m => m.Login == login);
+            if (UserID==-1) return File("~/Content/default-avatar.png", "image/png");
+            User curUser = db.Users.Find(UserID);
 
             if (curUser.RoleID == 0)
             {
                 try
                 {
                     byte[] img = db.Buyers.First(m => m.UserID == curUser.UserID).Avatar;
+                    if (img != null) return File(img, "image/jpeg");
+                }
+                catch { }
+            }
+            else if (curUser.RoleID == 1)
+            {
+                try
+                {
+                    byte[] img = db.Sellers.First(m => m.UserID == curUser.UserID).Avatar;
                     if (img != null) return File(img, "image/jpeg");
                 }
                 catch { }

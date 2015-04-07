@@ -23,8 +23,10 @@ namespace Wholesale_Marketplace.Models
         public int DisputeID { get; set; }
         public string Text { get; set; }
         public System.DateTime Post_date { get; set; }
+        public int UserID { get; set; }
     
         public virtual Dialog_dispute Dialog_dispute { get; set; }
         public virtual ICollection<Picture> Pictures { get; set; }
+        public virtual User User { get; set; }
     }
 }

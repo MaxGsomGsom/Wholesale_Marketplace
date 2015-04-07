@@ -19,6 +19,7 @@ namespace Wholesale_Marketplace.Models
             this.Buyers = new HashSet<Buyer>();
             this.Sellers = new HashSet<Seller>();
             this.Support_agent = new HashSet<Support_agent>();
+            this.Messages = new HashSet<Message>();
         }
     
         public int UserID { get; set; }
@@ -31,5 +32,6 @@ namespace Wholesale_Marketplace.Models
         public virtual Role Role { get; set; }
         public virtual ICollection<Seller> Sellers { get; set; }
         public virtual ICollection<Support_agent> Support_agent { get; set; }
+        public virtual ICollection<Message> Messages { get; set; }
     }
 }
