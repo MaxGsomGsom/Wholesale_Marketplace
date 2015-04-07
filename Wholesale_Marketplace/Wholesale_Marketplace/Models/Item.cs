@@ -34,9 +34,9 @@ namespace Wholesale_Marketplace.Models
         public int Marks_count { get; set; }
         public double Average_mark { get; set; }
     
-        public virtual Item_category Item_category { get; set; }
         public virtual Store Store { get; set; }
         public virtual ICollection<Order> Orders { get; set; }
         public virtual ICollection<Picture> Pictures { get; set; }
+        public virtual Item_category Item_category { get; set; }
     }
 }

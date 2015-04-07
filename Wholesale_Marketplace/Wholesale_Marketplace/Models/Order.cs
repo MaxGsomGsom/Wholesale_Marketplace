@@ -14,11 +14,15 @@ namespace Wholesale_Marketplace.Models
     
     public partial class Order
     {
+        public Order()
+        {
+            this.Dialog_dispute = new HashSet<Dialog_dispute>();
+        }
+    
         public int OrderID { get; set; }
-        public int AgentID { get; set; }
+        public Nullable<int> AgentID { get; set; }
         public int BuyerID { get; set; }
         public int ItemID { get; set; }
-        public int DisputeID { get; set; }
         public int ShippingID { get; set; }
         public int Order_statusID { get; set; }
         public double Total_price { get; set; }
@@ -30,14 +34,14 @@ namespace Wholesale_Marketplace.Models
         public string Address { get; set; }
         public string ForSellerInfo { get; set; }
         public string ForBuyerInfo { get; set; }
-        public int SellerID { get; set; }
+        public Nullable<int> SellerID { get; set; }
     
         public virtual Buyer Buyer { get; set; }
-        public virtual Dialog_dispute Dialog_dispute { get; set; }
         public virtual Item Item { get; set; }
-        public virtual Support_agent Support_agent { get; set; }
         public virtual Shipping_type Shipping_type { get; set; }
         public virtual Order_status Order_status { get; set; }
+        public virtual Support_agent Support_agent { get; set; }
         public virtual Seller Seller { get; set; }
+        public virtual ICollection<Dialog_dispute> Dialog_dispute { get; set; }
     }
 }

@@ -41,9 +41,9 @@ namespace Wholesale_Marketplace.Controllers
                 if (curItem.Close_date > DateTime.Now && curItem.Left_goods_count > 0)
                 {
                     //единичные агент продавец и писпут означают что их пока нет
-                    NewOrder.AgentID = 1;
-                    NewOrder.SellerID = 1;
-                    NewOrder.DisputeID = 1;
+                    //NewOrder.AgentID = 1;
+                    //NewOrder.SellerID = 1;
+                    //NewOrder.DisputeID = 1;
 
 
                     NewOrder.Order_statusID = 0;

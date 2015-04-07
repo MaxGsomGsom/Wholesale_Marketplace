@@ -26,8 +26,8 @@ namespace Wholesale_Marketplace.Models
         public int Solved_count { get; set; }
         public System.DateTime Registration_date { get; set; }
     
+        public virtual User User { get; set; }
         public virtual ICollection<Dialog_dispute> Dialog_dispute { get; set; }
         public virtual ICollection<Order> Orders { get; set; }
-        public virtual User User { get; set; }
     }
 }

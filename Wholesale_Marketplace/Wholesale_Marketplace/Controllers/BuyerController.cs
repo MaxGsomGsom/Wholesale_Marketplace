@@ -11,7 +11,6 @@ namespace Wholesale_Marketplace.Controllers
     {
         WMDB db = new WMDB();
 
-        // GET: Buyer
         public ActionResult Orders()
         {
             if (Helpers.UserCheck(db, ViewBag) && ViewBag.RoleID == 0)
@@ -19,6 +18,23 @@ namespace Wholesale_Marketplace.Controllers
                 int buyerID = ViewBag.BuyerID;
                 IEnumerable<Order> orders = db.Orders.Where(m => m.BuyerID == buyerID).OrderByDescending(m =>m.Open_date);
                 return View("Orders", orders);
+            }
+
+            return Redirect("/Home/Index");
+        }
+
+        public ActionResult Dialogs()
+        {
+            if (Helpers.UserCheck(db, ViewBag) && ViewBag.RoleID == 0)
+            {
+                int buyerID = ViewBag.BuyerID;
+                IEnumerable<Dialog_dispute> dialogs = db.Dialog_dispute.Where(m => m.BuyerID == buyerID);
+                dialogs = dialogs.OrderByDescending(m =>
+                {
+                    DateTime key = m.Messages.Last().Post_date;
+                    return key;
+                });
+                return View("Dialogs", dialogs);
             }
 
             return Redirect("/Home/Index");
