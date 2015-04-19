@@ -1,0 +1,15 @@
+﻿@model IEnumerable<Wholesale_Marketplace.Models.Message>
+@using Wholesale_Marketplace.Models
+@using System.Linq
+
+
+@foreach (Message item in Model)
+{
+    <div class="row">
+        <div class="row">@item.User.Login @item.Post_date</div>
+        <div class="row">@item.Text</div>
+        @if (item.Pictures.Count > 0) { 
+            <div class="row"><img style="max-height:100px" src="/Dialog/GetImage?id=@item.Pictures.First().PictureID" onclick="window.open('/Dialog/GetImage?id=@item.Pictures.First().PictureID')" /></div>
+        }
+    </div>
+}
