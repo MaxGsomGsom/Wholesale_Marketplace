@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using Wholesale_Marketplace.Models
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -48,9 +50,10 @@
                             Категория товара <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="#">123</a></li>
-                            <li><a href="#">456</a></li>
-                            <li><a href="#">646363</a></li>
+                            @foreach (Item_category cat in ViewBag.Categories)
+                            {
+                                <li><a href="/Item/Search?category=@cat.CategoryID">@cat.Name</a></li>
+                            }
                         </ul>
                     </div>
                 </div>

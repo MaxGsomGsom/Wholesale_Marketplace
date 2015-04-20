@@ -89,5 +89,68 @@ namespace Wholesale_Marketplace.Controllers
             return Content("");
         }
 
+        public ActionResult CreateDialogForItem(int itemID)
+        {
+            if (Helpers.UserCheck(db, ViewBag) && ViewBag.RoleID == 0)
+            {
+                if (db.Items.Any(m => m.ItemID == itemID))
+                {
+                    int buyer = ViewBag.BuyerID;
+                    if (db.Dialog_dispute.Any(m=>m.ItemID == itemID && m.BuyerID==buyer))
+                    {
+                        return View("Show", db.Dialog_dispute.First(m => m.ItemID == itemID && m.BuyerID == buyer));
+                    }
+                    else
+                    {
+                        Dialog_dispute newDialog = new Dialog_dispute();
+                        newDialog.Open_date = DateTime.Now;
+                        newDialog.ItemID = itemID;
+                        newDialog.IsDispute = false;
+                        newDialog.HasNewMessages = false;
+                        newDialog.BuyerID = ViewBag.BuyerID;
+                        db.Dialog_dispute.Add(newDialog);
+                        db.SaveChanges();
+                        return View("Show", newDialog);
+                    }
+                }
+
+                
+            }
+
+            return Redirect("/Home/Index");
+        }
+
+
+        public ActionResult CreateDialogForOrder(int orderID)
+        {
+            if (Helpers.UserCheck(db, ViewBag) && ViewBag.RoleID == 0)
+            {
+                if (db.Orders.Any(m => m.OrderID == orderID))
+                {
+                    int buyer = ViewBag.BuyerID;
+                    if (db.Dialog_dispute.Any(m => m.OrderID == orderID && m.BuyerID == buyer))
+                    {
+                        return View("Show", db.Dialog_dispute.First(m => m.OrderID == orderID && m.BuyerID == buyer));
+                    }
+                    else
+                    {
+                        Dialog_dispute newDialog = new Dialog_dispute();
+                        newDialog.Open_date = DateTime.Now;
+                        newDialog.OrderID = orderID;
+                        newDialog.IsDispute = false;
+                        newDialog.HasNewMessages = false;
+                        newDialog.BuyerID = ViewBag.BuyerID;
+                        db.Dialog_dispute.Add(newDialog);
+                        db.SaveChanges();
+                        return View("Show", newDialog);
+                    }
+                }
+
+
+            }
+
+            return Redirect("/Home/Index");
+        }
+
     }
 }

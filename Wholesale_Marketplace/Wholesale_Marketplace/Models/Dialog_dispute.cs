@@ -29,11 +29,13 @@ namespace Wholesale_Marketplace.Models
         public string Resolution_text { get; set; }
         public Nullable<int> OrderID { get; set; }
         public bool HasNewMessages { get; set; }
+        public Nullable<int> ItemID { get; set; }
     
         public virtual Buyer Buyer { get; set; }
         public virtual ICollection<Message> Messages { get; set; }
         public virtual Support_agent Support_agent { get; set; }
         public virtual Seller Seller { get; set; }
         public virtual Order Order { get; set; }
+        public virtual Item Item { get; set; }
     }
 }

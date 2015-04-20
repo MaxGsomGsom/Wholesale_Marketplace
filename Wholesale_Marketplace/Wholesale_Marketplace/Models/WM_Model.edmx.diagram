@@ -40,6 +40,7 @@
         <AssociationConnector Association="WM_Model.FK_ORDER_PLACE_OF__SELLER" />
         <AssociationConnector Association="WM_Model.FK_DIALOGUE_SIDE_4_ORDER" />
         <AssociationConnector Association="WM_Model.FK_MESSAGE_USER" />
+        <AssociationConnector Association="WM_Model.FK_DIALOGUE_SIDE_5_ITEM" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
