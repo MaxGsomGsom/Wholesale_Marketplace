@@ -98,6 +98,7 @@ namespace Wholesale_Marketplace.Controllers
         [HttpGet]
         public ActionResult Login()
         {
+            Helpers.UserCheck(db, ViewBag);
             return View("Login");
         }
 

@@ -31,7 +31,15 @@ namespace Wholesale_Marketplace.Controllers
                 IEnumerable<Dialog_dispute> dialogs = db.Dialog_dispute.Where(m => m.BuyerID == buyerID);
                 dialogs = dialogs.OrderByDescending(m =>
                 {
-                    DateTime key = m.Messages.Last().Post_date;
+                    DateTime key = new DateTime(1999,1,1);
+                    try
+                    {
+                        key = m.Messages.Last().Post_date;
+                    }
+                    catch
+                    {
+                        key = m.Open_date;
+                    }
                     return key;
                 });
                 return View("Dialogs", dialogs);

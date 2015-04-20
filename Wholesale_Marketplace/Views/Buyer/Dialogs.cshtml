@@ -1,9 +1,9 @@
 ﻿@model IEnumerable<Wholesale_Marketplace.Models.Dialog_dispute>
-@using Wholesale_Marketplace.Models
+@using Wholesale_Marketplace.Models 
 
 
 @{
-    ViewBag.Title = "Диалоги";
+    ViewBag.Title = "Диалоги"; //ошибка если нет сообщений, либо емсли не присвоен продавец, проверить создание диспута
     if (ViewBag.RoleID == 0) { Layout = "~/Views/Shared/BuyerLayout.cshtml"; }
 }
 
@@ -11,7 +11,11 @@
 <div class="field-main">
     @foreach (Dialog_dispute dialog in Model)
     {
-        Message lastMessage = dialog.Messages.Last();
+        Message lastMessage = null;
+        if (dialog.Messages.Count > 0)
+        {
+            lastMessage = dialog.Messages.Last();
+        }
         <div class="row field-in" style="padding-top:1em; margin-bottom:1em; padding-left:0px">
             @if (dialog.Seller != null)
             {
@@ -26,8 +30,11 @@
             <div class="row">Заказ: <a href="/Order/Info?id=@dialog.OrderID" style="text-decoration:none; color:black"><b>@dialog.OrderID</b></a></div>
         }
         <div class="row"></div>
+@if (dialog.Messages.Count > 0)
+{
         <div class="row">Последнее сообщение: @lastMessage.Post_date от @lastMessage.User.Login</div>
         <div class="row">@lastMessage.Text</div>
+        }
     </div>
             }
             else
@@ -38,8 +45,10 @@
                 <div class="col-md-6">
                     <div class="row">@dialog.Support_agent.User.Login (агент техподдержки)</div>
                     <div class="row"></div>
+@if (dialog.Messages.Count > 0) {
                     <div class="row">Последнее сообщение: @lastMessage.Post_date от @lastMessage.User.Login</div>
                     <div class="row">@lastMessage.Text</div>
+}
                 </div>
              }
                     

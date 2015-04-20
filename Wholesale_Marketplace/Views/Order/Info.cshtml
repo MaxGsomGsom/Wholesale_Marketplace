@@ -143,23 +143,22 @@
         </dl>
     </div>
 
-    @if (@Model.Order_statusID == 0)
+    @if (Model.Order_statusID == 0)
     {
         <a href="/Order/Pay?id=@Model.OrderID" class="btn btn-primary">Оплатить заказ</a>
         <a href="/Order/Cancel?id=@Model.OrderID" class="btn btn-primary">Отменить заказ</a>
     }
-    else if (@Model.Order_statusID == 2)
+    else if (Model.Order_statusID == 1)
+    {
+        <a href="/Dialog/OpenDispute?orderId=@Model.OrderID" class="btn btn-primary">Открыть спор</a>
+    }
+    else if (Model.Order_statusID == 2)
     {
         <a href="/Order/Review?id=@Model.OrderID" class="btn btn-primary">Завершить заказ</a>
-        <a href="@Model.OrderID" class="btn btn-primary">Открыть спор</a>
+        <a href="/Dialog/OpenDispute?orderId=@Model.OrderID" class="btn btn-primary">Открыть спор</a>
     }
-    else if (@Model.Order_statusID == 4)
+    else if (Model.Order_statusID == 4 || Model.Order_statusID == 5)
     {
-        <a href="@Model.OrderID" class="btn btn-primary">Перейти к спору</a>
-        <a href="@Model.OrderID" class="btn btn-primary">Закрыть спор??</a>
-    }
-    else if (@Model.Order_statusID == 5)
-    {
-        <a href="/Order/Review?id=@Model.OrderID" class="btn btn-primary">Завершить спор??</a>
+        <a href="/Dialog/Show?id=@Model.Dialog_dispute.First().DisputeID" class="btn btn-primary">Перейти к спору</a>
     }
 </div>
