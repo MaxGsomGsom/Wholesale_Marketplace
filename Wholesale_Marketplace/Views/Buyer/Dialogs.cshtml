@@ -1,9 +1,9 @@
 ﻿@model IEnumerable<Wholesale_Marketplace.Models.Dialog_dispute>
-@using Wholesale_Marketplace.Models 
+@using Wholesale_Marketplace.Models
 
 
 @{
-    ViewBag.Title = "Диалоги"; //ошибка если нет сообщений, либо емсли не присвоен продавец, проверить создание диспута
+    ViewBag.Title = "Диалоги";
     if (ViewBag.RoleID == 0) { Layout = "~/Views/Shared/BuyerLayout.cshtml"; }
 }
 
@@ -11,47 +11,93 @@
 <div class="field-main">
     @foreach (Dialog_dispute dialog in Model)
     {
-        Message lastMessage = null;
-        if (dialog.Messages.Count > 0)
-        {
-            lastMessage = dialog.Messages.Last();
-        }
         <div class="row field-in" style="padding-top:1em; margin-bottom:1em; padding-left:0px">
-            @if (dialog.Seller != null)
+            @if (dialog.Order != null || dialog.Item!=null)
             {
-            <div class="col-md-3">
-                <img src="/Account/Avatar?UserID=@dialog.Seller.UserID" class="img-responsive img-rounded" style="width:100%; max-height:100px" />
-            </div>
-    <div class="col-md-6">
-        <div class="row">@dialog.Seller.User.Login (продавец магазина @dialog.Seller.Store.Name)</div>
-        <div class="row"></div>
-        @if (dialog.Order != null)
-        {
-            <div class="row">Заказ: <a href="/Order/Info?id=@dialog.OrderID" style="text-decoration:none; color:black"><b>@dialog.OrderID</b></a></div>
-        }
-        <div class="row"></div>
-@if (dialog.Messages.Count > 0)
-{
-        <div class="row">Последнее сообщение: @lastMessage.Post_date от @lastMessage.User.Login</div>
-        <div class="row">@lastMessage.Text</div>
-        }
-    </div>
+                <div class="col-md-3">
+                    @if(dialog.Seller!=null) {
+                    <img src="/Account/Avatar?UserID=@dialog.Seller.UserID" class="img-responsive img-rounded" style="width:100%; max-height:100px" />
+                    }
+                    else
+                    {
+                    <img src="/Account/Avatar?UserID=-1" class="img-responsive img-rounded" style="width:100%; max-height:100px" />
+                    }
+                </div>
+                <div class="col-md-6">
+                    @if(dialog.Seller!=null) 
+                    {
+                    <div class="row">@dialog.Seller.User.Login (продавец магазина @dialog.Seller.Store.Name)</div>
+                    }
+                    else if (dialog.Order != null)
+                    {
+                    <div class="row">магазин @dialog.Order.Item.Store.Name</div>
+                    }
+                    else
+                    {
+                    <div class="row">магазин @dialog.Item.Store.Name</div>
+                    }
+
+                    <div class="row"></div>
+                    @if (dialog.Order != null)
+                    {
+                    <div class="row">Заказ: <a href="/Order/Info?id=@dialog.OrderID" style="text-decoration:none; color:black"><b>@dialog.OrderID  (@dialog.Order.Item.Name)</b></a></div>
+                    }
+                    else
+                    {
+                    <div class="row">Вещь: <a href="/Item/Info?id=@dialog.ItemID" style="text-decoration:none; color:black"><b>@dialog.Item.Name</b></a></div>
+                    }
+
+                    <div class="row"></div>
+                    @if (dialog.Messages.Count > 0)
+                    {
+                        <div class="row">Последнее сообщение: @dialog.Messages.Last().Post_date от @dialog.Messages.Last().User.Login</div>
+                        <div class="row">@dialog.Messages.Last().Text</div>
+                    }
+                    else
+                    {
+                        <div class="row">Создан: @dialog.Open_date</div>
+                    }
+                    @if (dialog.IsDispute && dialog.Order.Order_statusID == 4)
+                    {
+                        <div class="row"><b>Спор открыт</b></div>
+                    }
+                </div>
             }
+            
+            
+            
+            
+            
+            
+            
             else
             {
                 <div class="col-md-3">
                     <img src="/Account/Avatar?UserID=-1" class="img-responsive img-rounded" style="width:100%; max-height:100px" />
                 </div>
                 <div class="col-md-6">
-                    <div class="row">@dialog.Support_agent.User.Login (агент техподдержки)</div>
+                    @if(dialog.Support_agent!=null) 
+                    {
+                        <div class="row">@dialog.Support_agent.User.Login (агент техподдержки)</div>
+                    }
+                    else
+                    {
+                        <div class="row">Техподдержка</div>
+                    }
+
                     <div class="row"></div>
-@if (dialog.Messages.Count > 0) {
-                    <div class="row">Последнее сообщение: @lastMessage.Post_date от @lastMessage.User.Login</div>
-                    <div class="row">@lastMessage.Text</div>
-}
+                    @if (dialog.Messages.Count > 0)
+                    {
+                        <div class="row">Последнее сообщение: @dialog.Messages.Last().Post_date от @dialog.Messages.Last().User.Login</div>
+                        <div class="row">@dialog.Messages.Last().Text</div>
+                    }
+                    else
+                    {
+                        <div class="row">Создан: @dialog.Open_date</div>
+                    }
                 </div>
-             }
-                    
+            }
+
 
             <div class="col-md-3">
                 <div class="row" style="padding-bottom:0em"><a class="btn btn-default" href="/Dialog/Show?id=@dialog.DisputeID">Открыть</a></div>
