@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -19,6 +20,7 @@ namespace Wholesale_Marketplace.Controllers
                 Dialog_dispute dialog = db.Dialog_dispute.Find(id);
                 if (dialog.Buyer.UserID == ViewBag.UserID)
                 {
+                    ViewBag.DisputeStates = db.DisputeStates.ToList();
                     return View("Show", dialog);
                 }
             }
@@ -147,6 +149,103 @@ namespace Wholesale_Marketplace.Controllers
                 }
 
 
+            }
+
+            return Redirect("/Home/Index");
+        }
+
+
+        public ActionResult OpenDispute(int orderID)
+        {
+            if (Helpers.UserCheck(db, ViewBag) && ViewBag.RoleID == 0)
+            {
+                if (db.Orders.Any(m => m.OrderID == orderID))
+                {
+                    Order curOrder = db.Orders.First(m => m.OrderID == orderID);
+
+                    if (curOrder.Order_statusID == 1 || curOrder.Order_statusID == 2)
+                    {
+
+                        int buyer = ViewBag.BuyerID;
+                        if (db.Dialog_dispute.Any(m => m.OrderID == orderID && m.BuyerID == buyer))
+                        {
+                            Dialog_dispute curDispute = db.Dialog_dispute.First(m => m.OrderID == orderID && m.BuyerID == buyer);
+                            curDispute.IsDispute = true;
+                            curDispute.DisputeStateID = 3;
+                            curDispute.RefundValue = 0;
+                            curOrder.Order_statusID = 4;
+                            db.Entry(curDispute).State = EntityState.Modified;
+                            db.Entry(curOrder).State = EntityState.Modified;
+                            db.SaveChanges();
+
+                            return View("Show", db.Dialog_dispute.First(m => m.OrderID == orderID && m.BuyerID == buyer));
+                        }
+                        else
+                        {
+                            Dialog_dispute newDialog = new Dialog_dispute();
+                            newDialog.Open_date = DateTime.Now;
+                            newDialog.OrderID = orderID;
+                            newDialog.IsDispute = true;
+                            newDialog.DisputeStateID = 3;
+                            newDialog.RefundValue = 0;
+                            newDialog.BuyerID = ViewBag.BuyerID;
+                            db.Dialog_dispute.Add(newDialog);
+                            db.SaveChanges();
+                            return View("Show", newDialog);
+                        }
+                    }
+                }
+
+
+            }
+
+            return Redirect("/Home/Index");
+        }
+
+
+        public ActionResult Agree(int id)
+        {
+            if (Helpers.UserCheck(db, ViewBag) && ViewBag.RoleID == 0)
+            {
+                Dialog_dispute dialog = db.Dialog_dispute.Find(id);
+                if (dialog.Buyer.UserID == ViewBag.UserID && dialog.IsDispute==true)
+                {
+                    dialog.BuyerAgree = true;
+                    db.Entry(dialog).State = EntityState.Modified;
+                    
+                    if (dialog.BuyerAgree==true && dialog.SellerAgree==true && dialog.Order.Order_statusID == 4)
+                    {
+                        Order curOrder = dialog.Order;
+                        curOrder.Order_statusID = 5;
+                        db.Entry(curOrder).State = EntityState.Modified;
+                    }
+                    db.SaveChanges();
+
+                    return View("Show", dialog);
+                }
+            }
+
+            return Redirect("/Home/Index");
+        }
+
+
+        public ActionResult ChangeSolution(int id, int refundValue, int disputeState)
+        {
+            if (Helpers.UserCheck(db, ViewBag) && ViewBag.RoleID == 0)
+            {
+                Dialog_dispute dialog = db.Dialog_dispute.Find(id);
+                if (dialog.Buyer.UserID == ViewBag.UserID && dialog.IsDispute == true && refundValue>=0 
+                    && refundValue<=dialog.Order.Total_price && disputeState>0 && disputeState<=3)
+                {
+                    dialog.BuyerAgree = false;
+                    dialog.SellerAgree = false;
+                    dialog.RefundValue = refundValue;
+                    dialog.DisputeStateID = disputeState;
+                    db.Entry(dialog).State = EntityState.Modified;
+                    db.SaveChanges();
+
+                    return View("Show", dialog);
+                }
             }
 
             return Redirect("/Home/Index");

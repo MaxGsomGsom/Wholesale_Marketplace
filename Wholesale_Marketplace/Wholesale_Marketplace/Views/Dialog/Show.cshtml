@@ -47,15 +47,15 @@
 
 <div class="field-main">
     <div class="col-md-8">
-        @if (Model.Seller != null)
+        @if (Model.Item != null)
         {
             <div class="row" style="padding-left:1em">
                 <div class="row">
-                    <h3><b>@Model.Seller.Store.Name</b></h3>
+                    <h3><b>@Model.Item.Store.Name</b></h3>
                 </div>
                 <div class="row">
-                    <div class="col-md-2" style="padding-left:0px">@Helpers.Stars(Convert.ToInt32(Model.Seller.Store.Average_mark))</div>
-                    <div class="col-md-2">@Model.Seller.Store.Orders_count заказов</div>
+                    <div class="col-md-2" style="padding-left:0px">@Helpers.Stars(Convert.ToInt32(Model.Item.Store.Average_mark))</div>
+                    <div class="col-md-2">@Model.Item.Store.Orders_count заказов</div>
                 </div>
             </div>
         }
@@ -74,13 +74,38 @@
             </form>
         </div>
     </div>
-    @if (Model.Order != null) { 
     <div class="col-md-4">
-        <div class="row">@Model.Order.Item.Name</div>
-        <div class="row"><img class=" img-rounded" id="MainImg" src="~/Item/Photo?id=@((Model.Order.Item.Pictures.Count > 0) ? (Model.Order.Item.Pictures.First().PictureID) : -1)" style=" max-height:100px"></div>
-        <div class="row"><a href="/Order/Info?id=@Model.Order.OrderID" role="button" class="btn btn-default">Посмотреть заказ</a></div>
-        <div class="row">   </div>
-    </div>
-    }
+        @if (Model.Order != null)
+        {
+            <div class="row">@Model.Order.Item.Name</div>
+            <div class="row"><img class=" img-rounded" id="MainImg" src="~/Item/Photo?id=@((Model.Order.Item.Pictures.Count > 0) ? (Model.Order.Item.Pictures.First().PictureID) : -1)" style=" max-height:100px"></div>
+            <div class="row"><a href="/Order/Info?id=@Model.Order.OrderID" role="button" class="btn btn-default">Посмотреть заказ</a></div>
+            <div class="row">   </div>
+        }
+        @if (Model.Item != null)
+        {
+            <div class="row">@Model.Item.Name</div>
+            <div class="row"><img class=" img-rounded" id="MainImg" src="~/Item/Photo?id=@((Model.Item.Pictures.Count > 0) ? (Model.Item.Pictures.First().PictureID) : -1)" style=" max-height:100px"></div>
+            <div class="row"><a href="/Item/Info?id=@Model.Item.ItemID" role="button" class="btn btn-default">Посмотреть товар</a></div>
+            <div class="row">   </div>
+        }
+        @if (Model.IsDispute)
+        {
+            <div class="row">@Model.DisputeState.Name</div>
+            <div class="row">@Model.RefundValue руб</div>
+            <div class="row"><a href="/Dispute/Agree?id=@Model.DisputeID" role="button" class="btn btn-default">Согласиться</a></div>
+            <form action="/Dispute/ChangeSolution" method="post">
+                <input type="number" name="id" value="@Model.DisputeID" style="display:none"/>
+                <input type="number" name="refundValue" value="0" />
+                <select name="disputeState" class="form-control"  required>
+                    @foreach (DisputeState state in ViewBag.DisputeStates)
+                    {
+                        <option value="@state.DisputeStateID" style="padding:0.5em"> @state.Name </option>
+                    }
+                </select>
+                <div class="row"><input type="submit" class="btn btn-primary" value="Предложить" /></div>
+            </form>
+        }
+    </div>  
 </div>
 

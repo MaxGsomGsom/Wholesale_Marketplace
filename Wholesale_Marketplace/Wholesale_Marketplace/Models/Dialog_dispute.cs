@@ -30,6 +30,10 @@ namespace Wholesale_Marketplace.Models
         public Nullable<int> OrderID { get; set; }
         public bool HasNewMessages { get; set; }
         public Nullable<int> ItemID { get; set; }
+        public Nullable<double> RefundValue { get; set; }
+        public Nullable<bool> SellerAgree { get; set; }
+        public Nullable<bool> BuyerAgree { get; set; }
+        public Nullable<int> DisputeStateID { get; set; }
     
         public virtual Buyer Buyer { get; set; }
         public virtual ICollection<Message> Messages { get; set; }
@@ -37,5 +41,6 @@ namespace Wholesale_Marketplace.Models
         public virtual Seller Seller { get; set; }
         public virtual Order Order { get; set; }
         public virtual Item Item { get; set; }
+        public virtual DisputeState DisputeState { get; set; }
     }
 }

@@ -32,6 +32,17 @@
           <Property Name="OrderID" Type="int" />
           <Property Name="HasNewMessages" Type="bit" Nullable="false" />
           <Property Name="ItemID" Type="int" />
+          <Property Name="RefundValue" Type="float" />
+          <Property Name="SellerAgree" Type="bit" />
+          <Property Name="BuyerAgree" Type="bit" />
+          <Property Name="DisputeStateID" Type="int" />
+        </EntityType>
+        <EntityType Name="DisputeState">
+          <Key>
+            <PropertyRef Name="DisputeStateID" />
+          </Key>
+          <Property Name="DisputeStateID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Item">
           <Key>
@@ -237,6 +248,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_DIALOGUE_SIDE 6_DisputeState">
+          <End Role="DisputeState" Type="Self.DisputeState" Multiplicity="0..1" />
+          <End Role="Dialog_dispute" Type="Self.Dialog_dispute" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DisputeState">
+              <PropertyRef Name="DisputeStateID" />
+            </Principal>
+            <Dependent Role="Dialog_dispute">
+              <PropertyRef Name="DisputeStateID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ITEM_CATHEGORY_ITEM_CAT">
           <End Role="Item_category" Type="Self.Item_category" Multiplicity="1" />
           <End Role="Item" Type="Self.Item" Multiplicity="*" />
@@ -432,6 +455,7 @@
         <EntityContainer Name="Хранилище WM_ModelContainer">
           <EntitySet Name="Buyer" EntityType="Self.Buyer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Dialog_dispute" EntityType="Self.Dialog_dispute" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DisputeState" EntityType="Self.DisputeState" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Item" EntityType="Self.Item" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Item_category" EntityType="Self.Item_category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Message" EntityType="Self.Message" Schema="dbo" store:Type="Tables" />
@@ -466,6 +490,10 @@
           </AssociationSet>
           <AssociationSet Name="FK_DIALOGUE_SIDE 5_ITEM" Association="Self.FK_DIALOGUE_SIDE 5_ITEM">
             <End Role="Item" EntitySet="Item" />
+            <End Role="Dialog_dispute" EntitySet="Dialog_dispute" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DIALOGUE_SIDE 6_DisputeState" Association="Self.FK_DIALOGUE_SIDE 6_DisputeState">
+            <End Role="DisputeState" EntitySet="DisputeState" />
             <End Role="Dialog_dispute" EntitySet="Dialog_dispute" />
           </AssociationSet>
           <AssociationSet Name="FK_ITEM_CATHEGORY_ITEM_CAT" Association="Self.FK_ITEM_CATHEGORY_ITEM_CAT">
@@ -573,6 +601,11 @@
           <Property Name="HasNewMessages" Type="Boolean" Nullable="false" />
           <Property Name="ItemID" Type="Int32" />
           <NavigationProperty Name="Item" Relationship="WM_Model.FK_DIALOGUE_SIDE_5_ITEM" FromRole="Dialog_dispute" ToRole="Item" />
+          <Property Name="RefundValue" Type="Double" />
+          <Property Name="SellerAgree" Type="Boolean" />
+          <Property Name="BuyerAgree" Type="Boolean" />
+          <Property Name="DisputeStateID" Type="Int32" />
+          <NavigationProperty Name="DisputeState" Relationship="WM_Model.FK_DIALOGUE_SIDE_6_DisputeState" FromRole="Dialog_dispute" ToRole="DisputeState" />
         </EntityType>
         <EntityType Name="Item">
           <Key>
@@ -1012,6 +1045,11 @@
             <End Role="Item" EntitySet="Items" />
             <End Role="Dialog_dispute" EntitySet="Dialog_dispute" />
           </AssociationSet>
+          <EntitySet Name="DisputeStates" EntityType="WM_Model.DisputeState" />
+          <AssociationSet Name="FK_DIALOGUE_SIDE_6_DisputeState" Association="WM_Model.FK_DIALOGUE_SIDE_6_DisputeState">
+            <End Role="DisputeState" EntitySet="DisputeStates" />
+            <End Role="Dialog_dispute" EntitySet="Dialog_dispute" />
+          </AssociationSet>
         </EntityContainer>
         <Association Name="FK_DIALOGUE_SIDE_2_SUPPORT_">
           <End Type="WM_Model.Support_agent" Role="Support_agent" Multiplicity="0..1" />
@@ -1109,6 +1147,26 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="DisputeState">
+          <Key>
+            <PropertyRef Name="DisputeStateID" />
+          </Key>
+          <Property Name="DisputeStateID" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Dialog_dispute" Relationship="WM_Model.FK_DIALOGUE_SIDE_6_DisputeState" FromRole="DisputeState" ToRole="Dialog_dispute" />
+        </EntityType>
+        <Association Name="FK_DIALOGUE_SIDE_6_DisputeState">
+          <End Type="WM_Model.DisputeState" Role="DisputeState" Multiplicity="0..1" />
+          <End Type="WM_Model.Dialog_dispute" Role="Dialog_dispute" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DisputeState">
+              <PropertyRef Name="DisputeStateID" />
+            </Principal>
+            <Dependent Role="Dialog_dispute">
+              <PropertyRef Name="DisputeStateID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1131,6 +1189,10 @@
           <EntitySetMapping Name="Dialog_dispute">
             <EntityTypeMapping TypeName="WM_Model.Dialog_dispute">
               <MappingFragment StoreEntitySet="Dialog_dispute">
+                <ScalarProperty Name="DisputeStateID" ColumnName="DisputeStateID" />
+                <ScalarProperty Name="BuyerAgree" ColumnName="BuyerAgree" />
+                <ScalarProperty Name="SellerAgree" ColumnName="SellerAgree" />
+                <ScalarProperty Name="RefundValue" ColumnName="RefundValue" />
                 <ScalarProperty Name="ItemID" ColumnName="ItemID" />
                 <ScalarProperty Name="HasNewMessages" ColumnName="HasNewMessages" />
                 <ScalarProperty Name="OrderID" ColumnName="OrderID" />
@@ -1286,6 +1348,14 @@
                 <ScalarProperty Name="Login" ColumnName="Login" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DisputeStates">
+            <EntityTypeMapping TypeName="WM_Model.DisputeState">
+              <MappingFragment StoreEntitySet="DisputeState">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="DisputeStateID" ColumnName="DisputeStateID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

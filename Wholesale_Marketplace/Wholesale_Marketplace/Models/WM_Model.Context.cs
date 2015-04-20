@@ -39,5 +39,6 @@ namespace Wholesale_Marketplace.Models
         public virtual DbSet<Store> Stores { get; set; }
         public virtual DbSet<Support_agent> Support_agent { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<DisputeState> DisputeStates { get; set; }
     }
 }

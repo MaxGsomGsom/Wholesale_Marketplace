@@ -134,6 +134,9 @@
     <Compile Include="Models\Dialog_dispute.cs">
       <DependentUpon>WM_Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\DisputeState.cs">
+      <DependentUpon>WM_Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Item.cs">
       <DependentUpon>WM_Model.tt</DependentUpon>
     </Compile>
