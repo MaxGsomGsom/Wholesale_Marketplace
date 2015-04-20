@@ -20,7 +20,7 @@ namespace Wholesale_Marketplace.Controllers
                 Dialog_dispute dialog = db.Dialog_dispute.Find(id);
                 if (dialog.Buyer.UserID == ViewBag.UserID)
                 {
-                    ViewBag.DisputeStates = db.DisputeStates.ToList();
+                    ViewBag.DisputeStates = db.DisputeStates;
                     return View("Show", dialog);
                 }
             }
@@ -50,9 +50,11 @@ namespace Wholesale_Marketplace.Controllers
             {
                 if (db.Dialog_dispute.Find(newMessage.DisputeID).Buyer.UserID == ViewBag.UserID)
                 {
+                    if (newMessage.Text == null) return Content("");
+
                     newMessage.Post_date = DateTime.Now;
                     newMessage.UserID = ViewBag.UserID;
-
+                    
                     db.Messages.Add(newMessage);
                     db.SaveChanges();
 
@@ -100,6 +102,7 @@ namespace Wholesale_Marketplace.Controllers
                     int buyer = ViewBag.BuyerID;
                     if (db.Dialog_dispute.Any(m=>m.ItemID == itemID && m.BuyerID==buyer))
                     {
+                        ViewBag.DisputeStates = db.DisputeStates;
                         return View("Show", db.Dialog_dispute.First(m => m.ItemID == itemID && m.BuyerID == buyer));
                     }
                     else
@@ -112,6 +115,7 @@ namespace Wholesale_Marketplace.Controllers
                         newDialog.BuyerID = ViewBag.BuyerID;
                         db.Dialog_dispute.Add(newDialog);
                         db.SaveChanges();
+                        ViewBag.DisputeStates = db.DisputeStates;
                         return View("Show", newDialog);
                     }
                 }
@@ -132,6 +136,7 @@ namespace Wholesale_Marketplace.Controllers
                     int buyer = ViewBag.BuyerID;
                     if (db.Dialog_dispute.Any(m => m.OrderID == orderID && m.BuyerID == buyer))
                     {
+                        ViewBag.DisputeStates = db.DisputeStates;
                         return View("Show", db.Dialog_dispute.First(m => m.OrderID == orderID && m.BuyerID == buyer));
                     }
                     else
@@ -144,6 +149,8 @@ namespace Wholesale_Marketplace.Controllers
                         newDialog.BuyerID = ViewBag.BuyerID;
                         db.Dialog_dispute.Add(newDialog);
                         db.SaveChanges();
+                        ViewBag.DisputeStates = db.DisputeStates;
+                        newDialog.Order = db.Orders.Find(orderID);
                         return View("Show", newDialog);
                     }
                 }
@@ -177,7 +184,7 @@ namespace Wholesale_Marketplace.Controllers
                             db.Entry(curDispute).State = EntityState.Modified;
                             db.Entry(curOrder).State = EntityState.Modified;
                             db.SaveChanges();
-
+                            ViewBag.DisputeStates = db.DisputeStates;
                             return View("Show", db.Dialog_dispute.First(m => m.OrderID == orderID && m.BuyerID == buyer));
                         }
                         else
@@ -191,6 +198,8 @@ namespace Wholesale_Marketplace.Controllers
                             newDialog.BuyerID = ViewBag.BuyerID;
                             db.Dialog_dispute.Add(newDialog);
                             db.SaveChanges();
+                            ViewBag.DisputeStates = db.DisputeStates;
+                            newDialog.Order = db.Orders.Find(orderID);
                             return View("Show", newDialog);
                         }
                     }
@@ -220,7 +229,7 @@ namespace Wholesale_Marketplace.Controllers
                         db.Entry(curOrder).State = EntityState.Modified;
                     }
                     db.SaveChanges();
-
+                    ViewBag.DisputeStates = db.DisputeStates;
                     return View("Show", dialog);
                 }
             }
@@ -235,7 +244,7 @@ namespace Wholesale_Marketplace.Controllers
             {
                 Dialog_dispute dialog = db.Dialog_dispute.Find(id);
                 if (dialog.Buyer.UserID == ViewBag.UserID && dialog.IsDispute == true && refundValue>=0 
-                    && refundValue<=dialog.Order.Total_price && disputeState>0 && disputeState<=3)
+                    && refundValue<=dialog.Order.Total_price && disputeState>=0 && disputeState<=3)
                 {
                     dialog.BuyerAgree = false;
                     dialog.SellerAgree = false;
@@ -243,7 +252,7 @@ namespace Wholesale_Marketplace.Controllers
                     dialog.DisputeStateID = disputeState;
                     db.Entry(dialog).State = EntityState.Modified;
                     db.SaveChanges();
-
+                    ViewBag.DisputeStates = db.DisputeStates;
                     return View("Show", dialog);
                 }
             }
