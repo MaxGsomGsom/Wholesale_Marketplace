@@ -18,6 +18,7 @@ namespace Wholesale_Marketplace.Models
         {
             this.Orders = new HashSet<Order>();
             this.Pictures = new HashSet<Picture>();
+            this.Dialog_dispute = new HashSet<Dialog_dispute>();
         }
     
         public int ItemID { get; set; }
@@ -38,5 +39,6 @@ namespace Wholesale_Marketplace.Models
         public virtual ICollection<Order> Orders { get; set; }
         public virtual ICollection<Picture> Pictures { get; set; }
         public virtual Item_category Item_category { get; set; }
+        public virtual ICollection<Dialog_dispute> Dialog_dispute { get; set; }
     }
 }

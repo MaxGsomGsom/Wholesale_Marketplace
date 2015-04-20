@@ -31,6 +31,7 @@
           <Property Name="Resolution_text" Type="varchar" MaxLength="50" />
           <Property Name="OrderID" Type="int" />
           <Property Name="HasNewMessages" Type="bit" Nullable="false" />
+          <Property Name="ItemID" Type="int" />
         </EntityType>
         <EntityType Name="Item">
           <Key>
@@ -221,6 +222,18 @@
             </Principal>
             <Dependent Role="Dialog_dispute">
               <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DIALOGUE_SIDE 5_ITEM">
+          <End Role="Item" Type="Self.Item" Multiplicity="0..1" />
+          <End Role="Dialog_dispute" Type="Self.Dialog_dispute" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Item">
+              <PropertyRef Name="ItemID" />
+            </Principal>
+            <Dependent Role="Dialog_dispute">
+              <PropertyRef Name="ItemID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -451,6 +464,10 @@
             <End Role="Order" EntitySet="Order" />
             <End Role="Dialog_dispute" EntitySet="Dialog_dispute" />
           </AssociationSet>
+          <AssociationSet Name="FK_DIALOGUE_SIDE 5_ITEM" Association="Self.FK_DIALOGUE_SIDE 5_ITEM">
+            <End Role="Item" EntitySet="Item" />
+            <End Role="Dialog_dispute" EntitySet="Dialog_dispute" />
+          </AssociationSet>
           <AssociationSet Name="FK_ITEM_CATHEGORY_ITEM_CAT" Association="Self.FK_ITEM_CATHEGORY_ITEM_CAT">
             <End Role="Item_category" EntitySet="Item_category" />
             <End Role="Item" EntitySet="Item" />
@@ -554,6 +571,8 @@
           <NavigationProperty Name="Seller" Relationship="WM_Model.FK_DIALOGUE_SIDE_3_SELLER" FromRole="Dialog_dispute" ToRole="Seller" />
           <NavigationProperty Name="Order" Relationship="WM_Model.FK_DIALOGUE_SIDE_4_ORDER" FromRole="Dialog_dispute" ToRole="Order" />
           <Property Name="HasNewMessages" Type="Boolean" Nullable="false" />
+          <Property Name="ItemID" Type="Int32" />
+          <NavigationProperty Name="Item" Relationship="WM_Model.FK_DIALOGUE_SIDE_5_ITEM" FromRole="Dialog_dispute" ToRole="Item" />
         </EntityType>
         <EntityType Name="Item">
           <Key>
@@ -576,6 +595,7 @@
           <Property Name="Marks_count" Type="Int32" Nullable="false" />
           <Property Name="Average_mark" Type="Double" Nullable="false" />
           <NavigationProperty Name="Item_category" Relationship="WM_Model.FK_ITEM_CATHEGORY_ITEM_CAT" FromRole="Item" ToRole="Item_category" />
+          <NavigationProperty Name="Dialog_dispute" Relationship="WM_Model.FK_DIALOGUE_SIDE_5_ITEM" FromRole="Item" ToRole="Dialog_dispute" />
         </EntityType>
         <EntityType Name="Item_category">
           <Key>
@@ -988,6 +1008,10 @@
             <End Role="User" EntitySet="Users" />
             <End Role="Message" EntitySet="Messages" />
           </AssociationSet>
+          <AssociationSet Name="FK_DIALOGUE_SIDE_5_ITEM" Association="WM_Model.FK_DIALOGUE_SIDE_5_ITEM">
+            <End Role="Item" EntitySet="Items" />
+            <End Role="Dialog_dispute" EntitySet="Dialog_dispute" />
+          </AssociationSet>
         </EntityContainer>
         <Association Name="FK_DIALOGUE_SIDE_2_SUPPORT_">
           <End Type="WM_Model.Support_agent" Role="Support_agent" Multiplicity="0..1" />
@@ -1073,6 +1097,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_DIALOGUE_SIDE_5_ITEM">
+          <End Type="WM_Model.Item" Role="Item" Multiplicity="0..1" />
+          <End Type="WM_Model.Dialog_dispute" Role="Dialog_dispute" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Item">
+              <PropertyRef Name="ItemID" />
+            </Principal>
+            <Dependent Role="Dialog_dispute">
+              <PropertyRef Name="ItemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1095,6 +1131,7 @@
           <EntitySetMapping Name="Dialog_dispute">
             <EntityTypeMapping TypeName="WM_Model.Dialog_dispute">
               <MappingFragment StoreEntitySet="Dialog_dispute">
+                <ScalarProperty Name="ItemID" ColumnName="ItemID" />
                 <ScalarProperty Name="HasNewMessages" ColumnName="HasNewMessages" />
                 <ScalarProperty Name="OrderID" ColumnName="OrderID" />
                 <ScalarProperty Name="DisputeID" ColumnName="DisputeID" />
