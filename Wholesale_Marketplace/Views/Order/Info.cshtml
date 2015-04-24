@@ -26,139 +26,135 @@
         </div>
     </div>
 
-    <div class="row"><img class=" img-rounded" id="MainImg" src="~/Item/Photo?id=@((Model.Item.Pictures.Count > 0) ? (Model.Item.Pictures.First().PictureID) : -1)" style=" max-height:100px"></div>
+    <div class="row field-in" style="padding-top:1em; margin-top:2em; margin-bottom:2em">
+        <h3 style="margin-bottom:1em"><b>Информация о заказе:</b></h3>
+        <div class="row">
+            <div class="col-md-4" style="margin-top:1em">
+                <img class=" img-rounded" id="MainImg" src="~/Item/Photo?id=@((Model.Item.Pictures.Count > 0) ? (Model.Item.Pictures.First().PictureID) : -1)">
+            </div>
+            <div class="col-md-8">
+                <div class="row" style="border-bottom: 1px solid lightgray; margin-bottom:0.5em"><div class="col-md-12"><h3><b><a href="/Item/Info?id=@Model.ItemID" style="text-decoration:none; color:black">@Model.Item.Name</a></b></h3></div></div>
+                <div class="row">
+                    <div class="col-md-4">Номер заказа:</div>
+                    <div class="col-md-6">@Model.OrderID</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">Количество:</div>
+                    <div class="col-md-6">@Model.Amount шт</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">Способ доставки:</div>
+                    <div class="col-md-6">@Model.Shipping_type.Name</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4"><b>Общая стоимость:</b></div>
+                    <div class="col-md-6"><b>@Model.Total_price руб</b></div>
+                </div>
+                <div class="row" style="margin-top:1em">
+                    <div class="col-md-4">Статус:</div>
+                    <div class="col-md-6"><b>@Model.Order_status.Name</b></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">Дата оформления:</div>
+                    <div class="col-md-6">@Model.Open_date</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">Дата получения:</div>
+                    <div class="col-md-6">@Model.Close_date</div>
+                </div>
+            </div>
+        </div>
 
-    <div>
-        <h4>Order</h4>
-        <hr />
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.Total_price)
-            </dt>
+        <div class="row" style="margin-top:4em; margin-bottom:1em">
+            <div class="col-md-6">
+                <div class="row" style="border-bottom: 1px solid lightgray; margin-bottom:0.5em; margin-top:0.5em">
+                    <div class="col-md-12"><h4><b>Информация о покупателе:</b></h4></div>
+                </div>
+                    <div class="row">
+                        <div class="col-md-4">ФИО:</div>
+                        <div class="col-md-8">@Model.Buyer.Name</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">Логин:</div>
+                        <div class="col-md-8">@Model.Buyer.User.Login</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">E-mail:</div>
+                        <div class="col-md-8">@Model.Buyer.User.Email</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12" style="margin-top:1em">Адрес доставки:</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12"><i>@Model.Address</i></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12" style="margin-top:1em">Сообщение продавцу:</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12"><i>@Model.ForBuyerInfo</i></div>
+                    </div>
+                </div>
+            @if (Model.Seller != null)
+            {
+                <div class="col-md-6">
+                    <div class="row" style="border-bottom: 1px solid lightgray; margin-bottom:0.5em; margin-top:0.5em">
+                        <div class="col-md-12"><h4><b>Информация о продавце:</b></h4></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">ФИО:</div>
+                        <div class="col-md-8">@Model.Seller.Name</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">Логин:</div>
+                        <div class="col-md-8">@Model.Seller.User.Login</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">E-mail:</div>
+                        <div class="col-md-8">@Model.Seller.User.Email</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12" style="margin-top:1em">Сообщение покупателю:</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12"><i>@Model.ForBuyerInfo</i></div>
+                    </div>
+                </div>
+            }
 
-            <dd>
-                @Html.DisplayFor(model => model.Total_price)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Open_date)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Open_date)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Close_date)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Close_date)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Amount)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Amount)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Mark)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Mark)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Review_text)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Review_text)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Address)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Address)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.ForSellerInfo)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.ForSellerInfo)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.ForBuyerInfo)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.ForBuyerInfo)
-            </dd>
-
-
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Item.Name)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Item.Name)
-            </dd>
-
-
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Item.Store.Name)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Item.Store.Name)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Shipping_type.Name)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Shipping_type.Name)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Order_status.Name)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Order_status.Name)
-            </dd>
-
-        </dl>
+        </div>
     </div>
+
 
     @if (Model.Order_statusID == 0)
     {
-        <a href="/Order/Pay?id=@Model.OrderID" class="btn btn-primary">Оплатить заказ</a>
-        <a href="/Order/Cancel?id=@Model.OrderID" class="btn btn-primary">Отменить заказ</a>
+        <div class="row" style="margin-bottom:1em">
+            <div class="col-md-3"><a href="/Order/Pay?id=@Model.OrderID" class="btn btn-primary btn-lg btn-block">Оплатить заказ</a></div>
+            <div class="col-md-3">
+                <a href="/Order/Cancel?id=@Model.OrderID" class="btn btn-default btn-lg">Отменить заказ</a>
+            </div>
+        </div>
     }
     else if (Model.Order_statusID == 1)
     {
-        <a href="/Dialog/OpenDispute?orderId=@Model.OrderID" class="btn btn-primary">Открыть спор</a>
+    <div class="row" style="margin-bottom:1em">
+        <div class="col-md-3"><a href="/Dialog/OpenDispute?orderId=@Model.OrderID" class="btn btn-primary btn-lg btn-block">Открыть спор</a></div>
+    </div>
     }
     else if (Model.Order_statusID == 2)
     {
-        <a href="/Order/Review?id=@Model.OrderID" class="btn btn-primary">Завершить заказ</a>
-        <a href="/Dialog/OpenDispute?orderId=@Model.OrderID" class="btn btn-primary">Открыть спор</a>
+        <div class="row" style="margin-bottom:1em">
+            <div class="col-md-3"><a href="/Order/Review?id=@Model.OrderID" class="btn btn-primary btn-lg btn-block">Завершить заказ</a></div>
+            <div class="col-md-3">
+                <a href="/Dialog/OpenDispute?orderId=@Model.OrderID" class="btn btn-default btn-lg">Открыть спор</a>
+            </div>
+        </div>
+
     }
     else if (Model.Order_statusID == 4 || Model.Order_statusID == 5)
     {
-        <a href="/Dialog/Show?id=@Model.Dialog_dispute.First().DisputeID" class="btn btn-primary">Перейти к спору</a>
+        <div class="row" style="margin-bottom:1em">
+            <div class="col-md-3"><a href="/Dialog/Show?id=@Model.Dialog_dispute.First().DisputeID" class="btn btn-primary btn-lg btn-block">Перейти к спору</a></div>
+        </div>
     }
 </div>

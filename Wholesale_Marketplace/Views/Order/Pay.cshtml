@@ -27,126 +27,42 @@
     </div>
 
 
-    <div>
-        <h4>Order</h4>
-        <hr />
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.Total_price)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Total_price)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Open_date)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Open_date)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Close_date)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Close_date)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Amount)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Amount)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Mark)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Mark)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Review_text)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Review_text)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Address)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Address)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.ForSellerInfo)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.ForSellerInfo)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.ForBuyerInfo)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.ForBuyerInfo)
-            </dd>
-
-
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Item.Name)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Item.Name)
-            </dd>
-
-
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Item.Store.Name)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Item.Store.Name)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Shipping_type.Name)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Shipping_type.Name)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Order_status.Name)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Order_status.Name)
-            </dd>
-
-        </dl>
+    <div style="margin-top:2em">
+        <div class="row"><div class="col-md-12"><h4 style="border-top: 1px solid lightgray; padding-top:1em; border-bottom: 1px solid lightgray; padding-bottom:1em"><b>Подтвердите данные заказа:</b></h4></div></div>
+        <div class="row h4" style="margin-top:1em">
+            <div class="col-md-4">Товар:</div>
+            <div class="col-md-6">@Model.Item.Name</div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">Количество:</div>
+            <div class="col-md-6">@Model.Amount шт</div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">Способ доставки:</div>
+            <div class="col-md-6">@Model.Shipping_type.Name</div>
+        </div>
+        <div class="row">
+            <div class="col-md-12" style="margin-top:1em">Адрес доставки:</div>
+        </div>
+        <div class="row">
+            <div class="col-md-12"><i>@Model.Address</i></div>
+        </div>
+        <div class="row h4" style="border-top: 1px solid lightgray; padding-top:1em; margin-top:1em">
+            <div class="col-md-4"><b>Общая стоимость:</b></div>
+            <div class="col-md-6"><b>@Model.Total_price руб</b></div>
+        </div>
     </div>
 
-    <form action="/Order/Pay" method="post">
+    <div class="row" style="margin-bottom:1em; margin-top:2em">
+        <div class="col-md-3">
+            <form action="/Order/Pay" method="post">
 
-        <input type="number" name="MakePayment" value="1" hidden />
-        <input type="number" name="id" value="@Model.OrderID" hidden />
-        <input type="submit" class="btn btn-primary" value="Оплатить" />
 
-    </form>
-</div>
+                <input type="number" name="MakePayment" value="1" hidden />
+                <input type="number" name="id" value="@Model.OrderID" hidden />
+                <input type="submit" class="btn btn-primary btn-lg btn-block" value="Оплатить" />
+
+            </form>
+        </div>
+    </div>
+    </div>
