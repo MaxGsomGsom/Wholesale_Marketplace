@@ -40,12 +40,6 @@ namespace Wholesale_Marketplace.Controllers
 
                 if (curItem.Close_date > DateTime.Now && curItem.Left_goods_count > 0)
                 {
-                    //единичные агент продавец и писпут означают что их пока нет
-                    //NewOrder.AgentID = 1;
-                    //NewOrder.SellerID = 1;
-                    //NewOrder.DisputeID = 1;
-
-
                     NewOrder.Order_statusID = 0;
                     NewOrder.BuyerID = ViewBag.BuyerID;
                     NewOrder.Open_date = DateTime.Now;
@@ -87,7 +81,7 @@ namespace Wholesale_Marketplace.Controllers
                         curOrder.Order_statusID = 1;
                         db.Entry(curOrder).State = EntityState.Modified;
                         db.SaveChanges();
-                        return Content("Оплачено");
+                        return Redirect("/Order/Info?id="+id);
                     }
                     else return Content("Не оплачено");
                 }
