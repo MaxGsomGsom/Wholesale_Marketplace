@@ -43,6 +43,7 @@ namespace Wholesale_Marketplace.Controllers
                     NewOrder.Order_statusID = 0;
                     NewOrder.BuyerID = ViewBag.BuyerID;
                     NewOrder.Open_date = DateTime.Now;
+                    NewOrder.Shipping_type = db.Shipping_type.Find(NewOrder.ShippingID);
                     NewOrder.Total_price = curItem.Price * NewOrder.Amount;
                     db.Orders.Add(NewOrder);
                     db.SaveChanges();

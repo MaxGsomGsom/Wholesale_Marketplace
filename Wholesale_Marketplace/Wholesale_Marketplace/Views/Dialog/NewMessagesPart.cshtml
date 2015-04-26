@@ -5,11 +5,33 @@
 
 @foreach (Message item in Model)
 {
-    <div class="row">
-        <div class="row">@item.User.Login @item.Post_date</div>
-        <div class="row">@item.Text</div>
-        @if (item.Pictures.Count > 0) { 
-            <div class="row"><img style="max-height:100px" src="/Dialog/GetImage?id=@item.Pictures.First().PictureID" onclick="window.open('/Dialog/GetImage?id=@item.Pictures.First().PictureID')" /></div>
+    
+        if (item.User.Role.RoleID == 1)
+        {
+            <div class="col-md-offset-2 col-md-10">
+                <div class="row field-in" style="background-color:lavender; padding-bottom:0px; margin-bottom:5px">
+                    <div class="row"><b>@item.User.Login</b> <small>@item.Post_date</small></div>
+                    <div class="row"><i>@item.Text</i></div>
+                    @if (item.Pictures.Count > 0)
+                    {
+                        <div class="row"><img style="max-height:100px" class="img-thumbnail" src="/Dialog/GetImage?id=@item.Pictures.First().PictureID" onclick="window.open('/Dialog/GetImage?id=@item.Pictures.First().PictureID')" /></div>
+                    }
+                </div>
+            </div>
         }
-    </div>
+        else if (item.User.RoleID == 0)
+        {
+                <div class="col-md-10">
+                    <div class="row field-in" style="background-color:lavender; padding-bottom:0px; margin-bottom:5px">
+                        <div class="row"><b>@item.User.Login</b> <small>@item.Post_date</small></div>
+                        <div class="row"><i>@item.Text</i></div>
+                        @if (item.Pictures.Count > 0)
+                {
+                            <div class="row"><img style="max-height:100px" class="img-thumbnail" src="/Dialog/GetImage?id=@item.Pictures.First().PictureID" onclick="window.open('/Dialog/GetImage?id=@item.Pictures.First().PictureID')" /></div>
+                }
+                    </div>
+                </div>
+        }
+        
+    
 }
