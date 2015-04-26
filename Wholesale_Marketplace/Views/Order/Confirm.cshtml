@@ -26,27 +26,66 @@
         </div>
     </div>
 
-    <form action="/Order/Confirm" method="post">
-        <div class="row"><img class=" img-rounded" id="MainImg" src="~/Item/Photo?id=@((Model.Pictures.Count>0) ? (Model.Pictures.First().PictureID) : -1)" style=" max-height:100px"></div>
-        <div class="row">Товар: @Model.Name</div>
-        <input type="number" name="ItemID" value="@Model.ItemID" hidden/>
-        <div class="row">Цена: @Model.Price руб</div>
-        <div class="row">Количество: <input type="number" name="Amount" value="1" min="1" max="@Model.Left_goods_count" id="amount" onclick="$('#total').html($('#amount').val()*@Model.Price);"/></div>
-        <div class="row">Стоимость: <span id="total">@Model.Price</span> руб</div>
+    
+    <form action="/Order/Confirm" method="post" class="field-in" style="padding-top:1em; margin-top:2em; margin-bottom:2em">
+        <div class="row">
+            <div class="col-md-3" style="margin-top:1em">
+                <div class="row"><img class="img-responsive img-rounded" id="MainImg" src="~/Item/Photo?id=@((Model.Pictures.Count>0) ? (Model.Pictures.First().PictureID) : -1)"></div>
+            </div>
+            <div class="col-md-8" style="margin-left:1em">
+                <div class="row" style="border-bottom:1px solid lightgray">
+                    <div class="col-md-4" style="margin-top:0.5em">Товар:</div>
+                    <div class="col-md-6"><h4><b>@Model.Name</b></h4></div>
+                </div>
+                <input type="number" name="ItemID" value="@Model.ItemID" hidden />
+                <div class="row" style="margin-bottom:1em">
+                    <div class="col-md-4">Цена:</div>
+                    <div class="col-md-6">@Model.Price руб</div>
+                </div>
+                <div class="row" style="margin-bottom:1em">
+                    <div class="col-md-4">Количество:</div>
+                    <div class="col-md-6"><input type="number" name="Amount" class="form-control" value="1" min="1" max="@Model.Left_goods_count" id="amount" onclick="$('#total').html($('#amount').val()*@Model.Price);" /></div>
+                </div>
 
-        <div class="row">Доставка:
-            <select size="4" name="ShippingID" class="form-control" style="height:10em; overflow:hidden;" required>
-                @foreach (Shipping_type ship in ViewBag.ShippingTypes)
-                {
-                    <option value="@ship.ShippingID" style="padding:0.5em"> @ship.Name </option>
-                }
-                <option value="7" style="padding:0.5em"> Строка списка 2 </option>
-            </select>
+                <div class="row" style="margin-bottom:1em">
+                    <div class="col-md-4">Доставка:</div>
+
+                    <div class="col-md-6">
+                        <select name="ShippingID" class="form-control" style=" overflow:hidden; height:2.5em" required>
+                            @foreach (Shipping_type ship in ViewBag.ShippingTypes)
+                            {
+                                <option value="@ship.ShippingID" style="padding:0.5em"> @ship.Name </option>
+                            }
+                        </select>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-md-4" style="margin-top:0.5em">Стоимость:</div>
+                    <div class="col-md-6"><h4><b><span id="total">@Model.Price</span> руб</b></h4></div>
+                </div>
+
+            </div>
         </div>
 
-        <div class="row">Адрес: <textarea  name="Address"  rows="10" >@ViewBag.Address</textarea></div>
-        <div class="row">Информация для продавца: <textarea  name="ForSellerInfo"  rows="10"></textarea></div>
 
-        <div class="row"><input type="submit" class="btn btn-primary" value="Подтвердить заказ" /></div>
-</form>
+
+        <div class="row" style="margin-top:4em; margin-bottom:1em">
+            <div class="col-md-5">
+                <div class="row">Адрес:</div>
+                <div class="row" style="margin-bottom:1em"><textarea class="form-control" name="Address" rows="10" placeholder="Введите текст" style="resize:none">@ViewBag.Address</textarea></div>
+            </div>
+            <div class="col-md-offset-1 col-md-5">
+                <div class="row">Информация для продавца: </div>
+                <div class="row" style="margin-bottom:1em"><textarea class="form-control" name="ForSellerInfo" placeholder="Введите текст" rows="10" style="resize:none"></textarea></div>
+            </div>
+            <div class="row" style="margin-top:2em; margin-left:0.3em"><input type="submit" class="btn btn-primary btn-lg" value="Подтвердить заказ" /></div>
+        </div>
+
+
+    </form>
+
+
+    
 </div>
