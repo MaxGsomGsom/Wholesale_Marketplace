@@ -27,24 +27,64 @@
         </div>
     </div>
 
-    <div class="row"><img class=" img-rounded" id="MainImg" src="~/Item/Photo?id=@((Model.Item.Pictures.Count > 0) ? (Model.Item.Pictures.First().PictureID) : -1)" style=" max-height:100px"></div>
-    <div class="row">Товар: @Model.Item.Name</div>
-    <div class="row">Номер заказа: @Model.OrderID</div>
-    <div class="row">Дата заказа: @Model.Open_date</div>
-    <div class="row">Статус заказа: @Model.Order_status.Name</div>
-    <div class="row">Информация от продавца: @Model.ForBuyerInfo</div>
+    <div class="row field-in" style="padding-top:1em; margin-top:2em; margin-bottom:2em">
+        <h3 style="margin-bottom:1em"><b>Информация о заказе:</b></h3>
+        <div class="row">
+            <div class="col-md-4" style="margin-top:1em">
+                <img class=" img-rounded img-responsive" id="MainImg" src="~/Item/Photo?id=@((Model.Item.Pictures.Count > 0) ? (Model.Item.Pictures.First().PictureID) : -1)">
+            </div>
+            <div class="col-md-8">
+                <div class="row" style="border-bottom: 1px solid lightgray; margin-bottom:0.5em"><div class="col-md-12"><h3><b><a href="/Item/Info?id=@Model.ItemID" style="text-decoration:none; color:black">@Model.Item.Name</a></b></h3></div></div>
+                <div class="row">
+                    <div class="col-md-4">Номер заказа:</div>
+                    <div class="col-md-6">@Model.OrderID</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">Количество:</div>
+                    <div class="col-md-6">@Model.Amount шт</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">Способ доставки:</div>
+                    <div class="col-md-6">@Model.Shipping_type.Name</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4"><b>Общая стоимость:</b></div>
+                    <div class="col-md-6"><b>@Model.Total_price руб</b></div>
+                </div>
+                <div class="row" style="margin-top:1em">
+                    <div class="col-md-4">Статус:</div>
+                    <div class="col-md-6"><b>@Model.Order_status.Name</b></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">Дата оформления:</div>
+                    <div class="col-md-6">@Model.Open_date</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">Дата получения:</div>
+                    <div class="col-md-6">@Model.Close_date</div>
+                </div>
+            </div>
+        </div>
 
-    <form action="/Order/Review" method="post">
-        <input type="number" name="id" value="@Model.OrderID" hidden />
+        <div class="row" style="margin-top:3em">
+            <form action="/Order/Review" method="post">
+                <input type="number" name="id" value="@Model.OrderID" hidden />
 
-        <div class="row"><b>Оцените качество товара и обслуживания:</b></div>
-        <div class="row">@Helpers.Stars(0)<input type="radio" name="Mark" value="0" required /></div>
-        <div class="row">@Helpers.Stars(1)<input type="radio" name="Mark" value="1" required /></div>
-        <div class="row">@Helpers.Stars(2)<input type="radio" name="Mark" value="2" required /></div>
-        <div class="row">@Helpers.Stars(3)<input type="radio" name="Mark" value="3" required /></div>
-        <div class="row">@Helpers.Stars(4)<input type="radio" name="Mark" value="4" required /></div>
-        <div class="row">@Helpers.Stars(5)<input type="radio" name="Mark" value="5" required /></div>
-
-        <div class="row"><input type="submit" class="btn btn-primary" value="Оценить" /></div>
-    </form>
+                <div class="row" style="margin-bottom:1em; border-bottom:1px solid lightgray; border-top:1px solid lightgray;"><div class="col-md-offset-3 col-md-8"><h4><b>Оцените качество товара и обслуживания:</b></h4></div></div>
+                <div class="row">
+                    <div class="col-md-offset-4 col-md-6">
+                        <div class="row"><input  type="radio" name="Mark" value="0" required /> @Helpers.Stars(0) Ужасно</div>
+                        <div class="row"><input type="radio" name="Mark" value="1" required /> @Helpers.Stars(1) Плохо</div>
+                        <div class="row"><input type="radio" name="Mark" value="2" required /> @Helpers.Stars(2) Удовлетворительно</div>
+                        <div class="row"><input type="radio" name="Mark" value="3" required /> @Helpers.Stars(3) Нормально</div>
+                        <div class="row"><input type="radio" name="Mark" value="4" required /> @Helpers.Stars(4) Хорошо</div>
+                        <div class="row"><input type="radio" name="Mark" value="5" required /> @Helpers.Stars(5) Отлично</div>
+                        
+                    </div>
+                </div>
+                <div class="row " style="margin-top:2em; margin-bottom:1em"><div class="col-md-offset-4 col-md-2"><input type="submit" class="btn btn-primary btn-block" value="Оценить" /></div></div>
+        
+        </form>
+    </div>
+    </div>
 </div>

@@ -94,6 +94,18 @@
                     <div class="row">
                         <div class="col-md-12"><i>@Model.ForBuyerInfo</i></div>
                     </div>
+                @if (Model.Order_statusID == 3)
+                {
+                    <div class="row">
+                        <div class="col-md-12" style="margin-top:1em">Отзыв:</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">@Helpers.Stars(Model.Mark.Value)</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12"><i>@Model.Review_text</i></div>
+                    </div>
+                }
                 </div>
             @if (Model.Seller != null)
             {
