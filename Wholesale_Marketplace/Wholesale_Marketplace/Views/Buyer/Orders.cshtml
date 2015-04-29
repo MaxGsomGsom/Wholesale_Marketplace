@@ -8,14 +8,14 @@
 }
 
 
-<div class="field-main">
+<div class="field-main" style="padding-top:2em">
 
     @foreach (Order order in Model)
     {
         int mainPic = (order.Item.Pictures.Count > 0) ? (order.Item.Pictures.First().PictureID) : -1;
         <div class="row field-in" style="padding-top:1em; margin-bottom:1em; padding-left:0px">
             <div class="col-md-3">
-                <img src="~/Item/Photo?id=@mainPic" class="img-responsive img-rounded" style="width:100%; max-height:100px" />
+                <img src="~/Item/Photo?id=@mainPic" class="img-responsive img-rounded" style="max-height:100px" />
             </div>
             <div class="col-md-6">
                 <div class="row">
@@ -27,7 +27,7 @@
                 <div class="row">Статус: <b>@order.Order_status.Name</b></div>
             </div>
             <div class="col-md-3">
-                <div class="row" style="padding-bottom:0em"><a class="btn btn-default" href="/Order/Info?id=@order.OrderID">Подробно</a></div>
+                <div class="row" style="padding-top:3em"><a class="btn btn-default btn-block" href="/Order/Info?id=@order.OrderID">Подробно</a></div>
             </div>
         </div>
     }

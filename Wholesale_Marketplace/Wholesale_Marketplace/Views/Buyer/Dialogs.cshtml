@@ -8,43 +8,44 @@
 }
 
 
-<div class="field-main">
+<div class="field-main" style="padding-top:2em">
     @foreach (Dialog_dispute dialog in Model)
     {
         <div class="row field-in" style="padding-top:1em; margin-bottom:1em; padding-left:0px">
-            @if (dialog.Order != null || dialog.Item!=null)
+            @if (dialog.Order != null || dialog.Item != null)
             {
                 <div class="col-md-3">
-                    @if(dialog.Seller!=null) {
-                    <img src="/Account/Avatar?UserID=@dialog.Seller.UserID" class="img-responsive img-rounded" style="width:100%; max-height:100px" />
+                    @if (dialog.Seller != null)
+                    {
+                        <img src="/Account/Avatar?UserID=@dialog.Seller.UserID" class="img-responsive img-rounded" style=" max-height:100px" />
                     }
                     else
                     {
-                    <img src="/Account/Avatar?UserID=-1" class="img-responsive img-rounded" style="width:100%; max-height:100px" />
+                        <img src="/Account/Avatar?UserID=-1" class="img-responsive img-rounded" style="max-height:100px" />
                     }
                 </div>
                 <div class="col-md-6">
-                    @if(dialog.Seller!=null) 
+                    @if (dialog.Seller != null)
                     {
-                    <div class="row">@dialog.Seller.User.Login (продавец магазина @dialog.Seller.Store.Name)</div>
+                        <div class="row">@dialog.Seller.User.Login (продавец магазина @dialog.Seller.Store.Name)</div>
                     }
                     else if (dialog.Order != null)
                     {
-                    <div class="row">магазин @dialog.Order.Item.Store.Name</div>
+                        <div class="row">магазин @dialog.Order.Item.Store.Name</div>
                     }
                     else
                     {
-                    <div class="row">магазин @dialog.Item.Store.Name</div>
+                        <div class="row">магазин @dialog.Item.Store.Name</div>
                     }
 
                     <div class="row"></div>
                     @if (dialog.Order != null)
                     {
-                    <div class="row">Заказ: <a href="/Order/Info?id=@dialog.OrderID" style="text-decoration:none; color:black"><b>@dialog.OrderID  (@dialog.Order.Item.Name)</b></a></div>
+                        <div class="row">Заказ: <a href="/Order/Info?id=@dialog.OrderID" style="text-decoration:none; color:black"><b>@dialog.OrderID  (@dialog.Order.Item.Name)</b></a></div>
                     }
                     else
                     {
-                    <div class="row">Вещь: <a href="/Item/Info?id=@dialog.ItemID" style="text-decoration:none; color:black"><b>@dialog.Item.Name</b></a></div>
+                        <div class="row">Вещь: <a href="/Item/Info?id=@dialog.ItemID" style="text-decoration:none; color:black"><b>@dialog.Item.Name</b></a></div>
                     }
 
                     <div class="row"></div>
@@ -63,20 +64,20 @@
                     }
                 </div>
             }
-            
-            
-            
-            
-            
-            
-            
+
+
+
+
+
+
+
             else
             {
                 <div class="col-md-3">
-                    <img src="/Account/Avatar?UserID=-1" class="img-responsive img-rounded" style="width:100%; max-height:100px" />
+                    <img src="/Account/Avatar?UserID=-1" class="img-responsive img-rounded" style=" max-height:100px" />
                 </div>
                 <div class="col-md-6">
-                    @if(dialog.Support_agent!=null) 
+                    @if (dialog.Support_agent != null)
                     {
                         <div class="row">@dialog.Support_agent.User.Login (агент техподдержки)</div>
                     }
@@ -100,7 +101,7 @@
 
 
             <div class="col-md-3">
-                <div class="row" style="padding-bottom:0em"><a class="btn btn-default" href="/Dialog/Show?id=@dialog.DisputeID">Открыть</a></div>
+                <div class="row" style="padding-top:3em"><a class="btn btn-default btn-block" href="/Dialog/Show?id=@dialog.DisputeID">Открыть</a></div>
             </div>
         </div>
     }
