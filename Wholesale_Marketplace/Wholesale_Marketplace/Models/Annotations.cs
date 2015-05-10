@@ -40,4 +40,28 @@ namespace Wholesale_Marketplace.Models
         public string Address { get; set; }
 
     }
+
+
+    [MetadataTypeAttribute(typeof(SellerMetadata))]
+    public partial class Seller { }
+
+    class SellerMetadata
+    {
+        [Required]
+        public string Name { get; set; }
+
+    }
+
+    [MetadataTypeAttribute(typeof(StoreMetadata))]
+    public partial class Store { }
+
+    class StoreMetadata
+    {
+        [Required]
+        public string Name { get; set; }
+
+        [Required]
+        public string SecretCode { get; set; }
+
+    }
 }

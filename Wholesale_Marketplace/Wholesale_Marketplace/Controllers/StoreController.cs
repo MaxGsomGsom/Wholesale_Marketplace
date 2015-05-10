@@ -26,7 +26,7 @@ namespace Wholesale_Marketplace.Controllers
                 modelOut2.Name = "";
                 modelOut2.SecretCode = "";
 
-                return View("CreateStore");
+                return View("CreateStore", modelOut2);
             }
             return Redirect("/Home/Index");
         }
@@ -43,8 +43,13 @@ namespace Wholesale_Marketplace.Controllers
                     newStore.Orders_count = 0;
                     newStore.Average_mark = 0;
                     newStore.Owner_sellerID = ViewBag.SellerID;
-
                     db.Stores.Add(newStore);
+                    db.SaveChanges();
+
+                    Seller me = db.Sellers.Find(ViewBag.SellerID);
+                    me.Store = newStore;
+                    db.Entry(me).State = EntityState.Modified;
+                    db.SaveChanges();
 
                     return Redirect("/Home/Index");
                 }
