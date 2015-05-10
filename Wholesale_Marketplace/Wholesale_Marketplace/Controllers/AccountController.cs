@@ -20,13 +20,14 @@ namespace Wholesale_Marketplace.Controllers
         [HttpGet]
         public ActionResult Register()
         {
-
+            Helpers.UserCheck(db, ViewBag);
             return View("Register");
         }
 
         [HttpPost]
         public ActionResult Register(User newUser)
         {
+            Helpers.UserCheck(db, ViewBag);
             if (ModelState.IsValid && !db.Users.Where(e => e.Login == newUser.Login).Any())
             {
                 if (newUser.RoleID == 0)
@@ -43,6 +44,20 @@ namespace Wholesale_Marketplace.Controllers
                     modelOut.Name = "";
                     modelOut.Address = "";
                     return View("AddInfoBuyer", modelOut);
+                }
+
+                if (newUser.RoleID == 1)
+                {
+                    db.Users.Add(newUser);
+                    db.SaveChanges();
+                    FormsAuthentication.SetAuthCookie(newUser.Login, true);
+                    ViewBag.RoleID = newUser.RoleID;
+                    ViewBag.UserID = newUser.UserID;
+                    ViewBag.Login = newUser.Login;
+
+                    Seller modelOut = new Seller();
+                    modelOut.Name = "";
+                    return View("AddInfoSeller", modelOut);
                 }
             } 
             
@@ -123,6 +138,66 @@ namespace Wholesale_Marketplace.Controllers
         {
             FormsAuthentication.SignOut();
             return Redirect("/Home/Index");
+        }
+
+
+        public ActionResult AddInfoSeller([Bind(Exclude = "Avatar")] Seller newSeller, HttpPostedFileBase Avatar, String SecretCode)
+        {
+            if (Helpers.UserCheck(db, ViewBag) && ModelState.IsValid)
+            {
+                if (ViewBag.RoleID == 1)
+                {
+                    int curUserID = ViewBag.UserID;
+
+                    if (db.Sellers.Any(e => e.UserID == curUserID))
+                    {
+                        Seller curSeller = db.Sellers.First(e => e.UserID == curUserID);
+                        curSeller.Name = newSeller.Name;
+
+                        if (Avatar != null) curSeller.Avatar = (new BinaryReader(Avatar.InputStream)).ReadBytes((int)Avatar.InputStream.Length);
+                        
+                        
+                        db.Entry(curSeller).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }
+                    else
+                    {
+                        newSeller.UserID = curUserID;
+                        newSeller.Registration_date = DateTime.Now;
+
+
+                        if (db.Stores.Any(m=>m.StoreID == newSeller.StoreID) && db.Stores.Find(newSeller.StoreID).SecretCode == SecretCode)
+                        {
+                            db.Sellers.Add(newSeller);
+                            db.SaveChanges();
+                            return Redirect("/Home/Index");
+                        }
+
+                             newSeller.StoreID = null;
+                            db.Sellers.Add(newSeller);
+                            db.SaveChanges();
+                            
+                            return Redirect("/Store/CreateStore");
+
+                        
+
+                    }
+                    
+                }
+            }
+
+            Seller modelOut = new Seller();
+            modelOut.Name = "";
+            if (ViewBag.UserID >= 0)
+            {
+                int curUser = ViewBag.UserID;
+                try
+                {
+                    modelOut = db.Sellers.First(m => m.UserID == curUser);
+                }
+                catch { }
+            }
+            return View("AddInfoSeller", modelOut);
         }
 
 

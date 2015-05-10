@@ -8,28 +8,44 @@
 }
 
 
-<div class="field-main" style="padding-top:2em">
+<script>
+    var pageNext = 0;
 
-    @foreach (Order order in Model)
-    {
-        int mainPic = (order.Item.Pictures.Count > 0) ? (order.Item.Pictures.First().PictureID) : -1;
-        <div class="row field-in" style="padding-top:1em; margin-bottom:1em; padding-left:0px">
-            <div class="col-md-3">
-                <img src="~/Item/Photo?id=@mainPic" class="img-responsive img-rounded" style="max-height:100px" />
-            </div>
-            <div class="col-md-6">
-                <div class="row">
-                    <h4 style="margin-top:0px"><a href="/Item/Info?id=@order.ItemID" style="text-decoration:none; color:black"><b>@order.Item.Name</b></a></h4>
-                </div>
-                <div class="row">Магазин: @order.Item.Store.Name</div>
-                <div class="row">Сумма: @order.Total_price руб</div>
-                <div class="row">Дата заказа: @order.Open_date</div>
-                <div class="row">Статус: <b>@order.Order_status.Name</b></div>
-            </div>
-            <div class="col-md-3">
-                <div class="row" style="padding-top:3em"><a class="btn btn-default btn-block" href="/Order/Info?id=@order.OrderID">Подробно</a></div>
-            </div>
-        </div>
+
+
+    var NextPage = function() {
+        pageNext++;
+        $.get("Orders", { page: pageNext,  part_page: 1},
+            function (data, textStatus, jqXHR) {
+                $("#OrdersResults").append(data);
+            });
     }
 
+
+
+</script>
+
+
+<div class="field-main" style="padding-top:2em">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="row">
+                <div class="row field-in" style="padding-top:1em; margin-bottom:1em;"><h4><b>Ваши заказы</b></h4></div>
+                </div>
+                <div id="OrdersResults" class="row">
+                    @{Html.RenderPartial("OrdersPart", Model);}
+                </div>
+                <div class="row"><a class="btn btn-default btn-block" onclick="NextPage();">Показать ещё</a></div>
+            </div>
+        <div class="col-md-4">
+            <div class="field-in" style="margin-left:1em">
+                <div class="row" style="margin-bottom:1em; margin-top:1em"><b>Статистика:</b></div>
+                <div class="row"><b>@ViewBag.waitPay</b> ожидает оплаты</div>
+                <div class="row"><b>@ViewBag.waitShipping</b> ожидает отправки</div>
+            <div class="row"><b>@ViewBag.waitClosing</b> ожидает подтверждения</div>
+            <div class="row"><b>@ViewBag.inDispute</b> в состоянии спора</div>
+        </div>
+
+    </div>
+</div>
 </div>

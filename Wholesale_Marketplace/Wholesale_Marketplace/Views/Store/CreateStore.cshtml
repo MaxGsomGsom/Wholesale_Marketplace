@@ -1,0 +1,37 @@
+﻿@using Wholesale_Marketplace.Models
+@model Wholesale_Marketplace.Models.Store
+@{
+
+    Layout = "~/Views/Shared/SellerLayout.cshtml";
+    ViewBag.Title = "Создать магазин";
+}
+
+<div class="row">
+    <div class="col-md-6 col-md-offset-3">
+        <div class="field-big">
+            <h3><b>Введите данные</b></h3>
+            <br />
+            @using (Html.BeginForm("CreateStore", "Store", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Name, "Название магазина")
+                    <br />
+                    @Html.EditorFor(m => m.Name, new { htmlAttributes = new { @class = "form-control", placeholder = Model.Name } })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Description, "Описание магазина")
+                    <br />
+                    @Html.EditorFor(m => m.Description, new { htmlAttributes = new { @class = "form-control", placeholder = Model.Description } })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.SecretCode, "Секретный код")
+                    <br />
+                    @Html.EditorFor(m => m.SecretCode, new { htmlAttributes = new { @class = "form-control", placeholder = Model.SecretCode } })
+                </div>
+
+                <br />
+                <input type="submit" class="btn btn-primary" value="Сохранить" formaction="CreateStore" />
+            }
+        </div>
+    </div>
+</div>

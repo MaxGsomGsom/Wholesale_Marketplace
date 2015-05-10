@@ -30,7 +30,6 @@
         <AssociationConnector Association="WM_Model.FK_ORDER_SHIPPING_SHIPPING" ManuallyRouted="false" />
         <AssociationConnector Association="WM_Model.FK_ORDER_STATUS_ORDER_ST" ManuallyRouted="false" />
         <AssociationConnector Association="WM_Model.FK_User_Role" ManuallyRouted="false" />
-        <AssociationConnector Association="WM_Model.FK_SELLER_PLACE_OF__STORE" ManuallyRouted="false" />
         <AssociationConnector Association="WM_Model.FK_Seller_User" ManuallyRouted="false" />
         <AssociationConnector Association="WM_Model.FK_Support_agent_User" ManuallyRouted="false" />
         <AssociationConnector Association="WM_Model.FK_DIALOGUE_SIDE_2_SUPPORT_" />
@@ -43,6 +42,7 @@
         <AssociationConnector Association="WM_Model.FK_DIALOGUE_SIDE_5_ITEM" />
         <EntityTypeShape EntityType="WM_Model.DisputeState" Width="1.5" PointX="0.75" PointY="0.875" />
         <AssociationConnector Association="WM_Model.FK_DIALOGUE_SIDE_6_DisputeState" />
+        <AssociationConnector Association="WM_Model.FK_SELLER_PLACE_OF__STORE" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
