@@ -78,7 +78,6 @@ namespace Wholesale_Marketplace.Controllers
 
 
 
-        public int part_page { get; set; }
     }
 
 }

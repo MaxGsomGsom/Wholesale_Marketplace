@@ -1,0 +1,40 @@
+﻿@using Wholesale_Marketplace.Models
+@model Wholesale_Marketplace.Models.Seller
+@{
+
+    Layout = "~/Views/Shared/SellerLayout.cshtml";
+    ViewBag.Title = "Ввод сведений о продавце";
+}
+
+<div class="row">
+    <div class="col-md-6 col-md-offset-3">
+        <div class="field-big">
+            <h3><b>Введите личные данные</b></h3>
+            <br />
+            @using (Html.BeginForm("AddInfoSeller", "Account", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Name, "ФИО")
+                    <br />
+                    @Html.EditorFor(m => m.Name, new { htmlAttributes = new { @class = "form-control", placeholder = Model.Name } })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.StoreID, "Магазин")
+                    <br />
+                    @Html.EditorFor(m => m.StoreID, new { htmlAttributes = new { @class = "form-control", placeholder = Model.StoreID } })
+                </div>
+                <div class="form-group">
+                    <p><b>Секретный код</b></p>
+                    <input type="text" class="form-control" name="SecretCode" />
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Avatar, "Аватар")
+                    <br />
+                    <input type="file" id="Avatar" name="Avatar" />
+                </div>
+                <br />
+                <input type="submit" class="btn btn-primary" value="Сохранить" formaction="AddInfoSeller" />
+            }
+        </div>
+    </div>
+</div>

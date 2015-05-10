@@ -129,7 +129,7 @@
             <PropertyRef Name="SellerID" />
           </Key>
           <Property Name="SellerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="StoreID" Type="int" Nullable="false" />
+          <Property Name="StoreID" Type="int" />
           <Property Name="UserID" Type="int" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Registration_date" Type="datetime" Nullable="false" />
@@ -155,6 +155,7 @@
           <Property Name="Created_date" Type="datetime" Nullable="false" />
           <Property Name="Description" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Owner_sellerID" Type="int" Nullable="false" />
+          <Property Name="SecretCode" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Support_agent">
           <Key>
@@ -405,7 +406,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_SELLER_PLACE_OF__STORE">
-          <End Role="Store" Type="Self.Store" Multiplicity="1" />
+          <End Role="Store" Type="Self.Store" Multiplicity="0..1" />
           <End Role="Seller" Type="Self.Seller" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Store">
@@ -712,15 +713,15 @@
             <PropertyRef Name="SellerID" />
           </Key>
           <Property Name="SellerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="StoreID" Type="Int32" Nullable="false" />
+          <Property Name="StoreID" Type="Int32" />
           <Property Name="UserID" Type="Int32" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Registration_date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Avatar" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <NavigationProperty Name="Store" Relationship="Self.FK_SELLER_PLACE_OF__STORE" FromRole="Seller" ToRole="Store" />
           <NavigationProperty Name="User" Relationship="Self.FK_Seller_User" FromRole="Seller" ToRole="User" />
           <NavigationProperty Name="Dialog_dispute" Relationship="WM_Model.FK_DIALOGUE_SIDE_3_SELLER" FromRole="Seller" ToRole="Dialog_dispute" />
           <NavigationProperty Name="Orders" Relationship="WM_Model.FK_ORDER_PLACE_OF__SELLER" FromRole="Seller" ToRole="Order" />
+          <NavigationProperty Name="Store" Relationship="WM_Model.FK_SELLER_PLACE_OF__STORE" FromRole="Seller" ToRole="Store" />
         </EntityType>
         <EntityType Name="Shipping_type">
           <Key>
@@ -742,9 +743,10 @@
           <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Owner_sellerID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Items" Relationship="Self.FK_ITEM_PLACE_OF__STORE" FromRole="Store" ToRole="Item" />
-          <NavigationProperty Name="Sellers" Relationship="Self.FK_SELLER_PLACE_OF__STORE" FromRole="Store" ToRole="Seller" />
           <Property Name="Marks_count" Type="Int32" Nullable="false" />
           <Property Name="Average_mark" Type="Double" Nullable="false" />
+          <Property Name="SecretCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Sellers" Relationship="WM_Model.FK_SELLER_PLACE_OF__STORE" FromRole="Store" ToRole="Seller" />
         </EntityType>
         <EntityType Name="Support_agent">
           <Key>
@@ -906,18 +908,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_SELLER_PLACE_OF__STORE">
-          <End Role="Store" Type="Self.Store" Multiplicity="1" />
-          <End Role="Seller" Type="Self.Seller" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Store">
-              <PropertyRef Name="StoreID" />
-            </Principal>
-            <Dependent Role="Seller">
-              <PropertyRef Name="StoreID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Seller_User">
           <End Role="User" Type="Self.User" Multiplicity="1" />
           <End Role="Seller" Type="Self.Seller" Multiplicity="*" />
@@ -1001,10 +991,6 @@
             <End Role="Role" EntitySet="Roles" />
             <End Role="User" EntitySet="Users" />
           </AssociationSet>
-          <AssociationSet Name="FK_SELLER_PLACE_OF__STORE" Association="Self.FK_SELLER_PLACE_OF__STORE">
-            <End Role="Store" EntitySet="Stores" />
-            <End Role="Seller" EntitySet="Sellers" />
-          </AssociationSet>
           <AssociationSet Name="FK_Seller_User" Association="Self.FK_Seller_User">
             <End Role="User" EntitySet="Users" />
             <End Role="Seller" EntitySet="Sellers" />
@@ -1049,6 +1035,10 @@
           <AssociationSet Name="FK_DIALOGUE_SIDE_6_DisputeState" Association="WM_Model.FK_DIALOGUE_SIDE_6_DisputeState">
             <End Role="DisputeState" EntitySet="DisputeStates" />
             <End Role="Dialog_dispute" EntitySet="Dialog_dispute" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SELLER_PLACE_OF__STORE" Association="WM_Model.FK_SELLER_PLACE_OF__STORE">
+            <End Role="Store" EntitySet="Stores" />
+            <End Role="Seller" EntitySet="Sellers" />
           </AssociationSet>
         </EntityContainer>
         <Association Name="FK_DIALOGUE_SIDE_2_SUPPORT_">
@@ -1164,6 +1154,18 @@
             </Principal>
             <Dependent Role="Dialog_dispute">
               <PropertyRef Name="DisputeStateID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SELLER_PLACE_OF__STORE">
+          <End Type="WM_Model.Store" Role="Store" Multiplicity="0..1" />
+          <End Type="WM_Model.Seller" Role="Seller" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Store">
+              <PropertyRef Name="StoreID" />
+            </Principal>
+            <Dependent Role="Seller">
+              <PropertyRef Name="StoreID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1318,6 +1320,7 @@
           <EntitySetMapping Name="Stores">
             <EntityTypeMapping TypeName="WM_Model.Store">
               <MappingFragment StoreEntitySet="Store">
+                <ScalarProperty Name="SecretCode" ColumnName="SecretCode" />
                 <ScalarProperty Name="Average_mark" ColumnName="Average_mark" />
                 <ScalarProperty Name="Marks_count" ColumnName="Marks_count" />
                 <ScalarProperty Name="StoreID" ColumnName="StoreID" />

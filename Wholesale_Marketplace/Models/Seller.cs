@@ -21,15 +21,15 @@ namespace Wholesale_Marketplace.Models
         }
     
         public int SellerID { get; set; }
-        public int StoreID { get; set; }
+        public Nullable<int> StoreID { get; set; }
         public int UserID { get; set; }
         public string Name { get; set; }
         public System.DateTime Registration_date { get; set; }
         public byte[] Avatar { get; set; }
     
-        public virtual Store Store { get; set; }
         public virtual User User { get; set; }
         public virtual ICollection<Dialog_dispute> Dialog_dispute { get; set; }
         public virtual ICollection<Order> Orders { get; set; }
+        public virtual Store Store { get; set; }
     }
 }

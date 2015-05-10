@@ -1,0 +1,70 @@
+﻿@using Wholesale_Marketplace.Models
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title – Wholesale Marketplace</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</head>
+<body style="background-color:#e2f9dc">
+    <div class="container">
+        <div class="field" style="margin-bottom:0.5em">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <a href="/Home/">
+                                <img src="~/Content/logo.jpg" class="img-rounded" style="width:87px; height:55px; margin-top:0.1em" />
+                            </a>
+                        </div>
+                        <div class="col-md-9" style="white-space: nowrap;">
+                            <a href="/Home/" style="text-decoration:none; color:black"><p class="h2"><b>Wholesale Marketplace</b></p></a>
+                            <p class="h5">Buy and sell everythink fast and free</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="row" style="padding-bottom:1em"><div class="col-md-offset-6 col-md-6">Продавец:<b style="margin-left:2.7em">@ViewBag.Login</b></div></div>
+                    <div class="row">
+                       <div class="col-md-3">
+                            <a href="/Buyer/Orders" class="btn btn-default btn-block" role="button">?????</a>
+                        </div>
+                        <div class="col-md-3">
+                            <a href="/Buyer/Dialogs" class="btn btn-default btn-block" role="button">?????</a>
+                        </div>
+                        <div class="col-md-3">
+                            <a href="/Account/AddInfoSeller" class="btn btn-default btn-block" role="button">Настройки</a>
+                        </div>
+                        <div class="col-md-1">
+                            <a href="/Help/Show" class="btn btn-default " role="button"><span class="glyphicon glyphicon-question-sign"></span></a>
+                        </div>
+                        <div class="col-md-1">
+                            <a href="/Account/Logout" class="btn btn-default " role="button"><span class="glyphicon glyphicon-log-out"></span></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <img class="img-responsive img-rounded" src="/Account/Avatar?UserID=@ViewBag.UserID" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content" style="padding-top:1em">
+        @RenderBody()
+    </div>
+    <div align="center" style="padding-top:3em">
+        <small>
+            <p>&copy; @DateTime.Now.Year – Wholesale Marketplace </p>
+            <p> <a href="mailto:max@pochtamt.ru">Contact us</a></p>
+        </small>
+
+    </div>
+</body>
+</html>

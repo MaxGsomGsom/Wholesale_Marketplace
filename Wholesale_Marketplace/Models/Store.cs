@@ -28,6 +28,7 @@ namespace Wholesale_Marketplace.Models
         public int Owner_sellerID { get; set; }
         public int Marks_count { get; set; }
         public double Average_mark { get; set; }
+        public string SecretCode { get; set; }
     
         public virtual ICollection<Item> Items { get; set; }
         public virtual ICollection<Seller> Sellers { get; set; }
