@@ -64,4 +64,18 @@ namespace Wholesale_Marketplace.Models
         public string SecretCode { get; set; }
 
     }
+
+    [MetadataTypeAttribute(typeof(ItemMetadata))]
+    public partial class ItemMetadata
+    {
+        [Required]
+        public int CategoryID { get; set; }
+        [Required]
+        public string Name { get; set; }
+        [Required]
+        public double Price { get; set; }
+        [Required]
+        public int Left_goods_count { get; set; }
+        
+    }
 }

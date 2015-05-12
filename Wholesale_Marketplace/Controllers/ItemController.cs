@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -78,6 +79,99 @@ namespace Wholesale_Marketplace.Controllers
 
 
 
+        //========================================
+
+
+
+        public ActionResult AddItem()
+        {
+            if (Helpers.UserCheck(db, ViewBag) && ViewBag.RoleID == 1)
+            {
+                return View("AddItem");
+            }
+            return Redirect("/Home/Index");
+        }
+
+        //модель не валидна, несколько фоток не грузятся
+        [HttpPost]
+        public ActionResult AddItem(Item newItem, IEnumerable<HttpPostedFileBase> Pictures)
+        {
+            if (Helpers.UserCheck(db, ViewBag) && ViewBag.RoleID == 1)
+            {
+                if (ModelState.IsValid)
+                {
+                    if (newItem.Minimum_order < 1) newItem.Minimum_order = 1;
+                    newItem.Open_date = DateTime.Now;
+                    newItem.StoreID = ViewBag.StoreID;
+                    newItem.Marks_count = 0;
+                    newItem.Orders_count = 0;
+
+                    db.Items.Add(newItem);
+                    db.SaveChanges();
+
+                    return Redirect("/Home/Index");
+                }
+            }
+            return View("AddItem");
+        }
+
+        //
+        public ActionResult EditItem(int id)
+        {
+            if (Helpers.UserCheck(db, ViewBag) && ViewBag.RoleID == 1)
+            {
+                try
+                {
+                    Item outModel = db.Items.Find(id);
+                    return View("EditItem");
+                }
+                catch { }
+            }
+            return Redirect("/Home/Index");
+        }
+        //
+        [HttpPost]
+        public ActionResult EditItem(Item editedItem)
+        {
+            if (Helpers.UserCheck(db, ViewBag) && ViewBag.RoleID == 1)
+            {
+                if (ModelState.IsValid)
+                {
+                    Item oldItem = db.Items.Find(editedItem.ItemID);
+                    oldItem.CategoryID = editedItem.CategoryID;
+                    oldItem.Minimum_order = editedItem.Minimum_order;
+                    if (oldItem.Minimum_order < 1) oldItem.Minimum_order = 1;
+
+                    oldItem.Description = editedItem.Description;
+                    oldItem.Left_goods_count = editedItem.Left_goods_count;
+                    oldItem.Price = editedItem.Price;
+                    oldItem.Name = editedItem.Name;
+
+                    db.Entry(oldItem).State = EntityState.Modified;
+                    db.SaveChanges();
+
+                    return Redirect("/Home/Index");
+                }
+            }
+            return View("EditItem");
+        }
+
+        //
+        public ActionResult DeleteItem(int id)
+        {
+            if (Helpers.UserCheck(db, ViewBag) && ViewBag.RoleID == 1)
+            {
+                try
+                {
+                    Item outModel = db.Items.Find(id);
+                    db.Items.Remove(outModel);
+                    db.SaveChanges();
+                    return Redirect("/Home/Index");
+                }
+                catch { }
+            }
+            return Redirect("/Item/Info?id=" + id);
+        }
     }
 
 }

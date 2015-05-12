@@ -34,6 +34,7 @@ namespace Wholesale_Marketplace
                             case 1:
                                 {
                                     ViewBag.SellerID = db.Sellers.First(e => e.UserID == curUser.UserID).SellerID;
+                                    ViewBag.StoreID = db.Sellers.First(e => e.UserID == curUser.UserID).StoreID;
                                     break;
                                 }
                         }
