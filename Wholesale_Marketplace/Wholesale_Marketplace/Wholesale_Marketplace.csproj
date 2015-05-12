@@ -278,6 +278,7 @@
     <Content Include="Views\Account\AddInfoSeller.cshtml" />
     <Content Include="Views\Shared\SellerLayout.cshtml" />
     <Content Include="Views\Store\CreateStore.cshtml" />
+    <Content Include="Views\Item\AddItem.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
