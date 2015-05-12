@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -50,7 +51,7 @@ namespace Wholesale_Marketplace.Controllers
             int price_maxForCheck = (price_max >= int.MaxValue) ? int.MaxValue : price_max;
 
             IEnumerable<Item> collect;
-            collect = db.Items.Where(m => m.Name.Contains(search_keywords) || m.Description.Contains(search_keywords)).Where(m=> m.Close_date >= DateTime.Now);
+            collect = db.Items.Where(m => m.Name.Contains(search_keywords) || m.Description.Contains(search_keywords)).Where(m => m.Close_date >= DateTime.Now || m.Close_date==null);
             collect = collect.Where(m => m.Price >= price_min && m.Price <= price_maxForCheck);
             if (good_sellers==1) collect = collect.Where(m => m.Store.Marks_count >= 5 && m.Store.Average_mark >= 4);
             if (category >= 0 && category <= 10) collect = collect.Where(m => m.CategoryID == category);
@@ -79,9 +80,6 @@ namespace Wholesale_Marketplace.Controllers
 
 
 
-        //========================================
-
-
 
         public ActionResult AddItem()
         {
@@ -92,9 +90,9 @@ namespace Wholesale_Marketplace.Controllers
             return Redirect("/Home/Index");
         }
 
-        //модель не валидна, несколько фоток не грузятся
+        
         [HttpPost]
-        public ActionResult AddItem(Item newItem, IEnumerable<HttpPostedFileBase> Pictures)
+        public ActionResult AddItem(Item newItem, IEnumerable<HttpPostedFileBase> Pics)
         {
             if (Helpers.UserCheck(db, ViewBag) && ViewBag.RoleID == 1)
             {
@@ -105,9 +103,25 @@ namespace Wholesale_Marketplace.Controllers
                     newItem.StoreID = ViewBag.StoreID;
                     newItem.Marks_count = 0;
                     newItem.Orders_count = 0;
-
                     db.Items.Add(newItem);
                     db.SaveChanges();
+
+
+                    if (Pics != null)
+                    {
+                        foreach (HttpPostedFileBase img in Pics)
+                        {
+                            Picture pic = new Picture();
+                            pic.ItemID = newItem.ItemID;
+                            pic.Image = (new BinaryReader(img.InputStream)).ReadBytes((int)img.InputStream.Length);
+                            db.Pictures.Add(pic);
+                            
+                            
+                        }
+                        db.SaveChanges();
+                    }
+
+                    
 
                     return Redirect("/Home/Index");
                 }
@@ -115,6 +129,10 @@ namespace Wholesale_Marketplace.Controllers
             return View("AddItem");
         }
 
+
+        //========================================
+        //========================================
+        //========================================
         //
         public ActionResult EditItem(int id)
         {

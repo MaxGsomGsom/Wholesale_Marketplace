@@ -10,7 +10,7 @@
 <script>
     var i = 1;
     var AddPic = function () {
-        $('#PicsDiv').append('<input type="file" name="Pictures[' + i + ']" />');
+        $('#PicsDiv').append('<input type="file" name="Pics" />');
         i++;
     }
 </script>
@@ -18,7 +18,7 @@
 <div class="field-main">
 
     <div class="row" style="margin-top:1em"><h4><b>Введите информацию о товаре</b></h4></div>
-    <form action="/Item/AddItem" method="post" class="field-in" style="padding-top:1em; margin-top:2em; margin-bottom:2em">
+    <form action="/Item/AddItem" method="post" enctype = "multipart/form-data" class="field-in" style="padding-top:1em; margin-top:2em; margin-bottom:2em">
         
         <div class="row">
 
@@ -30,7 +30,7 @@
             <div class="form-group">
                 @Html.LabelFor(m => m.CategoryID, "Категория товара")
                 <br />
-                <select name="Item_Category" class="form-control" style=" overflow:hidden; height:2.5em" required>
+                <select name="CategoryID" class="form-control" style=" overflow:hidden; height:2.5em" required>
                     @foreach (Item_category cat in ViewBag.Categories)
                     {
                         <option value="@cat.CategoryID" style="padding:0.5em"> @cat.Name </option>
@@ -59,17 +59,17 @@
                 @Html.EditorFor(m => m.Left_goods_count, new { htmlAttributes = new { @class = "form-control" } })
             </div>
             <br />
-                        <div class="form-group">
-                            <p><b>Изображения товара</b></p>
-                            <div id="PicsDiv">
-                                <input type="file" name="Pictures[0]" />
-                            </div>
-                            <a class="btn btn-default" style="margin-top:0.5em" onclick ="AddPic();">Добавить</a>
-                        </div>
-                        <br />
-                        <input type="submit" class="btn btn-primary" value="Сохранить" formaction="AddItem" />
+            <div class="form-group">
+                <p><b>Изображения товара</b></p>
+                <div id="PicsDiv">
+                    <input type="file" name="Pics" />
+                </div>
+                <a class="btn btn-default" style="margin-top:0.5em" onclick="AddPic();">Добавить</a>
+            </div>
+                <br />
+                <input type="submit" class="btn btn-primary" value="Сохранить" formaction="AddItem" />
 
-        </div>
+            </div>
 
 
     </form>

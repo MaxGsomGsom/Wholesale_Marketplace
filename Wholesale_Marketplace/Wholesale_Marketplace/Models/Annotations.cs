@@ -66,7 +66,9 @@ namespace Wholesale_Marketplace.Models
     }
 
     [MetadataTypeAttribute(typeof(ItemMetadata))]
-    public partial class ItemMetadata
+    public partial class Item { }
+
+    class ItemMetadata
     {
         [Required]
         public int CategoryID { get; set; }
