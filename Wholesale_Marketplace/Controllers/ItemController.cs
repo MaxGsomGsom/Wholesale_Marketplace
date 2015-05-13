@@ -19,7 +19,11 @@ namespace Wholesale_Marketplace.Controllers
             Helpers.UserCheck(db, ViewBag);
             Item curItem = db.Items.Find(id);
             if (curItem == null) return Redirect("/Home/Index");
-            else return View("Info", curItem);
+            else
+            {
+                if (ViewBag.RoleID == 1) return View("InfoSeller", curItem);
+                return View("Info", curItem);
+            }
         }
 
 
@@ -107,7 +111,7 @@ namespace Wholesale_Marketplace.Controllers
                     db.SaveChanges();
 
 
-                    if (Pics != null)
+                    if (Pics != null && Pics.ElementAt(0)!=null)
                     {
                         foreach (HttpPostedFileBase img in Pics)
                         {
@@ -130,10 +134,7 @@ namespace Wholesale_Marketplace.Controllers
         }
 
 
-        //========================================
-        //========================================
-        //========================================
-        //
+        
         public ActionResult EditItem(int id)
         {
             if (Helpers.UserCheck(db, ViewBag) && ViewBag.RoleID == 1)
@@ -141,50 +142,71 @@ namespace Wholesale_Marketplace.Controllers
                 try
                 {
                     Item outModel = db.Items.Find(id);
-                    return View("EditItem");
+                    return View("EditItem", outModel);
                 }
                 catch { }
             }
             return Redirect("/Home/Index");
         }
-        //
+        
+
         [HttpPost]
-        public ActionResult EditItem(Item editedItem)
+        public ActionResult EditItem(Item editedItem, IEnumerable<HttpPostedFileBase> Pics)
         {
             if (Helpers.UserCheck(db, ViewBag) && ViewBag.RoleID == 1)
             {
                 if (ModelState.IsValid)
                 {
                     Item oldItem = db.Items.Find(editedItem.ItemID);
-                    oldItem.CategoryID = editedItem.CategoryID;
-                    oldItem.Minimum_order = editedItem.Minimum_order;
-                    if (oldItem.Minimum_order < 1) oldItem.Minimum_order = 1;
+                    if (oldItem.StoreID == ViewBag.StoreID)
+                    {
+                        oldItem.CategoryID = editedItem.CategoryID;
+                        oldItem.Minimum_order = editedItem.Minimum_order;
+                        if (oldItem.Minimum_order < 1) oldItem.Minimum_order = 1;
 
-                    oldItem.Description = editedItem.Description;
-                    oldItem.Left_goods_count = editedItem.Left_goods_count;
-                    oldItem.Price = editedItem.Price;
-                    oldItem.Name = editedItem.Name;
+                        oldItem.Description = editedItem.Description;
+                        oldItem.Left_goods_count = editedItem.Left_goods_count;
+                        oldItem.Price = editedItem.Price;
+                        oldItem.Name = editedItem.Name;
 
-                    db.Entry(oldItem).State = EntityState.Modified;
-                    db.SaveChanges();
+                        db.Entry(oldItem).State = EntityState.Modified;
+                        db.SaveChanges();
 
-                    return Redirect("/Home/Index");
+                        if (Pics != null && Pics.ElementAt(0) != null)
+                        {
+                            foreach (HttpPostedFileBase img in Pics)
+                            {
+                                Picture pic = new Picture();
+                                pic.ItemID = editedItem.ItemID;
+                                pic.Image = (new BinaryReader(img.InputStream)).ReadBytes((int)img.InputStream.Length);
+                                db.Pictures.Add(pic);
+
+
+                            }
+                            db.SaveChanges();
+                        }
+
+                        return Redirect("/Home/Index");
+                    }
                 }
             }
             return View("EditItem");
         }
 
-        //
+        
         public ActionResult DeleteItem(int id)
         {
             if (Helpers.UserCheck(db, ViewBag) && ViewBag.RoleID == 1)
             {
                 try
                 {
-                    Item outModel = db.Items.Find(id);
-                    db.Items.Remove(outModel);
-                    db.SaveChanges();
-                    return Redirect("/Home/Index");
+                    Item delItem = db.Items.Find(id);
+                    if (delItem.StoreID == ViewBag.StoreID)
+                    {
+                        db.Items.Remove(delItem);
+                        db.SaveChanges();
+                        return Redirect("/Home/Index");
+                    }
                 }
                 catch { }
             }

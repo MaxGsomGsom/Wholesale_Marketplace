@@ -1,0 +1,139 @@
+﻿@model Wholesale_Marketplace.Models.Order
+@using Wholesale_Marketplace.Models
+
+
+@{
+    ViewBag.Title = "Заказ " + Model.OrderID;
+    if (ViewBag.RoleID == 1) { Layout = "~/Views/Shared/SellerLayout.cshtml"; }
+}
+
+<div class="field-main">
+    <div class="row field-in" style="padding-top:1em; margin-top:2em; margin-bottom:2em">
+        <h3 style="margin-bottom:1em"><b>Информация о заказе:</b></h3>
+        <div class="row">
+            <div class="col-md-4" style="margin-top:1em">
+                <img class=" img-rounded img-responsive" id="MainImg" src="~/Item/Photo?id=@((Model.Item.Pictures.Count > 0) ? (Model.Item.Pictures.First().PictureID) : -1)">
+            </div>
+            <div class="col-md-8">
+                <div class="row" style="border-bottom: 1px solid lightgray; margin-bottom:0.5em"><div class="col-md-12"><h3><b><a href="/Item/Info?id=@Model.ItemID" style="text-decoration:none; color:black">@Model.Item.Name</a></b></h3></div></div>
+                <div class="row">
+                    <div class="col-md-4">Номер заказа:</div>
+                    <div class="col-md-6">@Model.OrderID</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">Количество:</div>
+                    <div class="col-md-6">@Model.Amount шт</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">Способ доставки:</div>
+                    <div class="col-md-6">@Model.Shipping_type.Name</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4"><b>Общая стоимость:</b></div>
+                    <div class="col-md-6"><b>@Model.Total_price руб</b></div>
+                </div>
+                <div class="row" style="margin-top:1em">
+                    <div class="col-md-4">Статус:</div>
+                    <div class="col-md-6"><b>@Model.Order_status.Name</b></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">Дата оформления:</div>
+                    <div class="col-md-6">@Model.Open_date</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">Дата получения:</div>
+                    <div class="col-md-6">@Model.Close_date</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" style="margin-top:4em; margin-bottom:1em">
+            <div class="col-md-6">
+                <div class="row" style="border-bottom: 1px solid lightgray; margin-bottom:0.5em; margin-top:0.5em">
+                    <div class="col-md-12"><h4><b>Информация о покупателе:</b></h4></div>
+                </div>
+                    <div class="row">
+                        <div class="col-md-4">ФИО:</div>
+                        <div class="col-md-8">@Model.Buyer.Name</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">Логин:</div>
+                        <div class="col-md-8">@Model.Buyer.User.Login</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">E-mail:</div>
+                        <div class="col-md-8">@Model.Buyer.User.Email</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12" style="margin-top:1em">Адрес доставки:</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12"><i>@Model.Address</i></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12" style="margin-top:1em">Сообщение продавцу:</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12"><i>@Model.ForSellerInfo</i></div>
+                    </div>
+                @if (Model.Order_statusID == 3)
+                {
+                    <div class="row">
+                        <div class="col-md-12" style="margin-top:1em">Отзыв:</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">@Helpers.Stars(Model.Mark.Value)</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12"><i>@Model.Review_text</i></div>
+                    </div>
+                }
+                </div>
+            @if (Model.Seller != null)
+            {
+                <div class="col-md-6">
+                    <div class="row" style="border-bottom: 1px solid lightgray; margin-bottom:0.5em; margin-top:0.5em">
+                        <div class="col-md-12"><h4><b>Информация о продавце:</b></h4></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">ФИО:</div>
+                        <div class="col-md-8">@Model.Seller.Name</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">Логин:</div>
+                        <div class="col-md-8">@Model.Seller.User.Login</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">E-mail:</div>
+                        <div class="col-md-8">@Model.Seller.User.Email</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12" style="margin-top:1em">Сообщение покупателю:</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12"><i>@Model.ForBuyerInfo</i></div>
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+
+
+    @if (Model.Order_statusID == 1)
+    {
+        <div class="row" style="margin-bottom:1em">
+            <div class="col-md-3"><a href="/Order/Ship?id=@Model.OrderID" class="btn btn-primary btn-lg btn-block">Отправить заказ</a></div>
+            <div class="col-md-3">
+                <a href="/Order/Cancel?id=@Model.OrderID" class="btn btn-default btn-lg">Отменить заказ</a>
+            </div>
+        </div>
+    }
+
+    @if (Model.Dialog_dispute.Count>0)
+    {
+        <div class="row" style="margin-bottom:1em">
+            <div class="col-md-3"><a href="/Dialog/Show?id=@Model.Dialog_dispute.First().DisputeID" class="btn btn-default btn-lg btn-block">Перейти к диалогу</a></div>
+        </div>
+    }
+</div>

@@ -1,0 +1,137 @@
+﻿@model Wholesale_Marketplace.Models.Item
+@using Wholesale_Marketplace.Models;
+
+@{
+    ViewBag.Title = Model.Name;
+    if (ViewBag.RoleID == 1) { Layout = "~/Views/Shared/SellerLayout.cshtml"; }
+}
+
+
+<script>
+    var curFirstDispPic = 1;
+    function MovFront() {
+        var children = $("#Pics").children();
+        if (children.length > 10 && (curFirstDispPic+10)<(children.length-1)) {
+            $(children[curFirstDispPic]).addClass("hidden");
+            $(children[curFirstDispPic + 10]).removeClass("hidden");
+
+            curFirstDispPic++;
+        }
+    }
+
+    function MovBack() {
+        var children = $("#Pics").children();
+        if (children.length > 10 && (curFirstDispPic) > 1) {
+            $(children[curFirstDispPic-1]).removeClass("hidden");
+            $(children[curFirstDispPic + 9]).addClass("hidden");
+
+            curFirstDispPic--;
+        }
+    }
+
+    function ChangeMainImg(path) {
+        $("#MainImg").attr({ src: path });
+    }
+</script>
+
+<div class="field-main">
+    <div class="row" style="padding-top:2em">
+        <div class="col-md-6">
+            <div ><img class="img-responsive img-rounded" id="MainImg" src="~/Item/Photo?id=@((Model.Pictures.Count>0) ? (Model.Pictures.First().PictureID) : -1)" style="width:100%; max-height:378px"></div>
+        </div>
+        <div class="col-md-offset-0 col-md-6">
+            <div class="field-in" style="line-height:2em">
+                <div class="row" style="padding-top:0.5em; padding-bottom:0.5em; border-bottom:1px solid lightgray"><div class="col-md-offset-1 col-md-8"><h3><b>@Model.Name</b></h3></div></div>
+                <div class="row">
+                    <div class="col-md-offset-1 col-md-4"><h4><b>Рейтинг:</b></h4></div>
+                    <div class="col-md-offset-1 col-md-6"><h5 style="padding-top:0.1em"><b>@Helpers.Stars(Convert.ToInt32(Model.Average_mark))</b></h5></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-offset-1 col-md-4">Продано:</div>
+                    <div class="col-md-offset-1 col-md-6">@Model.Orders_count <i style="padding-left:0.5em">заказов</i></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-offset-1 col-md-4">Осталось:</div>
+                    <div class="col-md-offset-1 col-md-6">@Model.Left_goods_count <i style="padding-left:0.5em">штук</i></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-offset-1 col-md-4"><h2><b>Цена:</b></h2></div>
+                    <div class="col-md-offset-1 col-md-6"><h2><b>@Model.Price руб</b></h2></div>
+                </div>
+                <div class="row" style="padding-bottom:1em; border-bottom: 1px solid lightgray">
+                    <div class="col-md-offset-1 col-md-4">Мин. заказ:</div>
+                    <div class="col-md-offset-1 col-md-6">@Model.Minimum_order <i style="padding-left:0.5em">штук</i></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-offset-2 col-md-8">
+                        <div style="padding-top:1em; padding-bottom:0.5em">
+                            <a href="/Item/EditItem?id=@Model.ItemID" class="btn btn-primary btn-block" role="button"><div style="padding:0.5em">Редактировать</div></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-offset-2 col-md-8">
+                        <div style="padding-top:0em; padding-bottom:1em">
+                            <a href="/Item/DeleteItem?id=@Model.ItemID" class="btn btn-default btn-block btn-sm" role="button"><div >Удалить</div></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" style="margin-top:2em" id="Pics">
+        <div class="col-md-1"><a class="btn btn-default btn-block" role="button" onclick="MovBack();"><span class="glyphicon glyphicon-arrow-left" style="font-size:2em"></span></a></div>
+        @{int picNum = 0;
+            foreach (Picture item in Model.Pictures)
+            {
+                if (picNum < 10)
+                {
+                    <div class="col-md-1"><img src="~/Item/Photo?id=@item.PictureID" onclick="ChangeMainImg('Photo?id=@item.PictureID')" style="width:70px; height:50px;" /></div>
+                }
+                else
+                {
+                    <div class="col-md-1 hidden"><img src="~/Item/Photo?id=@item.PictureID" style="width:70px; height:50px;" onclick="ChangeMainImg('Photo?id=@item.PictureID')" /></div>
+                }
+                picNum++;
+            }
+            if (picNum < 10)
+            {
+                <div class="col-md-@(10-picNum)"></div>
+            }
+        }
+        <div class="col-md-1"><a class="btn btn-default btn-block" role="button" onclick="MovFront();"><span class="glyphicon glyphicon-arrow-right" style="font-size:2em"></span></a></div>
+    </div>
+    <div class="row" style="margin-top:2em">
+        <div class="col-md-6">
+            <div class="field-in">
+                <div class="row" style="padding-top:0.5em; padding-bottom:0.5em; border-bottom:1px solid lightgray" ><h4><b>Описание товара</b></h4></div>
+                <div class="row" style="padding-top:2em; margin-bottom:1em">
+                    @Model.Description 
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="field-in">
+                <div class="row" style="padding-top:0.5em; padding-bottom:0.5em; margin-bottom:1em; border-bottom:1px solid lightgray"><h4><b>Отзывы</b></h4></div>
+                @foreach (Wholesale_Marketplace.Models.Order review in Model.Orders)
+                {
+                    if (review.Mark.HasValue)
+                    {
+                    <div class="row field-in" style="padding-top:1em; margin-bottom:1em">
+                        <div class="row" style="border-bottom: 1px solid lightgray; padding-bottom:0.5em">
+                            <div class="col-md-6" style="padding-left:0px"><b>@review.Buyer.Name</b></div>
+                            <div class="col-md-6">@Helpers.Stars(review.Mark.Value)</div>
+                        </div>
+                        <div class="row" style="padding-top:0.5em">
+                            <i>@review.Review_text</i>
+                        </div>
+                    </div>
+                        }
+                    }
+
+            </div>
+        </div>
+    </div>
+    </div>
+

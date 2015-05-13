@@ -1,0 +1,109 @@
+﻿@using Wholesale_Marketplace.Models
+@model Wholesale_Marketplace.Models.Item
+@{
+
+    Layout = "~/Views/Shared/SellerLayout.cshtml";
+    ViewBag.Title = "Изменить товар";
+}
+
+
+<script>
+    var i = 1;
+    var AddPic = function () {
+        $('#PicsDiv').append('<input type="file" name="Pics" />');
+        i++;
+    }
+</script>
+
+<div class="field-main">
+
+    <div class="row" style="margin-top:1em"><h4><b>Введите информацию о товаре</b></h4></div>
+    <form action="/Item/AddItem" method="post" enctype = "multipart/form-data" class="field-in" style="padding-top:1em; margin-top:2em; margin-bottom:2em">
+        
+        <div class="row">
+            <input type="number" name="ItemID" value="@Model.ItemID" style="display:none" />
+            <div class="form-group">
+                @Html.LabelFor(m => m.Name, "Название товара")
+                <br />
+                @Html.EditorFor(m => m.Name, new { htmlAttributes = new { @class = "form-control"} })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.CategoryID, "Категория товара")
+                <br />
+                <select name="CategoryID" class="form-control" style=" overflow:hidden; height:2.5em" required>
+                    @foreach (Item_category cat in ViewBag.Categories)
+                    {
+                        if (cat.CategoryID == Model.CategoryID)
+                        {
+                            <option value="@cat.CategoryID" style="padding:0.5em" selected> @cat.Name </option>
+                        }
+                        else { 
+                        <option value="@cat.CategoryID" style="padding:0.5em"> @cat.Name </option>
+                         }
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Price, "Цена")
+                <br />
+                @Html.EditorFor(m => m.Price, new { htmlAttributes = new { @class = "form-control" , @type = "number" } })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Description, "Описание")
+                <br />
+                @Html.TextAreaFor(m => m.Description, new { @class = "form-control", rows = "5" })
+
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Minimum_order, "Минимальный заказ (шт.)")
+                <br />
+                @Html.EditorFor(m => m.Minimum_order, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Left_goods_count, "Товара в наличии (шт.)")
+                <br />
+                @Html.EditorFor(m => m.Left_goods_count, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+            <br />
+            <div class="form-group">
+                <p><b>Добавить изображения товара</b></p>
+                <div id="PicsDiv">
+                    <input type="file" name="Pics" />
+                </div>
+                <a class="btn btn-default" style="margin-top:0.5em" onclick="AddPic();">Добавить</a>
+            </div>
+                <br />
+                <input type="submit" class="btn btn-primary" value="Сохранить" formaction="EditItem" />
+
+            </div>
+
+
+    </form>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

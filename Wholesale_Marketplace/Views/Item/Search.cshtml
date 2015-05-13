@@ -55,35 +55,38 @@
 
 
 </script>
-<div class="field-main">
+<div class="field-main" style="padding-left:2.5em">
     <div class="row">
         <div class="col-md-4">
             <div class="field-in" style="margin-top:0.5em; margin-left:0em; margin-right:1em; padding-top:1em">
-                <div class="row h4" style="padding-bottom:0.5em; margin-bottom:0.5em; border-bottom: 1px solid lightgray"><b>Категория:</b></div>
-                <select id="CategorySelect" size="4" name="category"  class="form-control" style="height:20em; overflow:hidden;">
-                    <option  value="-1" hidden selected></option>
+                <div class="row h4" style="padding-bottom:1em; margin-bottom:1em; border-bottom: 1px solid lightgray"><b>Категория:</b></div>
+                <select id="CategorySelect" size="4" name="category" class="form-control" style="height:20em; overflow:hidden;">
+                    <option value="-1" hidden selected></option>
                     @foreach (Item_category cat in ViewBag.Categories)
                     {
                         <option value="@cat.CategoryID" style="padding:0.5em">@cat.Name</option>
                     }
                     <option value="7" style="padding:0.5em">777</option>
                 </select>
-                
+
                 <div class="row h4" style="padding-bottom:0.5em; margin-bottom:0.5em; padding-top:0.5em; margin-top:2em; border-bottom: 1px solid lightgray; border-top:1px solid lightgray;"><b>Цена:</b></div>
-                <div class="row">Мин:<input type="text" value="@ViewBag.price_min" id="InpPriceMin" class="form-control"/></div>
-                <div class="row" style="margin-top:0.5em">Макс:<input type="text" value="" id="InpPriceMax" class="form-control" ></div>
-                <div class="row" style="padding-bottom:0.5em; margin-bottom:0.5em; padding-top:0.5em; margin-top:3em; border-bottom: 1px solid lightgray; border-top:1px solid lightgray;"><label class="checkbox"><input type="checkbox" id="InpGoodSellers"/>Провереные продавцы</label></div>
+                <div class="row">Мин:<input type="text" value="@ViewBag.price_min" id="InpPriceMin" class="form-control" /></div>
+                <div class="row" style="margin-top:0.5em">Макс:<input type="text" value="" id="InpPriceMax" class="form-control"></div>
+                <div class="row" style="padding-top:2em; margin-top:3em; border-top:1px solid lightgray;"><label class="checkbox"><input type="checkbox" id="InpGoodSellers" />Провереные продавцы</label></div>
+                <div class="row" style="margin-bottom:2em; margin-top:0em; "><label class="checkbox"><input type="checkbox" id="FreeShipping" />Бесплатная доставка</label></div>
             </div>
         </div>
         <div class="col-md-8">
             <div class="row field-in" style="padding-top:0.5em; padding-bottom:0.5em; margin-top:0.5em">По запросу <b id="SrchKwrdsInfo">@ViewBag.search_keywords</b> найдено <b id="SrchCnt">@ViewBag.FoundCount</b> товаров</div>
-            <div class="row field-in" style="padding-top:0.5em; padding-bottom:0.5em; margin-top:0.5em; margin-bottom:0.5em; ">Сортировка по 
-            <a onclick="sortCur=0; SearchAgain();" style="border-right:1px solid lightgray; margin-right:0.5em; margin-right:0.5em">цена /\ </a>
+            <div class="row field-in" style="padding-top:0.5em; padding-bottom:0.5em; margin-top:0.5em; margin-bottom:0.5em; ">
+                Сортировка по
+                <a onclick="sortCur=0; SearchAgain();" style="border-right:1px solid lightgray; margin-right:0.5em; margin-right:0.5em">цена /\ </a>
                 <a onclick="sortCur=1; SearchAgain();" style="border-right:1px solid lightgray; margin-right:0.5em; margin-right:0.5em">цена \/ </a>
                 <a onclick="sortCur=2; SearchAgain();" style="border-right:1px solid lightgray; margin-right:0.5em; margin-right:0.5em">рейтинг </a>
                 <a onclick="sortCur=3; SearchAgain();" style="border-right:1px solid lightgray; margin-right:0.5em; margin-right:0.5em">заказы </a>
                 <a onclick="sortCur=4; SearchAgain();" style="border-right:1px solid lightgray; margin-right:0.5em; margin-right:0.5em">дата \/ </a>
-             <a onclick="sortCur=5; SearchAgain();" >дата /\ </a></div>
+                <a onclick="sortCur=5; SearchAgain();">дата /\ </a>
+            </div>
             <div id="SearchResults">
                 @{Html.RenderPartial("SearchPart", Model);}
             </div>

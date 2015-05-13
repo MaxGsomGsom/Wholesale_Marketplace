@@ -1,0 +1,55 @@
+﻿@model Wholesale_Marketplace.Models.Order
+@using Wholesale_Marketplace.Models
+
+
+@{
+    ViewBag.Title = "Подтверждение отправки " + Model.OrderID;
+    if (ViewBag.RoleID == 0) { Layout = "~/Views/Shared/SellerLayout.cshtml"; }
+}
+
+<div class="field-main">
+    <div style="margin-top:2em">
+        <div class="row"><div class="col-md-12"><h4 style="border-top: 1px solid lightgray; padding-top:1em; border-bottom: 1px solid lightgray; padding-bottom:1em"><b>Подтвердите данные заказа:</b></h4></div></div>
+        <div class="row h4" style="margin-top:1em">
+            <div class="col-md-4">Товар:</div>
+            <div class="col-md-6">@Model.Item.Name</div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">Количество:</div>
+            <div class="col-md-6">@Model.Amount шт</div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">Способ доставки:</div>
+            <div class="col-md-6">@Model.Shipping_type.Name</div>
+        </div>
+        <div class="row">
+            <div class="col-md-12" style="margin-top:1em">Адрес доставки:</div>
+        </div>
+        <div class="row">
+            <div class="col-md-12"><i>@Model.Address</i></div>
+        </div>
+        <div class="row h4" style="border-top: 1px solid lightgray; padding-top:1em; margin-top:1em">
+            <div class="col-md-4"><b>Общая стоимость:</b></div>
+            <div class="col-md-6"><b>@Model.Total_price руб</b></div>
+        </div>
+    </div>
+
+    <div class="row" style="margin-bottom:1em; margin-top:3em">
+        <div class="col-md-8">
+            <form action="/Order/Ship" method="post">
+
+
+                <input type="number" name="MakeShipment" value="1" hidden />
+                <input type="number" name="id" value="@Model.OrderID" hidden />
+                <div class="form-group">
+                    @Html.LabelFor(m => m.ForBuyerInfo, "Введите информацию для покупателя:")
+                    <br />
+                    @Html.TextAreaFor(m => m.ForBuyerInfo, new { @class = "form-control", rows = "5" })
+
+                </div>
+                <input type="submit" class="btn btn-primary btn-lg" value="Подтвердить отправку" />
+
+            </form>
+        </div>
+    </div>
+    </div>
