@@ -101,8 +101,19 @@ namespace Wholesale_Marketplace.Controllers
                         curOrder.Order_statusID = 6;
                         db.Entry(curOrder).State = EntityState.Modified;
                         db.SaveChanges();
-                        return Content("Заказ отменен");
+                        return Redirect("/Order/Info?id=" + id);
                     }
+            }
+            else if (ViewBag.RoleID == 1)
+            {
+                Order curOrder = db.Orders.Find(id);
+                if (curOrder.Item.StoreID == ViewBag.StoreID)
+                {
+                    curOrder.Order_statusID = 6;
+                    db.Entry(curOrder).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return Redirect("/Order/Info?id=" + id);
+                }
             }
 
             return Redirect("/Home/Index");
@@ -144,7 +155,7 @@ namespace Wholesale_Marketplace.Controllers
                             curOrder.Mark = Mark;
                             db.Entry(curOrder).State = EntityState.Modified;
                             db.SaveChanges();
-                            return Content("Отзыв оставлен");
+                            return Redirect("/Order/Info?id=" + id);
                         }
                     }
             }
@@ -164,7 +175,57 @@ namespace Wholesale_Marketplace.Controllers
                     return View("Info", curOrder);
                 }
             }
+            else if (ViewBag.RoleID == 1)
+            {
+                Order curOrder = db.Orders.Find(id);
+                if (curOrder.Item.StoreID == ViewBag.StoreID)
+                {
+                    return View("InfoSeller", curOrder);
+                }
+            }
 
+            return Redirect("/Home/Index");
+        }
+
+
+
+
+
+
+        [HttpGet]
+        public ActionResult Ship(int id)
+        {
+            if (Helpers.UserCheck(db, ViewBag) && ViewBag.RoleID == 1)
+            {
+                Order curOrder = db.Orders.Find(id);
+                if (curOrder.Item.StoreID == ViewBag.StoreID)
+                {
+                    return View("Ship", curOrder);
+                }
+            }
+
+            return Redirect("/Home/Index");
+        }
+
+        [HttpPost]
+        public ActionResult Ship(int id, string forBuyerInfo, int MakeShipment = 0)
+        {
+            if (Helpers.UserCheck(db, ViewBag) && ViewBag.RoleID == 1)
+            {
+                Order curOrder = db.Orders.Find(id);
+                if (curOrder.Item.StoreID == ViewBag.StoreID)
+                {
+                    if (MakeShipment == 1)
+                    {
+                        curOrder.Order_statusID = 2;
+                        curOrder.ForBuyerInfo = forBuyerInfo;
+                        db.Entry(curOrder).State = EntityState.Modified;
+                        db.SaveChanges();
+                        return Redirect("/Order/Info?id=" + id);
+                    }
+                    else return Content("Не отправлено");
+                }
+            }
             return Redirect("/Home/Index");
         }
 
