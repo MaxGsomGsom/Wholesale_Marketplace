@@ -1,0 +1,51 @@
+﻿@model IEnumerable<Wholesale_Marketplace.Models.Order>
+@using Wholesale_Marketplace.Models
+
+
+@{
+    ViewBag.Title = "Заказы";
+    if (ViewBag.RoleID == 0) { Layout = "~/Views/Shared/SellerLayout.cshtml"; }
+}
+
+
+<script>
+    var pageNext = 0;
+
+
+
+    var NextPage = function() {
+        pageNext++;
+        $.get("Orders", { page: pageNext,  part_page: 1},
+            function (data, textStatus, jqXHR) {
+                $("#OrdersResults").append(data);
+            });
+    }
+
+
+
+</script>
+
+
+<div class="field-main" style="padding-top:2em">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="row">
+                <div class="row field-in" style="padding-top:1em; margin-bottom:1em;"><h4><b>Ваши заказы</b></h4></div>
+                </div>
+                <div id="OrdersResults" class="row">
+                    @{Html.RenderPartial("OrdersPart", Model);}
+                </div>
+                <div class="row"><a class="btn btn-default btn-block" onclick="NextPage();">Показать ещё</a></div>
+            </div>
+        <div class="col-md-4">
+            <div class="field-in" style="margin-left:1em">
+                <div class="row" style="margin-bottom:1em; margin-top:1em"><b>Статистика:</b></div>
+                <div class="row"><b>@ViewBag.waitPay</b> ожидает оплаты</div>
+                <div class="row"><b>@ViewBag.waitShipping</b> ожидает отправки</div>
+            <div class="row"><b>@ViewBag.waitClosing</b> ожидает подтверждения</div>
+            <div class="row"><b>@ViewBag.inDispute</b> в состоянии спора</div>
+        </div>
+
+    </div>
+</div>
+</div>
