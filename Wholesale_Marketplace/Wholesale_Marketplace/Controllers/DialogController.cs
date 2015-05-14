@@ -24,17 +24,39 @@ namespace Wholesale_Marketplace.Controllers
                     return View("Show", dialog);
                 }
             }
+            else if (ViewBag.RoleID == 1)
+            {
+                Dialog_dispute dialog = db.Dialog_dispute.Find(id);
+                if ((dialog.Item != null && dialog.Item.StoreID == ViewBag.StoreID) || (dialog.Order != null && dialog.Order.Item.StoreID == ViewBag.StoreID))
+                {
+                    ViewBag.DisputeStates = db.DisputeStates;
+                    return View("ShowSeller", dialog);
+                }
+            }
 
             return Redirect("/Home/Index");
         }
+
+
 
         public ActionResult ShowNewMessages(int id, long lastTime)
         {
             if (Helpers.UserCheck(db, ViewBag) && ViewBag.RoleID == 0)
             {
-                if (db.Dialog_dispute.Find(id).Buyer.UserID == ViewBag.UserID)
+                Dialog_dispute dialog = db.Dialog_dispute.Find(id);
+                if (dialog.Buyer.UserID == ViewBag.UserID)
                 {
-                    DateTime lastTimeConverted = new DateTime(lastTime*10000+(new DateTime(1970,1,1,3,0,0)).Ticks); // зависимость от нашего часового пояса
+                    DateTime lastTimeConverted = new DateTime(lastTime * 10000 + (new DateTime(1970, 1, 1, 3, 0, 0)).Ticks); // зависимость от нашего часового пояса
+                    IEnumerable<Message> messages = db.Messages.Where(m => m.DisputeID == id && m.Post_date > lastTimeConverted);
+                    return PartialView("NewMessagesPart", messages);
+                }
+            }
+            else if (ViewBag.RoleID == 1)
+            {
+                Dialog_dispute dialog = db.Dialog_dispute.Find(id);
+                if ((dialog.Item != null && dialog.Item.StoreID == ViewBag.StoreID) || (dialog.Order != null && dialog.Order.Item.StoreID == ViewBag.StoreID))
+                {
+                    DateTime lastTimeConverted = new DateTime(lastTime * 10000 + (new DateTime(1970, 1, 1, 3, 0, 0)).Ticks);
                     IEnumerable<Message> messages = db.Messages.Where(m => m.DisputeID == id && m.Post_date > lastTimeConverted);
                     return PartialView("NewMessagesPart", messages);
                 }
@@ -54,7 +76,33 @@ namespace Wholesale_Marketplace.Controllers
 
                     newMessage.Post_date = DateTime.Now;
                     newMessage.UserID = ViewBag.UserID;
-                    
+
+                    db.Messages.Add(newMessage);
+                    db.SaveChanges();
+
+                    if (messageImage != null)
+                    {
+                        Picture newPic = new Picture();
+                        newPic.Image = (new BinaryReader(messageImage.InputStream)).ReadBytes((int)messageImage.InputStream.Length);
+                        newPic.MessageID = newMessage.MessageID;
+                        db.Pictures.Add(newPic);
+                        db.SaveChanges();
+                    }
+
+
+                    return Content("");
+                }
+            }
+            else if (ViewBag.RoleID == 1)
+            {
+                Dialog_dispute dialog = db.Dialog_dispute.Find(newMessage.DisputeID);
+                if (dialog.Seller != null && dialog.Seller.UserID == ViewBag.UserID)
+                {
+                    if (newMessage.Text == null) return Content("");
+
+                    newMessage.Post_date = DateTime.Now;
+                    newMessage.UserID = ViewBag.UserID;
+
                     db.Messages.Add(newMessage);
                     db.SaveChanges();
 
@@ -89,6 +137,19 @@ namespace Wholesale_Marketplace.Controllers
                 }
                 catch { }
             }
+            if (ViewBag.RoleID == 1)
+            {
+                try
+                {
+                    Dialog_dispute dialog = db.Pictures.Find(id).Message.Dialog_dispute;
+                    if ((dialog.Item != null && dialog.Item.StoreID == ViewBag.StoreID) || (dialog.Order != null && dialog.Order.Item.StoreID == ViewBag.StoreID))
+                    {
+                        byte[] img = db.Pictures.Find(id).Image;
+                        if (img != null) return File(img, "image/jpeg");
+                    }
+                }
+                catch { }
+            }
 
             return Content("");
         }
@@ -100,7 +161,7 @@ namespace Wholesale_Marketplace.Controllers
                 if (db.Items.Any(m => m.ItemID == itemID))
                 {
                     int buyer = ViewBag.BuyerID;
-                    if (db.Dialog_dispute.Any(m=>m.ItemID == itemID && m.BuyerID==buyer))
+                    if (db.Dialog_dispute.Any(m => m.ItemID == itemID && m.BuyerID == buyer))
                     {
                         ViewBag.DisputeStates = db.DisputeStates;
                         return View("Show", db.Dialog_dispute.First(m => m.ItemID == itemID && m.BuyerID == buyer));
@@ -120,7 +181,7 @@ namespace Wholesale_Marketplace.Controllers
                     }
                 }
 
-                
+
             }
 
             return Redirect("/Home/Index");
@@ -217,12 +278,12 @@ namespace Wholesale_Marketplace.Controllers
             if (Helpers.UserCheck(db, ViewBag) && ViewBag.RoleID == 0)
             {
                 Dialog_dispute dialog = db.Dialog_dispute.Find(id);
-                if (dialog.Buyer.UserID == ViewBag.UserID && dialog.IsDispute==true)
+                if (dialog.Buyer.UserID == ViewBag.UserID && dialog.IsDispute == true)
                 {
                     dialog.BuyerAgree = true;
                     db.Entry(dialog).State = EntityState.Modified;
-                    
-                    if (dialog.BuyerAgree==true && dialog.SellerAgree==true && dialog.Order.Order_statusID == 4)
+
+                    if (dialog.BuyerAgree == true && dialog.SellerAgree == true && dialog.Order.Order_statusID == 4)
                     {
                         Order curOrder = dialog.Order;
                         curOrder.Order_statusID = 5;
@@ -231,6 +292,25 @@ namespace Wholesale_Marketplace.Controllers
                     db.SaveChanges();
                     ViewBag.DisputeStates = db.DisputeStates;
                     return View("Show", dialog);
+                }
+            }
+            else if (ViewBag.RoleID == 1)
+            {
+                Dialog_dispute dialog = db.Dialog_dispute.Find(id);
+                if (dialog.Seller.UserID == ViewBag.UserID && dialog.IsDispute == true)
+                {
+                    dialog.SellerAgree = true;
+                    db.Entry(dialog).State = EntityState.Modified;
+
+                    if (dialog.BuyerAgree == true && dialog.SellerAgree == true && dialog.Order.Order_statusID == 4)
+                    {
+                        Order curOrder = dialog.Order;
+                        curOrder.Order_statusID = 5;
+                        db.Entry(curOrder).State = EntityState.Modified;
+                    }
+                    db.SaveChanges();
+                    ViewBag.DisputeStates = db.DisputeStates;
+                    return View("ShowSeller", dialog);
                 }
             }
 
@@ -243,8 +323,8 @@ namespace Wholesale_Marketplace.Controllers
             if (Helpers.UserCheck(db, ViewBag) && ViewBag.RoleID == 0)
             {
                 Dialog_dispute dialog = db.Dialog_dispute.Find(id);
-                if (dialog.Buyer.UserID == ViewBag.UserID && dialog.IsDispute == true && refundValue>=0 
-                    && refundValue<=dialog.Order.Total_price && disputeState>=0 && disputeState<=3)
+                if (dialog.Buyer.UserID == ViewBag.UserID && dialog.IsDispute == true && refundValue >= 0
+                    && refundValue <= dialog.Order.Total_price && disputeState >= 0 && disputeState <= 3)
                 {
                     dialog.BuyerAgree = false;
                     dialog.SellerAgree = false;
@@ -256,8 +336,53 @@ namespace Wholesale_Marketplace.Controllers
                     return View("Show", dialog);
                 }
             }
+            else if (ViewBag.RoleID == 1)
+            {
+                Dialog_dispute dialog = db.Dialog_dispute.Find(id);
+                if (dialog.Seller.UserID == ViewBag.UserID && dialog.IsDispute == true && refundValue >= 0
+                    && refundValue <= dialog.Order.Total_price && disputeState >= 0 && disputeState <= 3)
+                {
+                    dialog.BuyerAgree = false;
+                    dialog.SellerAgree = false;
+                    dialog.RefundValue = refundValue;
+                    dialog.DisputeStateID = disputeState;
+                    db.Entry(dialog).State = EntityState.Modified;
+                    db.SaveChanges();
+                    ViewBag.DisputeStates = db.DisputeStates;
+                    return View("ShowSeller", dialog);
+                }
+            }
 
             return Redirect("/Home/Index");
+        }
+
+
+        public ActionResult ConnectDialogToSeller(int id)
+        {
+            if (Helpers.UserCheck(db, ViewBag) && ViewBag.RoleID == 1)
+            {
+                try
+                {
+                    Dialog_dispute curDialog = db.Dialog_dispute.Find(id);
+
+                    if (((curDialog.Item != null && curDialog.Item.StoreID == ViewBag.StoreID) || (curDialog.Order != null && curDialog.Order.Item.StoreID == ViewBag.StoreID)) && curDialog.Seller == null)
+                    {
+                        curDialog.SellerID = ViewBag.SellerID;
+                        db.Entry(curDialog).State = EntityState.Modified;
+                        db.SaveChanges();
+
+
+                        return View("ShowSeller", curDialog);
+                    }
+                }
+                catch { }
+
+
+
+
+            }
+            return Redirect("/Home/Index");
+
         }
 
     }

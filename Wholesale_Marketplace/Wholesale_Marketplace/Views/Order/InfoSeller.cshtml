@@ -120,7 +120,7 @@
     </div>
 
 
-    @if (Model.Order_statusID == 1)
+    @if (Model.SellerID == ViewBag.SellerID && Model.Order_statusID == 1)
     {
         <div class="row" style="margin-bottom:1em">
             <div class="col-md-3"><a href="/Order/Ship?id=@Model.OrderID" class="btn btn-primary btn-lg btn-block">Отправить заказ</a></div>
@@ -130,7 +130,7 @@
         </div>
     }
 
-    @if (Model.Dialog_dispute.Count>0)
+    @if (Model.SellerID == ViewBag.SellerID && Model.Dialog_dispute.Count > 0)
     {
         <div class="row" style="margin-bottom:1em">
             <div class="col-md-3"><a href="/Dialog/Show?id=@Model.Dialog_dispute.First().DisputeID" class="btn btn-default btn-lg btn-block">Перейти к диалогу</a></div>

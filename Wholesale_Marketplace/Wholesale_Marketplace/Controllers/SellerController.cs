@@ -28,6 +28,7 @@ namespace Wholesale_Marketplace.Controllers
                 ViewBag.waitShipping = orders.Where(m => m.Order_status.Order_statusID == 1).Count();
                 ViewBag.waitClosing = orders.Where(m => m.Order_status.Order_statusID == 2).Count();
                 ViewBag.inDispute = orders.Where(m => m.Order_status.Order_statusID == 4).Count();
+                ViewBag.noSeller = orders.Where(m => m.Seller == null).Count();
 
                 orders = orders.Skip(page * 10).Take(10);
 
@@ -44,33 +45,49 @@ namespace Wholesale_Marketplace.Controllers
         }
 
 
-
-        public ActionResult ConnectOrderToSeller(int id)
+        public ActionResult Dialogs(int page = 0, int part_page = 0)
         {
+
             if (Helpers.UserCheck(db, ViewBag) && ViewBag.RoleID == 1)
             {
-                try
+                int sellerID = ViewBag.SellerID;
+                int storeID = ViewBag.StoreID;
+
+                IEnumerable<Dialog_dispute> dialogs = db.Dialog_dispute.Where(m => 
+                    m.SellerID == sellerID || (m.Item!=null && m.Item.StoreID == storeID) || (m.Order!=null && m.Order.Item.StoreID == storeID));
+
+                ViewBag.dialogsNum = dialogs.Count();
+                ViewBag.disputesNum = dialogs.Where(m => m.Order!=null && m.Order.Order_statusID == 4).Count();
+                ViewBag.noSeller = dialogs.Where(m => m.Seller == null).Count();
+
+                dialogs = dialogs.OrderByDescending(m =>
                 {
-                    Order curOrder = db.Orders.Find(id);
-
-                    if (curOrder.Item.StoreID == ViewBag.StoreID && curOrder.Seller == null)
+                    DateTime key = new DateTime(1999, 1, 1);
+                    try
                     {
-                        curOrder.SellerID = ViewBag.SellerID;
-                        db.Entry(curOrder).State = EntityState.Modified;
-                        db.SaveChanges();
-
-
-                        return Redirect("/Order/Info?id=" + id);
+                        key = m.Messages.Last().Post_date;
                     }
+                    catch
+                    {
+                        key = m.Open_date;
+                    }
+                    return key;
+                });
+
+                dialogs = dialogs.Skip(page * 10).Take(10);
+
+                if (part_page == 1)
+                {
+                    return PartialView("DialogsPart", dialogs);
                 }
-                catch { }
-                
 
-                
-
+                return View("Dialogs", dialogs);
             }
+
             return Redirect("/Home/Index");
 
         }
+
+   
     }
 }

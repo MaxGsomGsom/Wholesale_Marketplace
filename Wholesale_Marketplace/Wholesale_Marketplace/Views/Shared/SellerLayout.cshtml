@@ -33,19 +33,28 @@
                 <div class="col-md-6">
                     <div class="row" style="padding-bottom:1em"><div class="col-md-offset-6 col-md-6">Продавец:<b style="margin-left:2.7em">@ViewBag.Login</b></div></div>
                     <div class="row">
-                        <div class="col-md-3">
-                            <a href="/Item/AddItem" class="btn btn-default btn-block" role="button">Добавить товар</a>
-                        </div>
+                        @if (ViewBag.StoreID != null)
+                        {
+                            <div class="col-md-1" style="margin-right:0em; padding-right:0em">
+                                <a href="/Item/AddItem" class="btn btn-default btn-block" role="button"><span class="glyphicon-plus-sign glyphicon"></span></a>
+                            </div>
+    <div class="col-md-2" style="margin-left:0em; padding-left:0em">
+        <a href="/Item/Search?StoreID=@ViewBag.StoreID" class="btn btn-default btn-block" role="button">Товары</a>
+    </div>
+                        }
                         <div class="col-md-3">
                             <a href="/Seller/Orders" class="btn btn-default btn-block" role="button">Заказы</a>
                         </div>
                         <div class="col-md-3">
-                            <a href="/Account/AddInfoSeller" class="btn btn-default btn-block" role="button">Настройки</a>
+                            <a href="/Seller/Orders" class="btn btn-default btn-block" role="button">Диалоги</a>
                         </div>
                         <div class="col-md-1">
-                            <a href="/Help/Show" class="btn btn-default " role="button"><span class="glyphicon glyphicon-question-sign"></span></a>
+                            <a href="/Account/AddInfoSeller" class="btn btn-default" role="button"><span class="glyphicon-cog glyphicon"></span></a>
                         </div>
                         <div class="col-md-1">
+                            <a href="/Help/Show" class="btn btn-default btn" role="button"><span class="glyphicon glyphicon-question-sign"></span></a>
+                        </div>
+                        <div class="col-md-1" >
                             <a href="/Account/Logout" class="btn btn-default " role="button"><span class="glyphicon glyphicon-log-out"></span></a>
                         </div>
                     </div>

@@ -99,6 +99,10 @@
 
         <div class="col-md-3">
             <div class="row" style="padding-top:0em; margin-left:2em"><a class="btn btn-default btn-block" href="/Dialog/Show?id=@dialog.DisputeID">Открыть</a></div>
+            @if (dialog.Seller == null)
+            {
+                <div class="row" style="margin-top:1em"><a class="btn btn-primary btn-block" href="/Dialog/ConnectDialogToSeller?id=@dialog.DisputeID">Вступить в диалог</a></div>
+            }
         </div>
     </div>
 }
