@@ -1,0 +1,36 @@
+﻿@model IEnumerable<Wholesale_Marketplace.Models.Order>
+@using Wholesale_Marketplace.Controllers;
+@using Wholesale_Marketplace.Models
+
+
+
+@foreach (Order order in Model)
+{
+    int mainPic = (order.Item.Pictures.Count > 0) ? (order.Item.Pictures.First().PictureID) : -1;
+    <div class="row field-in" style="padding-top:1em; margin-bottom:1em; padding-left:0px">
+        <div class="col-md-3">
+            <img src="~/Item/Photo?id=@mainPic" class="img-responsive img-rounded" style="max-height:100px" />
+        </div>
+        <div class="col-md-6">
+            <div class="row">
+                <h4 style="margin-top:0px"><a href="/Item/Info?id=@order.ItemID" style="text-decoration:none; color:black"><b>@order.Item.Name</b></a></h4>
+            </div>
+            @if (order.Seller != null)
+            {
+                <div class="row">Продавец: <b>@order.Seller</b></div>
+            }
+            else
+            {
+                <div class="row">Продавец не назначен</div>
+            }
+            <div class="row">Сумма: @order.Total_price руб</div>
+            <div class="row">Дата заказа: @order.Open_date</div>
+            <div class="row">Статус: <b>@order.Order_status.Name</b></div>
+        </div>
+        <div class="col-md-3">
+            <div class="row" style="padding-top:0em"><a class="btn btn-default btn-block" href="/Order/Info?id=@order.OrderID">Подробно</a></div>
+            <div class="row" style="margin-top:1em"><a class="btn btn-primary btn-block" href="/Order/ConnectOrderToSeller?id=@order.OrderID">Взять на обработку</a></div>
+        </div>
+    </div>
+}
+

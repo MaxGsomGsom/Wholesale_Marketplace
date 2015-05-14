@@ -1,0 +1,49 @@
+﻿@model IEnumerable<Wholesale_Marketplace.Models.Dialog_dispute>
+@using Wholesale_Marketplace.Models
+
+
+@{
+    ViewBag.Title = "Диалоги";
+    if (ViewBag.RoleID == 0) { Layout = "~/Views/Shared/BuyerLayout.cshtml"; }
+}
+
+
+<script>
+    var pageNext = 0;
+
+
+
+    var NextPage = function () {
+        pageNext++;
+        $.get("Dialogs", { page: pageNext, part_page: 1 },
+            function (data, textStatus, jqXHR) {
+                $("#DialogsResults").append(data);
+            });
+    }
+
+
+
+</script>
+
+
+<div class="field-main" style="padding-top:2em">
+    <div class="row">
+        <div class="col-md-9">
+            <div class="row">
+                <div class="row field-in" style="padding-top:1em; margin-bottom:1em;"><h4><b>Ваши диалоги</b></h4></div>
+            </div>
+            <div id="DialogsResults" class="row">
+                @{Html.RenderPartial("DialogsPart", Model);}
+            </div>
+            <div class="row"><a class="btn btn-default btn-block" onclick="NextPage();">Показать ещё</a></div>
+        </div>
+        <div class="col-md-3">
+            <div class="field-in" style="margin-left:1em">
+                <div class="row" style="margin-bottom:1em; margin-top:1em"><b>Статистика:</b></div>
+                <div class="row"><b>@ViewBag.dialogsNum</b> диалогов</div>
+                <div class="row"><b>@ViewBag.disputesNum</b> споров</div>
+            </div>
+
+        </div>
+    </div>
+</div>

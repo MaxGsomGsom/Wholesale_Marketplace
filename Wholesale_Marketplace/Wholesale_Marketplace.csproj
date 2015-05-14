@@ -120,6 +120,7 @@
     <Compile Include="Controllers\BuyerController.cs" />
     <Compile Include="Controllers\DialogController.cs" />
     <Compile Include="Controllers\HelpController.cs" />
+    <Compile Include="Controllers\SellerController.cs" />
     <Compile Include="Controllers\StoreController.cs" />
     <Compile Include="Helpers.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -283,6 +284,10 @@
     <Content Include="Views\Item\EditItem.cshtml" />
     <Content Include="Views\Order\InfoSeller.cshtml" />
     <Content Include="Views\Order\Ship.cshtml" />
+    <Content Include="Views\Seller\Dialogs.cshtml" />
+    <Content Include="Views\Seller\DialogsPart.cshtml" />
+    <Content Include="Views\Seller\Orders.cshtml" />
+    <Content Include="Views\Seller\OrdersPart.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
