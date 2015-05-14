@@ -229,5 +229,34 @@ namespace Wholesale_Marketplace.Controllers
             return Redirect("/Home/Index");
         }
 
+
+        public ActionResult ConnectOrderToSeller(int id)
+        {
+            if (Helpers.UserCheck(db, ViewBag) && ViewBag.RoleID == 1)
+            {
+                try
+                {
+                    Order curOrder = db.Orders.Find(id);
+
+                    if (curOrder.Item.StoreID == ViewBag.StoreID && curOrder.Seller == null)
+                    {
+                        curOrder.SellerID = ViewBag.SellerID;
+                        db.Entry(curOrder).State = EntityState.Modified;
+                        db.SaveChanges();
+
+
+                        return View("Info", curOrder);
+                    }
+                }
+                catch { }
+
+
+
+
+            }
+            return Redirect("/Home/Index");
+
+        }
+
     }
 }

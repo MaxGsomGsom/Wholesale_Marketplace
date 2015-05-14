@@ -51,7 +51,7 @@ namespace Wholesale_Marketplace.Controllers
                 IEnumerable<Dialog_dispute> dialogs = db.Dialog_dispute.Where(m => m.BuyerID == buyerID);
 
                 ViewBag.dialogsNum = dialogs.Count();
-                ViewBag.disputesNum = dialogs.Where(m => m.IsDispute == true).Count();
+                ViewBag.disputesNum = dialogs.Where(m => m.Order != null && m.Order.Order_statusID == 4).Count();
 
                 dialogs = dialogs.OrderByDescending(m =>
                 {

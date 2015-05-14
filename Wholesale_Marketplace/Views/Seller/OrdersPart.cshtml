@@ -17,7 +17,7 @@
             </div>
             @if (order.Seller != null)
             {
-                <div class="row">Продавец: <b>@order.Seller</b></div>
+                <div class="row">Продавец: <b>@order.Seller.User.Login</b></div>
             }
             else
             {
@@ -29,8 +29,10 @@
         </div>
         <div class="col-md-3">
             <div class="row" style="padding-top:0em"><a class="btn btn-default btn-block" href="/Order/Info?id=@order.OrderID">Подробно</a></div>
+            @if (order.Seller == null) { 
             <div class="row" style="margin-top:1em"><a class="btn btn-primary btn-block" href="/Order/ConnectOrderToSeller?id=@order.OrderID">Взять на обработку</a></div>
-        </div>
+            }
+         </div>
     </div>
 }
 

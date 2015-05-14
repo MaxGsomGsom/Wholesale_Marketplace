@@ -41,7 +41,7 @@ namespace Wholesale_Marketplace.Controllers
 
         //сортировка 0 возрастание цены, 1 убывание цены, 2 убывание рейтингу, 3 убывание количества заказов, 4 убывание дате добавления, возрастание даты добавления
         //реализовать бесплатную доставку
-        public ActionResult Search(string search_keywords = "", int page = 0, int sort = 0, int price_min = 0, int price_max = int.MaxValue, int good_sellers = 0, int category = -1, int part_page = 0)
+        public ActionResult Search(string search_keywords = "", int page = 0, int sort = 0, int price_min = 0, int price_max = int.MaxValue, int good_sellers = 0, int category = -1, int part_page = 0, int storeId=-1)
         {
             Helpers.UserCheck(db, ViewBag);
 
@@ -59,6 +59,7 @@ namespace Wholesale_Marketplace.Controllers
             collect = collect.Where(m => m.Price >= price_min && m.Price <= price_maxForCheck);
             if (good_sellers==1) collect = collect.Where(m => m.Store.Marks_count >= 5 && m.Store.Average_mark >= 4);
             if (category >= 0 && category <= 10) collect = collect.Where(m => m.CategoryID == category);
+            if (storeId > 0) collect = collect.Where(m => m.StoreID == storeId);
 
             ViewBag.FoundCount = collect.Count();
 
@@ -198,17 +199,16 @@ namespace Wholesale_Marketplace.Controllers
         {
             if (Helpers.UserCheck(db, ViewBag) && ViewBag.RoleID == 1)
             {
-                try
-                {
+              
                     Item delItem = db.Items.Find(id);
                     if (delItem.StoreID == ViewBag.StoreID)
                     {
-                        db.Items.Remove(delItem);
+                        delItem.Close_date = DateTime.Now;
+                        db.Entry(delItem).State = EntityState.Modified;
                         db.SaveChanges();
                         return Redirect("/Home/Index");
                     }
-                }
-                catch { }
+    
             }
             return Redirect("/Item/Info?id=" + id);
         }

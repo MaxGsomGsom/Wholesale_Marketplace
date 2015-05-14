@@ -4,7 +4,8 @@
 
 @{
     ViewBag.Title = "Search";
-    if (ViewBag.RoleID == 0) { Layout = "~/Views/Shared/BuyerLayout.cshtml"; }
+    if (ViewBag.RoleID == 0) { Layout = "~/Views/Shared/BuyerLayout.cshtml";}
+    if (ViewBag.RoleID == 1) { Layout = "~/Views/Shared/SellerLayout.cshtml"; }
 }
 
 <script>
