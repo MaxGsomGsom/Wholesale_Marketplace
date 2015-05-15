@@ -16,18 +16,11 @@ namespace Wholesale_Marketplace.Controllers
             return View();
         }
 
-        public ActionResult About()
+        public ActionResult Help()
         {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
+            Helpers.UserCheck(db, ViewBag);
+            return View("Help");
         }
 
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
     }
 }

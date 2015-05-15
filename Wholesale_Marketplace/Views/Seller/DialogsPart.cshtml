@@ -10,33 +10,15 @@
         @if (dialog.Order != null || dialog.Item != null)
         {
             <div class="col-md-3">
-                @if (dialog.Seller != null)
-                {
-                    <img src="/Account/Avatar?UserID=@dialog.Seller.UserID" class="img-responsive img-rounded" style=" max-height:100px" />
-                }
-                else
-                {
-                    <img src="/Account/Avatar?UserID=-1" class="img-responsive img-rounded" style="max-height:100px" />
-                }
+                <img src="/Account/Avatar?UserID=@dialog.Buyer.UserID" class="img-responsive img-rounded" style=" max-height:100px" />
             </div>
             <div class="col-md-6">
-                @if (dialog.Seller != null)
-                {
-                    <div class="row">@dialog.Seller.User.Login (продавец магазина @dialog.Seller.Store.Name)</div>
-                }
-                else if (dialog.Order != null)
-                {
-                    <div class="row">магазин @dialog.Order.Item.Store.Name</div>
-                }
-                else
-                {
-                    <div class="row">магазин @dialog.Item.Store.Name</div>
-                }
+                <div class="row">Покупатель: <b>@dialog.Buyer.User.Login</b></div>
 
                 <div class="row"></div>
                 @if (dialog.Order != null)
                 {
-                    <div class="row">Заказ: <a href="/Order/Info?id=@dialog.OrderID" style="text-decoration:none; color:black"><b>@dialog.OrderID  (@dialog.Order.Item.Name)</b></a></div>
+                    <div class="row">Заказ: <a href="/Order/Info?id=@dialog.OrderID" style="text-decoration:none; color:black"><b>@dialog.Order.Item.Name</b></a></div>
                 }
                 else
                 {
@@ -101,7 +83,7 @@
             <div class="row" style="padding-top:0em; margin-left:2em"><a class="btn btn-default btn-block" href="/Dialog/Show?id=@dialog.DisputeID">Открыть</a></div>
             @if (dialog.Seller == null)
             {
-                <div class="row" style="margin-top:1em"><a class="btn btn-primary btn-block" href="/Dialog/ConnectDialogToSeller?id=@dialog.DisputeID">Вступить в диалог</a></div>
+                <div class="row" style="margin-top:1em; margin-left:2em"><a class="btn btn-primary btn-block" href="/Dialog/ConnectDialogToSeller?id=@dialog.DisputeID">Вступить в диалог</a></div>
             }
         </div>
     </div>

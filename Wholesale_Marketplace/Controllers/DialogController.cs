@@ -371,7 +371,7 @@ namespace Wholesale_Marketplace.Controllers
                         db.Entry(curDialog).State = EntityState.Modified;
                         db.SaveChanges();
 
-
+                        ViewBag.DisputeStates = db.DisputeStates;
                         return View("ShowSeller", curDialog);
                     }
                 }
