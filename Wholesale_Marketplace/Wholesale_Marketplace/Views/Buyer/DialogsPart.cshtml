@@ -22,21 +22,21 @@
             <div class="col-md-6">
                 @if (dialog.Seller != null)
                 {
-                    <div class="row">@dialog.Seller.User.Login (продавец магазина @dialog.Seller.Store.Name)</div>
+                    <div class="row">Продавец: <b>@dialog.Seller.User.Login (@dialog.Seller.Store.Name)</b></div>
                 }
                 else if (dialog.Order != null)
                 {
-                    <div class="row">магазин @dialog.Order.Item.Store.Name</div>
+                    <div class="row">Магазин:<b> @dialog.Order.Item.Store.Name</b></div>
                 }
                 else
                 {
-                    <div class="row">магазин @dialog.Item.Store.Name</div>
+                    <div class="row">Магазин:<b> @dialog.Item.Store.Name</b></div>
                 }
 
                 <div class="row"></div>
                 @if (dialog.Order != null)
                 {
-                    <div class="row">Заказ: <a href="/Order/Info?id=@dialog.OrderID" style="text-decoration:none; color:black"><b>@dialog.OrderID  (@dialog.Order.Item.Name)</b></a></div>
+                    <div class="row">Заказ: <a href="/Order/Info?id=@dialog.OrderID" style="text-decoration:none; color:black"><b>@dialog.Order.Item.Name</b></a></div>
                 }
                 else
                 {

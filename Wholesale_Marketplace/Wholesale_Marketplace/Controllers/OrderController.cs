@@ -245,7 +245,7 @@ namespace Wholesale_Marketplace.Controllers
                         db.SaveChanges();
 
 
-                        return View("Info", curOrder);
+                        return View("InfoSeller", curOrder);
                     }
                 }
                 catch { }

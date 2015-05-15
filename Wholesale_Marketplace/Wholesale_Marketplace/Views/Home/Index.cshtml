@@ -1,33 +1,84 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
-    if (ViewBag.RoleID == 0) { Layout = "~/Views/Shared/BuyerLayout.cshtml";}
+    ViewBag.Title = "Wholesale MarketPlace";
+    if (ViewBag.RoleID == 0) { Layout = "~/Views/Shared/BuyerLayout.cshtml"; }
     if (ViewBag.RoleID == 1) { Layout = "~/Views/Shared/SellerLayout.cshtml"; }
 }
 
-<div class="jumbotron">
-    <h1>Wholesale Marketplace</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+
+<div class="field-main">
+        <div id="myCarousel" class="carousel slide" data-ride="carousel" style="height:500px; margin-top:2em; margin-bottom:2em;" >
+
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner" role="listbox">
+                <div class="item active">
+                    <div class="row" style="margin-top:3em">
+                        <div class="col-md-6"><img src="~/Content/logo.png" class="img-responsive" height="450"></div>
+                        <div class="col-md-6">
+                            <p><h1><b>Wholesale Marketplace</b></h1></p>
+                            <ul class="h4" style="margin-top:2em">
+                                <li>Огромный выбор товаров любых категорий</li>
+                                <br />
+                                <li>Продавцы со всего мира </li>
+                                <br />
+                                <li>Быстрая доставка</li>
+                                <br />
+                                <li>Низкие цены</li>
+                                <br />
+                                <li>Гарантия защиты ваших средств</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="item">
+                    <div class="row" style="margin-top:3em">
+                        <div class="col-md-offset-1 col-md-5">
+                            <p><h1><b>Стань продавцом</b></h1></p>
+                            <ul class="h4" style="margin-top:2em">
+                                <li>Cоздай свой магазин и продавай в нем любые товары</li>
+                                <br />
+                                <li>Принимай и обрабатывай заказы от покупателей</li>
+                                <br />
+                                <li>Общаться с покупателями, отвечай на их вопросы</li>
+                                <br />
+                                <li>В случае спорных ситуаций гарантировано получи помощь </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-5"><img src="~/Content/seller.png" class="img-responsive" style="max-height:450px" ></div>
+                    </div>
+                </div>
+
+                <div class="item">
+                    <div class="row" style="margin-top:3em">
+                        <div class="col-md-offset-1 col-md-5"><img src="~/Content/buyer.png" class="img-responsive" style="max-height:450px"></div>
+                        <div class="col-md-5">
+                            <p><h1><b>Стань покупателем</b></h1></p>
+                            <ul class="h4" style="margin-top:2em">
+                                <li>Cоздай свой магазин и продавай в нем любые товары</li>
+                                <br />
+                                <li>Принимай и обрабатывай заказы от покупателей</li>
+                                <br />
+                                <li>Общаться с покупателями, отвечай на их вопросы</li>
+                                <br />
+                                <li>В случае спорных ситуаций гарантировано получи помощь</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Left and right controls -->
+            <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev" style="border-radius: 10px">
+                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next" style="border-radius: 10px">
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+
+
 </div>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
-</div>
