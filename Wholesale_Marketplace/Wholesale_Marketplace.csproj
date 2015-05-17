@@ -199,6 +199,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\default-avatar.png" />
+    <Content Include="Content\Product.png" />
     <Content Include="Content\seller.png" />
     <Content Include="Content\logo.png" />
     <Content Include="Content\buyer.png" />

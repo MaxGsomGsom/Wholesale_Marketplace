@@ -118,7 +118,7 @@
             <div class="field-in">
                 <div class="row" style="padding-top:0.5em; padding-bottom:0.5em; border-bottom:1px solid lightgray" ><h4><b>Описание товара</b></h4></div>
                 <div class="row" style="padding-top:2em; margin-bottom:1em">
-                    @Model.Description 
+                    @Html.Raw(Model.Description);
                 </div>
             </div>
         </div>

@@ -163,10 +163,17 @@
         </div>
 
     }
-    else if (Model.Order_statusID == 4 || Model.Order_statusID == 5)
+    else if (Model.Order_statusID == 4)
     {
         <div class="row" style="margin-bottom:1em">
             <div class="col-md-3"><a href="/Dialog/Show?id=@Model.Dialog_dispute.First().DisputeID" class="btn btn-primary btn-lg btn-block">Перейти к спору</a></div>
         </div>
+    }
+    else if (Model.Order_statusID == 5)
+    {
+        <div class="row" style="margin-bottom:1em">
+            <div class="col-md-3"><a href="/Order/Review?id=@Model.OrderID" class="btn btn-primary btn-lg btn-block">Завершить заказ</a></div>
+        </div>
+
     }
 </div>

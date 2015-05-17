@@ -13,7 +13,7 @@ namespace Wholesale_Marketplace.Controllers
         WMDB db = new WMDB();
 
         [HttpGet]
-        public ActionResult Confirm(int Item=-1)
+        public ActionResult Confirm(int Item = -1)
         {
             if (Item == -1) return Redirect("/Home/Index");
 
@@ -21,7 +21,7 @@ namespace Wholesale_Marketplace.Controllers
             {
                 Item curItem = db.Items.Find(Item);
 
-                if (curItem.Close_date > DateTime.Now && curItem.Left_goods_count > 0)
+                if ((curItem.Close_date == null || curItem.Close_date > DateTime.Now) && curItem.Left_goods_count > 0)
                 {
                     ViewBag.ShippingTypes = db.Shipping_type;
                     return View("Confirm", curItem);
@@ -38,14 +38,22 @@ namespace Wholesale_Marketplace.Controllers
             {
                 Item curItem = db.Items.Find(NewOrder.ItemID);
 
-                if (curItem.Close_date > DateTime.Now && curItem.Left_goods_count > 0)
+                if ((curItem.Close_date == null || curItem.Close_date > DateTime.Now) && curItem.Left_goods_count > 0)
                 {
                     NewOrder.Order_statusID = 0;
                     NewOrder.BuyerID = ViewBag.BuyerID;
                     NewOrder.Open_date = DateTime.Now;
                     NewOrder.Shipping_type = db.Shipping_type.Find(NewOrder.ShippingID);
-                    NewOrder.Total_price = curItem.Price * NewOrder.Amount;
+                    NewOrder.Total_price = curItem.Price * NewOrder.Amount + NewOrder.Shipping_type.Price;
                     db.Orders.Add(NewOrder);
+
+                    NewOrder.Item.Left_goods_count -= 1;
+                    NewOrder.Item.Orders_count += 1;
+                    db.Entry(NewOrder.Item).State = EntityState.Modified;
+
+                    NewOrder.Item.Store.Orders_count += 1;
+                    db.Entry(NewOrder.Item.Store).State = EntityState.Modified;
+
                     db.SaveChanges();
                     return Pay(NewOrder.OrderID);
                 }
@@ -82,7 +90,7 @@ namespace Wholesale_Marketplace.Controllers
                         curOrder.Order_statusID = 1;
                         db.Entry(curOrder).State = EntityState.Modified;
                         db.SaveChanges();
-                        return Redirect("/Order/Info?id="+id);
+                        return Redirect("/Order/Info?id=" + id);
                     }
                     else return Content("Не оплачено");
                 }
@@ -95,14 +103,14 @@ namespace Wholesale_Marketplace.Controllers
         {
             if (Helpers.UserCheck(db, ViewBag) && ViewBag.RoleID == 0)
             {
-                    Order curOrder = db.Orders.Find(id);
-                    if (curOrder.BuyerID == ViewBag.BuyerID)
-                    {
-                        curOrder.Order_statusID = 6;
-                        db.Entry(curOrder).State = EntityState.Modified;
-                        db.SaveChanges();
-                        return Redirect("/Order/Info?id=" + id);
-                    }
+                Order curOrder = db.Orders.Find(id);
+                if (curOrder.BuyerID == ViewBag.BuyerID)
+                {
+                    curOrder.Order_statusID = 6;
+                    db.Entry(curOrder).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return Redirect("/Order/Info?id=" + id);
+                }
             }
             else if (ViewBag.RoleID == 1)
             {
@@ -142,22 +150,30 @@ namespace Wholesale_Marketplace.Controllers
 
 
         [HttpPost]
-        public ActionResult Review(int id, int Mark)
+        public ActionResult Review(int id, int Mark, string Review_text)
         {
-            if (Helpers.UserCheck(db, ViewBag) && ViewBag.RoleID == 0 && Mark>=0 && Mark<=5)
+            if (Helpers.UserCheck(db, ViewBag) && ViewBag.RoleID == 0 && Mark >= 0 && Mark <= 5)
             {
-                    Order curOrder = db.Orders.Find(id);
-                    if (curOrder.BuyerID == ViewBag.BuyerID)
+                Order curOrder = db.Orders.Find(id);
+                if (curOrder.BuyerID == ViewBag.BuyerID)
+                {
+                    if (curOrder.Order_statusID == 2 || curOrder.Order_statusID == 5)
                     {
-                        if (curOrder.Order_statusID == 2 || curOrder.Order_statusID == 5)
-                        {
-                            curOrder.Order_statusID = 3;
-                            curOrder.Mark = Mark;
-                            db.Entry(curOrder).State = EntityState.Modified;
-                            db.SaveChanges();
-                            return Redirect("/Order/Info?id=" + id);
-                        }
+                        curOrder.Review_text = Review_text;
+                        curOrder.Order_statusID = 3;
+                        curOrder.Mark = Mark;
+                        curOrder.Item.Average_mark = (double)((double)curOrder.Item.Marks_count * curOrder.Item.Average_mark + (double)curOrder.Mark) / (double)(curOrder.Item.Marks_count + 1);
+                        curOrder.Item.Store.Average_mark = (double)((double)curOrder.Item.Store.Marks_count * curOrder.Item.Store.Average_mark + (double)curOrder.Mark) / (double)(curOrder.Item.Store.Marks_count + 1);
+                        curOrder.Item.Marks_count += 1;
+                        curOrder.Item.Store.Marks_count += 1;
+
+                        db.Entry(curOrder.Item.Store).State = EntityState.Modified;
+                        db.Entry(curOrder.Item).State = EntityState.Modified;
+                        db.Entry(curOrder).State = EntityState.Modified;
+                        db.SaveChanges();
+                        return Redirect("/Order/Info?id=" + id);
                     }
+                }
             }
 
             return Redirect("/Home/Index");
@@ -241,6 +257,11 @@ namespace Wholesale_Marketplace.Controllers
                     if (curOrder.Item.StoreID == ViewBag.StoreID && curOrder.Seller == null)
                     {
                         curOrder.SellerID = ViewBag.SellerID;
+                        foreach (Dialog_dispute dialog in curOrder.Dialog_dispute)
+                        {
+                            dialog.SellerID = ViewBag.SellerID;
+                            db.Entry(dialog).State = EntityState.Modified;
+                        }
                         db.Entry(curOrder).State = EntityState.Modified;
                         db.SaveChanges();
 
