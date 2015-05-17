@@ -55,12 +55,12 @@
           <Property Name="Price" Type="float" Nullable="false" />
           <Property Name="Description" Type="text" Nullable="false" />
           <Property Name="Orders_count" Type="int" Nullable="false" />
-          <Property Name="Marks_count" Type="int" Nullable="false" />
           <Property Name="Average_mark" Type="float" Nullable="false" />
           <Property Name="Minimum_order" Type="int" Nullable="false" />
           <Property Name="Open_date" Type="datetime" Nullable="false" />
           <Property Name="Close_date" Type="datetime" />
           <Property Name="Left_goods_count" Type="int" Nullable="false" />
+          <Property Name="Marks_count" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Item_category">
           <Key>
@@ -155,7 +155,7 @@
           <Property Name="Created_date" Type="datetime" Nullable="false" />
           <Property Name="Description" Type="text" Nullable="false" />
           <Property Name="Owner_sellerID" Type="int" Nullable="false" />
-          <Property Name="SecretCode" Type="text" />
+          <Property Name="SecretCode" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="Support_agent">
           <Key>
@@ -173,9 +173,9 @@
           </Key>
           <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="RoleID" Type="int" Nullable="false" />
-          <Property Name="Login" Type="text" Nullable="false" />
-          <Property Name="Password" Type="text" Nullable="false" />
-          <Property Name="Email" Type="text" Nullable="false" />
+          <Property Name="Login" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <Association Name="FK_Buyer_User">
           <End Role="User" Type="Self.User" Multiplicity="1" />
@@ -745,7 +745,7 @@
           <NavigationProperty Name="Items" Relationship="Self.FK_ITEM_PLACE_OF__STORE" FromRole="Store" ToRole="Item" />
           <Property Name="Marks_count" Type="Int32" Nullable="false" />
           <Property Name="Average_mark" Type="Double" Nullable="false" />
-          <Property Name="SecretCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="SecretCode" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Sellers" Relationship="WM_Model.FK_SELLER_PLACE_OF__STORE" FromRole="Store" ToRole="Seller" />
         </EntityType>
         <EntityType Name="Support_agent">
@@ -767,9 +767,9 @@
           </Key>
           <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="RoleID" Type="Int32" Nullable="false" />
-          <Property Name="Login" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Login" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Buyers" Relationship="Self.FK_Buyer_User" FromRole="User" ToRole="Buyer" />
           <NavigationProperty Name="Role" Relationship="Self.FK_User_Role" FromRole="User" ToRole="Role" />
           <NavigationProperty Name="Sellers" Relationship="Self.FK_Seller_User" FromRole="User" ToRole="Seller" />
