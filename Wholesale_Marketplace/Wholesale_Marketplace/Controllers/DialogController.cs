@@ -368,6 +368,9 @@ namespace Wholesale_Marketplace.Controllers
                     if (((curDialog.Item != null && curDialog.Item.StoreID == ViewBag.StoreID) || (curDialog.Order != null && curDialog.Order.Item.StoreID == ViewBag.StoreID)) && curDialog.Seller == null)
                     {
                         curDialog.SellerID = ViewBag.SellerID;
+                        if (curDialog.Order!=null) curDialog.Order.SellerID = ViewBag.SellerID;
+
+                        db.Entry(curDialog.Order).State = EntityState.Modified;
                         db.Entry(curDialog).State = EntityState.Modified;
                         db.SaveChanges();
 

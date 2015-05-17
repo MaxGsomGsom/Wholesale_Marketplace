@@ -26,29 +26,35 @@
                         </div>
                         <div class="col-md-9" style="white-space: nowrap;">
                             <a href="/Home/" style="text-decoration:none; color:black"><p class="h2"><b>Wholesale Marketplace</b></p></a>
-                            <p class="h5">Buy and sell everythink fast and free</p>
+                            <p class="h5">Покупать и продавать легко</p>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-5">
                     <div class="row" style="padding-bottom:1em"><div class="col-md-offset-6 col-md-6">Покупатель:<b style="margin-left:2.7em">@ViewBag.Login</b></div></div>
                     <div class="row">
+                        @if (ViewBag.BuyerID != null) { 
                        <div class="col-md-3">
                             <a href="/Buyer/Orders" class="btn btn-default btn-block" role="button">Заказы</a>
                         </div>
                         <div class="col-md-3">
                             <a href="/Buyer/Dialogs" class="btn btn-default btn-block" role="button">Диалоги</a>
                         </div>
-                        <div class="col-md-3">
-                            <a href="/Account/AddInfoBuyer" class="btn btn-default btn-block" role="button">Настройки</a>
+                        }
+                        else
+                        {
+                            <div class="col-md-6"></div>
+                        }
+                            <div class="col-md-3">
+                                <a href="/Account/AddInfoBuyer" class="btn btn-default btn-block" role="button">Настройки</a>
+                            </div>
+                            <div class="col-md-1">
+                                <a href="/Home/Help" class="btn btn-default " role="button"><span class="glyphicon glyphicon-question-sign"></span></a>
+                            </div>
+                            <div class="col-md-1">
+                                <a href="/Account/Logout" class="btn btn-default " role="button"><span class="glyphicon glyphicon-log-out"></span></a>
+                            </div>
                         </div>
-                        <div class="col-md-1">
-                            <a href="/Home/Help" class="btn btn-default " role="button"><span class="glyphicon glyphicon-question-sign"></span></a>
-                        </div>
-                        <div class="col-md-1">
-                            <a href="/Account/Logout" class="btn btn-default " role="button"><span class="glyphicon glyphicon-log-out"></span></a>
-                        </div>
-                    </div>
                 </div>
                 <div class="col-md-1">
                     <img class="img-responsive img-rounded" src="/Account/Avatar?UserID=@ViewBag.UserID" />

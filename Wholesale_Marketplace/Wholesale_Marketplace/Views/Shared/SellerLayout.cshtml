@@ -15,7 +15,7 @@
 </head>
 <body style="background-image: linear-gradient(#ffe6e6, #d7ffd7);">
     <div class="container">
-        <div class="field" >
+        <div class="field">
             <div class="row">
                 <div class="col-md-5">
                     <div class="row">
@@ -26,35 +26,48 @@
                         </div>
                         <div class="col-md-9" style="white-space: nowrap;">
                             <a href="/Home/" style="text-decoration:none; color:black"><p class="h2"><b>Wholesale Marketplace</b></p></a>
-                            <p class="h5">Buy and sell everythink fast and free</p>
+                            <p class="h5">Покупать и продавать легко</p>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="row" style="padding-bottom:1em"><div class="col-md-offset-6 col-md-6">Продавец:<b style="margin-left:2.7em">@ViewBag.Login</b></div></div>
+                    <div class="row" style="padding-bottom:1em">
+                    @if (ViewBag.StoreID != null)
+                    {
+                        <div class="col-md-7">Магазин: <b style="margin-left:1em">@ViewBag.StoreName</b></div>
+                    }
+                    else
+                    {
+                        <div class="col-md-7"></div>
+                    }
+                    <div class="col-md-5">Продавец: <b style="margin-left:1em">@ViewBag.Login</b></div></div>
                     <div class="row">
                         @if (ViewBag.StoreID != null)
                         {
                             <div class="col-md-1" style="margin-right:0em; padding-right:0em">
                                 <a href="/Item/AddItem" class="btn btn-default btn-block" role="button"><span class="glyphicon-plus-sign glyphicon"></span></a>
                             </div>
-    <div class="col-md-2" style="margin-left:0em; padding-left:0em">
-        <a href="/Item/Search?StoreID=@ViewBag.StoreID" class="btn btn-default btn-block" role="button">Товары</a>
-    </div>
-                        }
+                            <div class="col-md-2" style="margin-left:0em; padding-left:0em">
+                                <a href="/Item/Search?StoreID=@ViewBag.StoreID" class="btn btn-default btn-block" role="button">Товары</a>
+                            </div>
                         <div class="col-md-3">
                             <a href="/Seller/Orders" class="btn btn-default btn-block" role="button">Заказы</a>
                         </div>
                         <div class="col-md-3">
                             <a href="/Seller/Dialogs" class="btn btn-default btn-block" role="button">Диалоги</a>
                         </div>
+                        }
+                        else
+                        {
+                            <div class="col-md-9"></div>
+                        }
                         <div class="col-md-1">
                             <a href="/Account/AddInfoSeller" class="btn btn-default" role="button"><span class="glyphicon-cog glyphicon"></span></a>
                         </div>
                         <div class="col-md-1">
                             <a href="/Home/Help" class="btn btn-default btn" role="button"><span class="glyphicon glyphicon-question-sign"></span></a>
                         </div>
-                        <div class="col-md-1" >
+                        <div class="col-md-1">
                             <a href="/Account/Logout" class="btn btn-default " role="button"><span class="glyphicon glyphicon-log-out"></span></a>
                         </div>
                     </div>

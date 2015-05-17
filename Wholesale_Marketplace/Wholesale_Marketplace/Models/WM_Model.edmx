@@ -11,8 +11,8 @@
           </Key>
           <Property Name="BuyerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserID" Type="int" Nullable="false" />
-          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Address" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="text" Nullable="false" />
+          <Property Name="Address" Type="text" Nullable="false" />
           <Property Name="Orders_count" Type="int" Nullable="false" />
           <Property Name="Registration_date" Type="datetime" Nullable="false" />
           <Property Name="Avatar" Type="image" />
@@ -28,7 +28,7 @@
           <Property Name="Open_date" Type="datetime" Nullable="false" />
           <Property Name="IsDispute" Type="bit" Nullable="false" />
           <Property Name="Close_date" Type="datetime" />
-          <Property Name="Resolution_text" Type="varchar" MaxLength="50" />
+          <Property Name="Resolution_text" Type="text" />
           <Property Name="OrderID" Type="int" />
           <Property Name="HasNewMessages" Type="bit" Nullable="false" />
           <Property Name="ItemID" Type="int" />
@@ -42,7 +42,7 @@
             <PropertyRef Name="DisputeStateID" />
           </Key>
           <Property Name="DisputeStateID" Type="int" Nullable="false" />
-          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="text" Nullable="false" />
         </EntityType>
         <EntityType Name="Item">
           <Key>
@@ -51,9 +51,9 @@
           <Property Name="ItemID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="StoreID" Type="int" Nullable="false" />
           <Property Name="CategoryID" Type="int" Nullable="false" />
-          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="text" Nullable="false" />
           <Property Name="Price" Type="float" Nullable="false" />
-          <Property Name="Description" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="text" Nullable="false" />
           <Property Name="Orders_count" Type="int" Nullable="false" />
           <Property Name="Marks_count" Type="int" Nullable="false" />
           <Property Name="Average_mark" Type="float" Nullable="false" />
@@ -67,7 +67,7 @@
             <PropertyRef Name="CategoryID" />
           </Key>
           <Property Name="CategoryID" Type="int" Nullable="false" />
-          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="text" Nullable="false" />
         </EntityType>
         <EntityType Name="Message">
           <Key>
@@ -75,7 +75,7 @@
           </Key>
           <Property Name="MessageID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="DisputeID" Type="int" Nullable="false" />
-          <Property Name="Text" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Text" Type="text" Nullable="false" />
           <Property Name="Post_date" Type="datetime" Nullable="false" />
           <Property Name="UserID" Type="int" Nullable="false" />
         </EntityType>
@@ -95,10 +95,10 @@
           <Property Name="Close_date" Type="datetime" />
           <Property Name="Amount" Type="int" Nullable="false" />
           <Property Name="Mark" Type="int" />
-          <Property Name="Review_text" Type="varchar" MaxLength="1000" />
-          <Property Name="Address" Type="varchar" MaxLength="1000" />
-          <Property Name="ForSellerInfo" Type="varchar" MaxLength="1000" />
-          <Property Name="ForBuyerInfo" Type="varchar" MaxLength="1000" />
+          <Property Name="Review_text" Type="text" />
+          <Property Name="Address" Type="text" />
+          <Property Name="ForSellerInfo" Type="text" />
+          <Property Name="ForBuyerInfo" Type="text" />
         </EntityType>
         <EntityType Name="Order_status">
           <Key>
@@ -114,7 +114,7 @@
           <Property Name="PictureID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ItemID" Type="int" />
           <Property Name="MessageID" Type="int" />
-          <Property Name="Description" Type="varchar" MaxLength="50" />
+          <Property Name="Description" Type="text" />
           <Property Name="Image" Type="image" Nullable="false" />
         </EntityType>
         <EntityType Name="Role">
@@ -122,7 +122,7 @@
             <PropertyRef Name="RoleID" />
           </Key>
           <Property Name="RoleID" Type="int" Nullable="false" />
-          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="text" Nullable="false" />
         </EntityType>
         <EntityType Name="Seller">
           <Key>
@@ -131,7 +131,7 @@
           <Property Name="SellerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="StoreID" Type="int" />
           <Property Name="UserID" Type="int" Nullable="false" />
-          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="text" Nullable="false" />
           <Property Name="Registration_date" Type="datetime" Nullable="false" />
           <Property Name="Avatar" Type="image" />
         </EntityType>
@@ -140,7 +140,7 @@
             <PropertyRef Name="ShippingID" />
           </Key>
           <Property Name="ShippingID" Type="int" Nullable="false" />
-          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="text" Nullable="false" />
           <Property Name="Price" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Store">
@@ -148,14 +148,14 @@
             <PropertyRef Name="StoreID" />
           </Key>
           <Property Name="StoreID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="text" Nullable="false" />
           <Property Name="Marks_count" Type="int" Nullable="false" />
           <Property Name="Orders_count" Type="int" Nullable="false" />
           <Property Name="Average_mark" Type="float" Nullable="false" />
           <Property Name="Created_date" Type="datetime" Nullable="false" />
-          <Property Name="Description" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="text" Nullable="false" />
           <Property Name="Owner_sellerID" Type="int" Nullable="false" />
-          <Property Name="SecretCode" Type="varchar" MaxLength="50" />
+          <Property Name="SecretCode" Type="text" />
         </EntityType>
         <EntityType Name="Support_agent">
           <Key>
@@ -163,7 +163,7 @@
           </Key>
           <Property Name="AgentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserID" Type="int" Nullable="false" />
-          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="text" Nullable="false" />
           <Property Name="Solved_count" Type="int" Nullable="false" />
           <Property Name="Registration_date" Type="datetime" Nullable="false" />
         </EntityType>
@@ -173,9 +173,9 @@
           </Key>
           <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="RoleID" Type="int" Nullable="false" />
-          <Property Name="Login" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Login" Type="text" Nullable="false" />
+          <Property Name="Password" Type="text" Nullable="false" />
+          <Property Name="Email" Type="text" Nullable="false" />
         </EntityType>
         <Association Name="FK_Buyer_User">
           <End Role="User" Type="Self.User" Multiplicity="1" />
@@ -572,8 +572,8 @@
           </Key>
           <Property Name="BuyerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UserID" Type="Int32" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Orders_count" Type="Int32" Nullable="false" />
           <Property Name="Registration_date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Avatar" Type="Binary" MaxLength="Max" FixedLength="false" />
@@ -592,7 +592,7 @@
           <Property Name="Open_date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="IsDispute" Type="Boolean" Nullable="false" />
           <Property Name="Close_date" Type="DateTime" Precision="3" />
-          <Property Name="Resolution_text" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Resolution_text" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Buyer" Relationship="Self.FK_DIALOGUE_SIDE_1_BUYER" FromRole="Dialog_dispute" ToRole="Buyer" />
           <NavigationProperty Name="Messages" Relationship="Self.FK_MESSAGE_AGGREGATE_DIALOGUE" FromRole="Dialog_dispute" ToRole="Message" />
           <Property Name="OrderID" Type="Int32" />
@@ -615,9 +615,9 @@
           <Property Name="ItemID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="StoreID" Type="Int32" Nullable="false" />
           <Property Name="CategoryID" Type="Int32" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Price" Type="Double" Nullable="false" />
-          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Orders_count" Type="Int32" Nullable="false" />
           <Property Name="Minimum_order" Type="Int32" Nullable="false" />
           <Property Name="Open_date" Type="DateTime" Nullable="false" Precision="3" />
@@ -636,7 +636,7 @@
             <PropertyRef Name="CategoryID" />
           </Key>
           <Property Name="CategoryID" Type="Int32" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Items" Relationship="WM_Model.FK_ITEM_CATHEGORY_ITEM_CAT" FromRole="Item_category" ToRole="Item" />
         </EntityType>
         <EntityType Name="Message">
@@ -645,7 +645,7 @@
           </Key>
           <Property Name="MessageID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="DisputeID" Type="Int32" Nullable="false" />
-          <Property Name="Text" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Post_date" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Dialog_dispute" Relationship="Self.FK_MESSAGE_AGGREGATE_DIALOGUE" FromRole="Message" ToRole="Dialog_dispute" />
           <NavigationProperty Name="Pictures" Relationship="Self.FK_PICTURE_ATTACHMEN_MESSAGE" FromRole="Message" ToRole="Picture" />
@@ -667,14 +667,14 @@
           <Property Name="Close_date" Type="DateTime" Precision="3" />
           <Property Name="Amount" Type="Int32" Nullable="false" />
           <Property Name="Mark" Type="Int32" />
-          <Property Name="Review_text" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="Review_text" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Buyer" Relationship="Self.FK_ORDER_CUSTOMER_BUYER" FromRole="Order" ToRole="Buyer" />
           <NavigationProperty Name="Item" Relationship="Self.FK_ORDER_PART_ITEM" FromRole="Order" ToRole="Item" />
           <NavigationProperty Name="Shipping_type" Relationship="Self.FK_ORDER_SHIPPING_SHIPPING" FromRole="Order" ToRole="Shipping_type" />
           <NavigationProperty Name="Order_status" Relationship="Self.FK_ORDER_STATUS_ORDER_ST" FromRole="Order" ToRole="Order_status" />
-          <Property Name="Address" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="ForSellerInfo" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="ForBuyerInfo" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ForSellerInfo" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ForBuyerInfo" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="SellerID" Type="Int32" />
           <NavigationProperty Name="Support_agent" Relationship="WM_Model.FK_ORDER_LEADER_SUPPORT_" FromRole="Order" ToRole="Support_agent" />
           <NavigationProperty Name="Seller" Relationship="WM_Model.FK_ORDER_PLACE_OF__SELLER" FromRole="Order" ToRole="Seller" />
@@ -695,7 +695,7 @@
           <Property Name="PictureID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ItemID" Type="Int32" />
           <Property Name="MessageID" Type="Int32" />
-          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Image" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
           <NavigationProperty Name="Item" Relationship="Self.FK_PICTURE_PHOTO_OBJ_ITEM" FromRole="Picture" ToRole="Item" />
           <NavigationProperty Name="Message" Relationship="Self.FK_PICTURE_ATTACHMEN_MESSAGE" FromRole="Picture" ToRole="Message" />
@@ -705,7 +705,7 @@
             <PropertyRef Name="RoleID" />
           </Key>
           <Property Name="RoleID" Type="Int32" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Users" Relationship="Self.FK_User_Role" FromRole="Role" ToRole="User" />
         </EntityType>
         <EntityType Name="Seller">
@@ -715,7 +715,7 @@
           <Property Name="SellerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="StoreID" Type="Int32" />
           <Property Name="UserID" Type="Int32" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Registration_date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Avatar" Type="Binary" MaxLength="Max" FixedLength="false" />
           <NavigationProperty Name="User" Relationship="Self.FK_Seller_User" FromRole="Seller" ToRole="User" />
@@ -728,7 +728,7 @@
             <PropertyRef Name="ShippingID" />
           </Key>
           <Property Name="ShippingID" Type="Int32" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Price" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Orders" Relationship="Self.FK_ORDER_SHIPPING_SHIPPING" FromRole="Shipping_type" ToRole="Order" />
         </EntityType>
@@ -737,15 +737,15 @@
             <PropertyRef Name="StoreID" />
           </Key>
           <Property Name="StoreID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Orders_count" Type="Int32" Nullable="false" />
           <Property Name="Created_date" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Owner_sellerID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Items" Relationship="Self.FK_ITEM_PLACE_OF__STORE" FromRole="Store" ToRole="Item" />
           <Property Name="Marks_count" Type="Int32" Nullable="false" />
           <Property Name="Average_mark" Type="Double" Nullable="false" />
-          <Property Name="SecretCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SecretCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Sellers" Relationship="WM_Model.FK_SELLER_PLACE_OF__STORE" FromRole="Store" ToRole="Seller" />
         </EntityType>
         <EntityType Name="Support_agent">
@@ -754,7 +754,7 @@
           </Key>
           <Property Name="AgentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UserID" Type="Int32" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Solved_count" Type="Int32" Nullable="false" />
           <Property Name="Registration_date" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="User" Relationship="Self.FK_Support_agent_User" FromRole="Support_agent" ToRole="User" />
@@ -767,9 +767,9 @@
           </Key>
           <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="RoleID" Type="Int32" Nullable="false" />
-          <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Login" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Buyers" Relationship="Self.FK_Buyer_User" FromRole="User" ToRole="Buyer" />
           <NavigationProperty Name="Role" Relationship="Self.FK_User_Role" FromRole="User" ToRole="Role" />
           <NavigationProperty Name="Sellers" Relationship="Self.FK_Seller_User" FromRole="User" ToRole="Seller" />
@@ -1142,7 +1142,7 @@
             <PropertyRef Name="DisputeStateID" />
           </Key>
           <Property Name="DisputeStateID" Type="Int32" Nullable="false" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Dialog_dispute" Relationship="WM_Model.FK_DIALOGUE_SIDE_6_DisputeState" FromRole="DisputeState" ToRole="Dialog_dispute" />
         </EntityType>
         <Association Name="FK_DIALOGUE_SIDE_6_DisputeState">

@@ -88,6 +88,7 @@ namespace Wholesale_Marketplace.Controllers
                         newBuyer.UserID = curUserID;
                         newBuyer.Orders_count = 0;
                         newBuyer.Registration_date = DateTime.Now;
+                        if (Avatar != null) newBuyer.Avatar = (new BinaryReader(Avatar.InputStream)).ReadBytes((int)Avatar.InputStream.Length);
                         db.Buyers.Add(newBuyer);
                         db.SaveChanges();
                     }
@@ -165,6 +166,7 @@ namespace Wholesale_Marketplace.Controllers
                         newSeller.UserID = curUserID;
                         newSeller.Registration_date = DateTime.Now;
 
+                        if (Avatar != null) newSeller.Avatar = (new BinaryReader(Avatar.InputStream)).ReadBytes((int)Avatar.InputStream.Length);
 
                         if (db.Stores.Any(m=>m.StoreID == newSeller.StoreID) && db.Stores.Find(newSeller.StoreID).SecretCode == SecretCode)
                         {

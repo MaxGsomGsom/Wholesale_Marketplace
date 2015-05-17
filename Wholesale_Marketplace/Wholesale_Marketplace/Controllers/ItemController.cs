@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using Wholesale_Marketplace.Models;
@@ -21,6 +22,14 @@ namespace Wholesale_Marketplace.Controllers
             if (curItem == null) return Redirect("/Home/Index");
             else
             {
+                for (int i = 0; i < curItem.Description.Length; i++)
+                {
+                    if (curItem.Description[i] == '\r')
+                    {
+                        curItem.Description = curItem.Description.Remove(i, 1);
+                        curItem.Description = curItem.Description.Insert(i, "<br>");
+                    }
+                }
                 if (ViewBag.RoleID == 1) return View("InfoSeller", curItem);
                 return View("Info", curItem);
             }
@@ -36,7 +45,7 @@ namespace Wholesale_Marketplace.Controllers
                 return File(curPic.Image, "image/jpeg");
             }
 
-            return File("~/Content/Logo.jpg", "image/jpeg");
+            return File("~/Content/Product.png", "image/png");
         }
 
         //сортировка 0 возрастание цены, 1 убывание цены, 2 убывание рейтингу, 3 убывание количества заказов, 4 убывание дате добавления, возрастание даты добавления
@@ -108,6 +117,7 @@ namespace Wholesale_Marketplace.Controllers
                     newItem.StoreID = ViewBag.StoreID;
                     newItem.Marks_count = 0;
                     newItem.Orders_count = 0;
+                    newItem.Average_mark = 0;
                     db.Items.Add(newItem);
                     db.SaveChanges();
 

@@ -35,6 +35,7 @@ namespace Wholesale_Marketplace
                                 {
                                     ViewBag.SellerID = db.Sellers.First(e => e.UserID == curUser.UserID).SellerID;
                                     ViewBag.StoreID = db.Sellers.First(e => e.UserID == curUser.UserID).StoreID;
+                                    ViewBag.StoreName = db.Stores.Find(ViewBag.StoreID).Name;
                                     break;
                                 }
                         }
