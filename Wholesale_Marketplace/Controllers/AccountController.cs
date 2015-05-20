@@ -121,6 +121,7 @@ namespace Wholesale_Marketplace.Controllers
         [HttpPost]
         public ActionResult Login(User u)
         {
+            Helpers.UserCheck(db, ViewBag);
             if (db.Users.Any(e => e.Login == u.Login))
             {
                 User curUser = db.Users.First(e => e.Login == u.Login);
